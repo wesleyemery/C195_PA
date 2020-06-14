@@ -14,8 +14,8 @@ public class Main extends Application {
         //Parent root = FXMLLoader.load(getClass().getResource("/View_Controller/sample.fxml"));
         /*primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));*/
-        Parent root = FXMLLoader.load(getClass().getResource("/View_Controller/sample.fxml"));
-        primaryStage.setTitle("Test");
+        Parent root = FXMLLoader.load(getClass().getResource("/View_Controller/LoginView.fxml"));
+        primaryStage.setTitle("Scheduling System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
