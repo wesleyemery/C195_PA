@@ -35,8 +35,15 @@ public class Main extends Application {
         //SQL insert statement
         String insertStatement = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy) VALUES('US', '2020-06-17 00:00:00', 'admin', 'admin')";
 
+        //SQL update statement
+        String updateStatement = "UPDATE country SET country = 'Japan' WHERE country = 'Canada'";
+
+        //SQL delete statement
+        String deleteStatement = "DELETE from country WHERE country = 'Japan'";
+
         //Execute SQL Statement
         statement.execute(insertStatement);
+        //statement.execute(updateStatement);
 
         //Confirm rows effected
         if(statement.getUpdateCount() > 0)
