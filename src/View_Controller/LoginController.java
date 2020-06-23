@@ -9,12 +9,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
+import Model.User;
 import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class  LoginController implements Initializable {
+public class  LoginController<user, currentUser> implements Initializable {
 
     @FXML
     private Label loginMessageLabel;
@@ -40,13 +40,16 @@ public class  LoginController implements Initializable {
     @FXML
     private ImageView flagIcon;
 
+    static User currentUser;
+    private String errorText, errorText1, errorHeader, exitMessage, exitHeader;
+
     @FXML
     void login(ActionEvent event) {
         String userNameInput = userNameTextField.getText();
         String passwordInput = passwordField.getText();
 
         //validation
-       /* if (userNameInput.isEmpty() || passwordInput.isEmpty()) {
+        /*if (userNameInput.isEmpty() || passwordInput.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(errorHeader);
             alert.setHeaderText("Error");
@@ -80,7 +83,11 @@ public class  LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Locale locale = Locale.getDefault();
-        ResourceBundle rb = ResourceBundle.getBundle("Languages/lang", locale);
+        ResourceBundle rb = ResourceBundle.getBundle("Languages/language", locale.getDefault());
+        if (locale.getDefault().getLanguage().equals("es") ||  locale.getDefault().getLanguage().equals("en"))
+            System.out.println(rb.getString("HI"));
+
+
     }
 
 }
