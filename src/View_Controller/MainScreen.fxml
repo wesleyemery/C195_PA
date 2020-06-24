@@ -14,7 +14,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="appointmentTable" layoutX="20.0" layoutY="80.0" prefHeight="200.0" prefWidth="797.0">
+      <TableView fx:id="appointmentTable" layoutX="20.0" layoutY="80.0" prefHeight="200.0" prefWidth="803.0">
         <columns>
           <TableColumn fx:id="appointmentIDColumn" prefWidth="45.0" text="ID" />
           <TableColumn fx:id="appointmentTitleColumn" prefWidth="150.0" text="Title" />
@@ -41,7 +41,7 @@
             <Button fx:id="deleteAppointmentBtn" mnemonicParsing="false" onAction="#deleteAppointmentHandler" text="Delete" />
          </children>
       </HBox>
-      <TableView fx:id="customerTable" layoutX="14.0" layoutY="342.0" prefHeight="200.0" prefWidth="797.0">
+      <TableView fx:id="customerTable" layoutX="20.0" layoutY="342.0" prefHeight="200.0" prefWidth="803.0">
         <columns>
           <TableColumn fx:id="customerIDColumn" prefWidth="45.0" text="ID" />
           <TableColumn fx:id="customerNameColumn" prefWidth="150.0" text="Name" />
