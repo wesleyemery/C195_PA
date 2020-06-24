@@ -31,11 +31,11 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
 
-        /*DataGenerator data = new DataGenerator();
-        data.populateAppointmentsTable();*/
-        Connection connection = DBConnection.getConnection(); //Connect to DB
+        //DataGenerator data = new DataGenerator();
+        //data.populateAppointmentsTable();
+        /*Connection connection = DBConnection.getConnection(); //Connect to DB
         DBQuery.setStatement(connection);
-        Statement statement = DBQuery.getStatement();
+        Statement statement = DBQuery.getStatement();*/
 
         //SQL insert statement
         /*String insertStatement = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy) VALUES('US', '2020-06-17 00:00:00', 'admin', 'admin')";

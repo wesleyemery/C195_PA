@@ -23,7 +23,6 @@ import java.util.ResourceBundle;
 public class MainScreenController implements Initializable {
 
 
-    //private static int currentUserId = LoginController.getCurrentUser().getUserID();
     String startMonth = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     String endMonth = LocalDateTime.now().plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
@@ -103,12 +102,40 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void deleteAppointmentHandler(ActionEvent event) {
+        Appointment appointmentDelete = appointmentTable.getSelectionModel().getSelectedItem();
+        if(appointmentDelete != null) {
+            String message = "Are you sure you want to delete " + appointmentTable.getSelectionModel().getSelectedItem().getTitle() + " appointment?";
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("ALERT: Delete Part Selected");
+            alert.setHeaderText("Confirm");
+            alert.setContentText(message);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    PreparedStatement ps = DBConnection.getConnection().prepareStatement("DELETE FROM appointment WHERE appointmentId = ?");
+                    ps.setInt(1, appointmentDelete.getAppointmentId());
+                    ps.execute();
 
+                    allAppointments.clear();
+                    appointmentTable.setItems(queryAppointments());
+                    appointmentTable.refresh();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setContentText("Please select Part");
+                alert.showAndWait();
+            }
+
+        }
     }
 
     @FXML
     void deleteCustomerHandler(ActionEvent event) {
-        /*Customer customerDelete = customerTable.getSelectionModel().getSelectedItem();
+        Customer customerDelete = customerTable.getSelectionModel().getSelectedItem();
         if(customerDelete != null) {
             String message = "Are you sure you want to delete " + customerTable.getSelectionModel().getSelectedItem().getCustomerName() + "?";
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -118,16 +145,19 @@ public class MainScreenController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 try {
-                    PreparedStatement ps = DBConnection.getConnection().prepareStatement("DELETE customer.*, address.* FROM customer, address WHERE customer.customerId = ? AND customer.addressId = address.addressId");
+                    PreparedStatement ps = DBConnection.getConnection().prepareStatement("DELETE FROM appointment WHERE customerId = ?");
                     ps.setInt(1, customerDelete.getCustomerId());
                     ps.execute();
-                    //update customer table
-                    allCustomers.remove(customerDelete);
-                    generateCustomerTable();
+                    ps = DBConnection.getConnection().prepareStatement("DELETE FROM customer WHERE customerId = ?");
+                    ps.setInt(1, customerDelete.getCustomerId());
+                    ps.execute();
+
+                    allCustomers.clear();
+                    customerTable.setItems(queryCustomers());
                     customerTable.refresh();
 
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
             } else {
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
@@ -136,7 +166,7 @@ public class MainScreenController implements Initializable {
                 alert.showAndWait();
             }
 
-        }*/
+        }
     }
 
     @FXML
@@ -239,7 +269,10 @@ public class MainScreenController implements Initializable {
     }
         @Override
     public void initialize(URL location, ResourceBundle resources) {
-        generateCustomerTable();
+        /*DataGenerator data = new DataGenerator();
+        data.populateAllTables();*/
         generateAppointmentTable();
-    }
+        generateCustomerTable();
+
+        }
 }

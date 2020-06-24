@@ -56,10 +56,13 @@ public class DataGenerator {
     }*/
 
     public boolean populateAppointmentsTable() {
-        String query = "INSERT INTO appointment(customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdateBy) VALUES \n" +
+        String query = "SET FOREIGN_KEY_CHECKS=0;";
+        int result = SqlHelper.getInstance().update(query);
+
+        String query1 = "INSERT INTO appointment(customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdateBy) VALUES \n" +
                 "('1','1','not needed','not needed','not needed','not needed','Presentation','not needed','2019-01-01 00:00:00','2019-01-01 00:00:00','2019-01-01 00:00:00','test','test'),\n" +
                 "('2','1','not needed','not needed','not needed','not needed','Scrum','not needed','2019-01-01 00:00:00','2019-01-01 00:00:00','2019-01-01 00:00:00','test','test');";
-        int result = SqlHelper.getInstance().update(query);
+        result = SqlHelper.getInstance().update(query1);
         return result > 0;
     }
 }
