@@ -203,13 +203,29 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void updateAppointmentHandler(ActionEvent event) {
+    void updateAppointmentHandler(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/updateAppointmentScreen.fxml"));
+        updateAppointmentController controller = new updateAppointmentController();
+        Stage stage = (Stage) updateAppointmentBtn.getScene().getWindow();
 
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    void updateCustomerHandler(ActionEvent event) {
+    void updateCustomerHandler(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/updateCustomerScreen.fxml"));
+        updateCustomerController controller = new updateCustomerController();
+        Stage stage = (Stage) updateAppointmentBtn.getScene().getWindow();
 
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -292,10 +308,13 @@ public class MainScreenController implements Initializable {
     }
         @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*DataGenerator data = new DataGenerator();
-        data.populateAllTables();*/
+
+        allAppointments.clear();
+        allCustomers.clear();
         generateAppointmentTable();
         generateCustomerTable();
+        /*DataGenerator data = new DataGenerator();
+        data.populateAllTables();*/
 
         }
 }

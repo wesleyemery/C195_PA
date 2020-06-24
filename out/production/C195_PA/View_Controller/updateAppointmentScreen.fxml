@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,12 +12,12 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="541.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane layoutX="23.0" layoutY="60.0" prefHeight="544.0" prefWidth="578.0">
+      <GridPane layoutX="38.0" layoutY="86.0" prefHeight="461.0" prefWidth="578.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="282.0" minWidth="10.0" prefWidth="85.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="493.0" minWidth="10.0" prefWidth="493.0" />
@@ -35,21 +33,20 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="150.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
             <Label text="Customer:" GridPane.rowIndex="1" />
             <Label text="Title:" GridPane.rowIndex="3" />
-            <Label text="Date:" GridPane.rowIndex="5" />
-            <Label text="Start:" GridPane.rowIndex="6" />
-            <Label text="End:" GridPane.rowIndex="7" />
-            <Label text="Type:" GridPane.rowIndex="9" />
-            <Label text="Description:" GridPane.rowIndex="10" />
+            <Label text="Start Date:" GridPane.rowIndex="5" />
+            <Label prefWidth="57.0" text="Start Time:" GridPane.rowIndex="6" />
+            <Label text="End Time:" GridPane.rowIndex="8" />
+            <Label text="Type:" GridPane.rowIndex="4" />
             <Label fx:id="userNameLabel" GridPane.columnIndex="1" />
+            <Label fx:id="customerNameLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="appointmentTitleTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <DatePicker fx:id="datePicker" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="appointmentTypeTextField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <TextArea fx:id="appointmentDescriptionTextArea" prefHeight="200.0" prefWidth="493.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <TextField fx:id="appointmentTypeTextField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <TextField fx:id="startHourTextField" prefWidth="50.0" promptText="12" />
@@ -58,7 +55,7 @@
                   <ChoiceBox fx:id="startAmPmChoiceBox" prefWidth="50.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                <children>
                   <TextField fx:id="endHourTextField" prefWidth="50.0" promptText="12" />
                   <Label text=":" />
@@ -66,26 +63,20 @@
                   <ChoiceBox fx:id="endAmPmChoiceBox" prefWidth="50.0" />
                </children>
             </HBox>
-            <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <Label fx:id="customerNameLabel" />
-                  <ChoiceBox fx:id="customerChoiceBox" disable="true" prefWidth="150.0" visible="false" />
-                  <ComboBox fx:id="customerComboBox" prefHeight="27.0" prefWidth="167.0" promptText="Select" />
-               </children>
-            </StackPane>
+            <ComboBox fx:id="customerComboBox" prefHeight="27.0" prefWidth="167.0" promptText="Select" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="End Date:" GridPane.rowIndex="7" />
+            <DatePicker fx:id="datePicker1" GridPane.columnIndex="1" GridPane.rowIndex="7" />
          </children>
       </GridPane>
-      <Label layoutX="103.0" layoutY="39.0" text="New Appointment">
+      <Label layoutX="110.0" layoutY="41.0" text="Update Appointment">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="83.0" fitWidth="33.0" layoutX="35.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="83.0" fitWidth="33.0" layoutX="46.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Style/appointment.png" />
          </image>
       </ImageView>
-      <Button fx:id="saveAppointmentBtn" layoutX="484.0" layoutY="631.0" mnemonicParsing="false" onAction="#saveAppointmentHandler" text="Save" />
-      <Button fx:id="cancelBtn" layoutX="549.0" layoutY="631.0" mnemonicParsing="false" onAction="#cancelHandler" text="Cancel" />
    </children>
 </AnchorPane>
