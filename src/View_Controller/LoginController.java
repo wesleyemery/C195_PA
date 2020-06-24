@@ -1,6 +1,7 @@
 package View_Controller;
 
 import Utils.DBConnection;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class  LoginController implements Initializable {
@@ -40,6 +42,9 @@ public class  LoginController implements Initializable {
     private PasswordField passwordField;
 
     @FXML
+    private Button exitButton;
+
+    @FXML
     private Button loginButton;
 
     @FXML
@@ -53,6 +58,19 @@ public class  LoginController implements Initializable {
     static User currentUser;
     private String errorPassword, errorBlank, errorTitle, exitMessage, exitHeader, loginTitle, loginHeader;
 
+    @FXML
+    void exit(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Alert: Exiting the Program");
+        alert.setContentText("Would you like to continue?");
+
+        Optional<ButtonType> button = alert.showAndWait();
+        if (button.get() == ButtonType.OK){
+            Platform.exit();
+        }
+
+    }
 
     @FXML
     void login(ActionEvent event) throws IOException {
@@ -80,39 +98,25 @@ public class  LoginController implements Initializable {
             userNameValid = true;
             passwordValid = true;
             if (userNameValid && passwordValid) {
-                User inputUser = new User(userName, password);
-                currentUser = existingUser(inputUser);
-               /* if (validUser == null) { // login was incorrect or user not found
-                    //logLogin(inputUser.getUsername(), false);
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle(errorTitle);
-                    alert.setHeaderText("Error");
-                    alert.setContentText(errorBlank);
-                    alert.show();*//*
-                } */// login was valid
+                    /*User inputUser = new User(userName, password);
+                    currentUser = existingUser(inputUser);
+
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle(loginTitle);
                     alert.setHeaderText(loginHeader);
-                    alert.showAndWait();
+                    alert.showAndWait();*/
                     // Sets current user for the current session
-                Stage stage;
-                stage = (Stage) loginButton.getScene().getWindow();
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/MainScreen.fxml"));
+                MainScreenController controller = new MainScreenController();
+                Stage stage = (Stage) loginButton.getScene().getWindow();
+
+                loader.setController(controller);
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();
-        }
-
-
-                Stage stage;
-                Parent root;
-                stage = (Stage) loginButton.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/MainScreen.fxml"));
-                root = loader.load();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                }
             }
         }
 

@@ -37,7 +37,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <VBox alignment="CENTER" layoutX="166.0" layoutY="56.0" prefHeight="288.0" prefWidth="269.0" spacing="30.0">
+      <VBox alignment="CENTER" layoutX="165.0" layoutY="126.0" prefHeight="126.0" prefWidth="269.0" spacing="15.0">
          <children>
             <Label fx:id="loginMessageLabel" text="Please Login" textFill="#0d0d0d">
                <font>
@@ -75,8 +75,9 @@
                   </ImageView>
                </children>
             </GridPane>
-            <Button fx:id="loginButton" mnemonicParsing="false" onAction="#login" text="Login" />
          </children>
       </VBox>
+      <Button fx:id="loginButton" layoutX="220.0" layoutY="264.0" mnemonicParsing="false" onAction="#login" text="Login" />
+      <Button fx:id="exitButton" layoutX="299.0" layoutY="264.0" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" prefWidth="49.0" text="Exit" />
    </children>
 </AnchorPane>

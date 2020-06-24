@@ -2,17 +2,24 @@ package View_Controller;
 
 import Model.Appointment;
 import Model.Customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
+import javafx.scene.control.cell.PropertyValueFactory;
+import Utils.*;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
+
+    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
     @FXML
     private TableView<Appointment> appointmentTable;
@@ -104,8 +111,46 @@ public class MainScreenController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void generateCustomerTable(){
+        customerTable.getItems().setAll(queryCustomers());
+        customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
+        customerCityColumn.setCellValueFactory(new PropertyValueFactory<>("customerCity"));
+        customerCountryColumn.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
+        customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
+        /*appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+        appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));*/
+    }
 
+    public static ObservableList<Customer> queryCustomers() {
+        String query = "SELECT customer.customerId, customer.customerName, customer.addressId, address.address, address.postalCode, city.cityId, city.city, country.country, address.phone "
+                + "FROM customer, address, city, country "
+                + "WHERE customer.addressId = address.addressId AND address.cityId = city.cityId AND city.countryId = country.countryId;";
+        try {
+            ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(query);
+            //getInstance().connection().createStatement().executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("customer.customerId");
+                String name = rs.getString("customer.customerName");
+                String address = rs.getString("address.address");
+                int addressId = rs.getInt("customer.addressId");
+                String city = rs.getString("city.city");
+                String country = rs.getString("country.country");
+                String phone = rs.getString("address.phone");
+                allCustomers.add(new Customer(id, name, addressId, address, city, country, phone));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allCustomers;
+    }
+        @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        generateCustomerTable();
     }
 }

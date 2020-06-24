@@ -19,6 +19,11 @@ public class DBConnection {
     private static String userName = "U06Bi7";
     private static String password = "53688714951";
     private static Connection connection = null;
+    private static DBConnection sInstance;
+
+    public DBConnection(Connection connection) {
+        this.connection = connection;
+    }
 
     public static Connection getConnection(){
         try {
@@ -31,7 +36,20 @@ public class DBConnection {
 
         return connection;
     }
+    public Connection connection() {
+        return connection;
+    }
 
+    public static DBConnection getInstance() {
+        if (sInstance == null) {
+            synchronized (DBConnection.class) {
+                if (sInstance == null) {
+                    sInstance = new DBConnection(getConnection());
+                }
+            }
+        }
+        return sInstance;
+    }
     public static void closeConnection() {
         try {
             connection.close();

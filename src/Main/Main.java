@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import Utils.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +31,8 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
 
-
+        /*DataGenerator data = new DataGenerator();
+        data.populateAppointmentsTable();*/
         Connection connection = DBConnection.getConnection(); //Connect to DB
         DBQuery.setStatement(connection);
         Statement statement = DBQuery.getStatement();
@@ -54,7 +55,7 @@ public class Main extends Application {
             System.out.println(statement.getUpdateCount() + " row(s) affected");
         else
             System.out.println("No change!");
-        */
+
 
         String selectStatement = "SELECT * FROM country";
         statement.execute(selectStatement); //Execute statement
@@ -73,7 +74,8 @@ public class Main extends Application {
             //Display Record
             System.out.println(countryID + " | " + countryName + " | " + date + "  " + time + " | " + createdBy + " | " + lastUpdate );
 
-        }
+        }*/
+
         launch(args);
         DBConnection.closeConnection();
     }
