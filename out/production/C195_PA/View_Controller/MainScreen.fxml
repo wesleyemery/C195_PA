@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="791.0" prefWidth="857.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="appointmentTable" layoutX="20.0" layoutY="119.0" prefHeight="200.0" prefWidth="797.0">
+      <TableView fx:id="appointmentTable" layoutX="20.0" layoutY="80.0" prefHeight="200.0" prefWidth="797.0">
         <columns>
           <TableColumn fx:id="appointmentIDColumn" prefWidth="45.0" text="ID" />
           <TableColumn fx:id="appointmentTitleColumn" prefWidth="150.0" text="Title" />
@@ -24,24 +24,24 @@
             <TableColumn fx:id="appointmentCustomerColumn" prefWidth="100.0" text="Customer ID" />
         </columns>
       </TableView>
-      <Label layoutX="78.0" layoutY="79.0" text="Appointments:">
+      <Label layoutX="72.0" layoutY="48.0" text="Appointments:">
          <font>
             <Font name="Arial Black" size="18.0" />
          </font>
       </Label>
-      <ImageView fitHeight="83.0" fitWidth="33.0" layoutX="26.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="83.0" fitWidth="33.0" layoutX="20.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Style/appointment.png" />
          </image>
       </ImageView>
-      <HBox layoutX="20.0" layoutY="340.0" prefHeight="27.0" prefWidth="258.0" spacing="10.0">
+      <HBox layoutX="569.0" layoutY="284.0" prefHeight="27.0" prefWidth="246.0" spacing="10.0">
          <children>
             <Button fx:id="newAppointmentBtn" mnemonicParsing="false" onAction="#newAppointmentHandler" text="New Appointment" />
             <Button fx:id="updateAppointmentBtn" mnemonicParsing="false" onAction="#updateAppointmentHandler" text="Update" />
             <Button fx:id="deleteAppointmentBtn" mnemonicParsing="false" onAction="#deleteAppointmentHandler" text="Delete" />
          </children>
       </HBox>
-      <TableView fx:id="customerTable" layoutX="24.0" layoutY="459.0" prefHeight="200.0" prefWidth="797.0">
+      <TableView fx:id="customerTable" layoutX="14.0" layoutY="342.0" prefHeight="200.0" prefWidth="797.0">
         <columns>
           <TableColumn fx:id="customerIDColumn" prefWidth="45.0" text="ID" />
           <TableColumn fx:id="customerNameColumn" prefWidth="150.0" text="Name" />
@@ -51,37 +51,41 @@
             <TableColumn fx:id="customerPhoneColumn" prefWidth="124.0" text="Phone" />
         </columns>
       </TableView>
-      <ImageView fitHeight="36.0" fitWidth="51.0" layoutX="25.0" layoutY="407.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="36.0" fitWidth="51.0" layoutX="22.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Style/customer.png" />
          </image>
       </ImageView>
-      <Label layoutX="78.0" layoutY="412.0" text="Customers:">
+      <Label layoutX="75.0" layoutY="311.0" text="Customers:">
          <font>
             <Font name="Arial Black" size="18.0" />
          </font>
       </Label>
-      <HBox layoutX="25.0" layoutY="682.0" prefHeight="27.0" prefWidth="270.0" spacing="10.0">
+      <HBox layoutX="584.0" layoutY="550.0" prefHeight="27.0" prefWidth="227.0" spacing="10.0">
          <children>
             <Button fx:id="newCustomerBtn" mnemonicParsing="false" onAction="#newCustomerHandler" text="New Customer" />
             <Button fx:id="updateCustomerBtn" mnemonicParsing="false" onAction="#updateCustomerHandler" text="Update" />
             <Button fx:id="deleteCustomerBtn" mnemonicParsing="false" onAction="#deleteCustomerHandler" text="Delete" />
          </children>
       </HBox>
-      <RadioButton fx:id="radioBtnViewWeek" layoutX="406.0" layoutY="80.0" mnemonicParsing="false" onAction="#viewWeekHandler" text="View Week">
-         <toggleGroup>
-            <ToggleGroup fx:id="viewBy" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="radioBtnViewMonth" layoutX="505.0" layoutY="80.0" mnemonicParsing="false" onAction="#viewMonthHandler" text="View Month">
-         <toggleGroup>
-            <ToggleGroup fx:id="viewBy" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton fx:id="radioBtnViewAll" layoutX="319.0" layoutY="80.0" mnemonicParsing="false" onAction="#viewAllHandler" selected="true" text="View All">
-         <toggleGroup>
-            <ToggleGroup fx:id="viewBy" />
-         </toggleGroup>
-      </RadioButton>
+      <HBox layoutX="549.0" layoutY="52.0" prefHeight="19.0" prefWidth="262.0" spacing="10.0">
+         <children>
+            <RadioButton fx:id="radioBtnViewAll" mnemonicParsing="false" onAction="#viewAllHandler" selected="true" text="View All">
+               <toggleGroup>
+                  <ToggleGroup fx:id="viewBy" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioBtnViewWeek" mnemonicParsing="false" onAction="#viewWeekHandler" text="View Week">
+               <toggleGroup>
+                  <ToggleGroup fx:id="viewBy" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="radioBtnViewMonth" mnemonicParsing="false" onAction="#viewMonthHandler" text="View Month">
+               <toggleGroup>
+                  <ToggleGroup fx:id="viewBy" />
+               </toggleGroup>
+            </RadioButton>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

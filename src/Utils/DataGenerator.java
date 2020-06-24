@@ -60,8 +60,8 @@ public class DataGenerator {
         int result = SqlHelper.getInstance().update(query);
 
         String query1 = "INSERT INTO appointment(customerId, userId, title, description, location, contact, type, url, start, end, createDate, createdBy, lastUpdateBy) VALUES \n" +
-                "('1','1','not needed','not needed','not needed','not needed','Presentation','not needed','2019-01-01 00:00:00','2019-01-01 00:00:00','2019-01-01 00:00:00','test','test'),\n" +
-                "('2','1','not needed','not needed','not needed','not needed','Scrum','not needed','2019-01-01 00:00:00','2019-01-01 00:00:00','2019-01-01 00:00:00','test','test');";
+                "('1','9','not needed','not needed','not needed','not needed','Presentation','not needed','2019-01-01 00:00:00','2019-01-01 00:00:00','2019-01-01 00:00:00','test','test'),\n" +
+                "('2','10','not needed','not needed','not needed','not needed','Scrum','not needed','2019-01-01 00:00:00','2019-01-01 00:00:00','2019-01-01 00:00:00','test','test');";
         result = SqlHelper.getInstance().update(query1);
         return result > 0;
     }
