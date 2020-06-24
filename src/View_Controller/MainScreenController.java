@@ -7,19 +7,27 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import Utils.*;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainScreenController implements Initializable {
 
+
+    //private static int currentUserId = LoginController.getCurrentUser().getUserID();
+    String startMonth = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    String endMonth = LocalDateTime.now().plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
     @FXML
     private TableView<Appointment> appointmentTable;
@@ -82,13 +90,53 @@ public class MainScreenController implements Initializable {
     private Button deleteCustomerBtn;
 
     @FXML
+    private RadioButton radioBtnViewWeek;
+
+    @FXML
+    private ToggleGroup viewBy;
+
+    @FXML
+    private RadioButton radioBtnViewMonth;
+
+    @FXML
+    private RadioButton radioBtnViewAll;
+
+    @FXML
     void deleteAppointmentHandler(ActionEvent event) {
 
     }
 
     @FXML
     void deleteCustomerHandler(ActionEvent event) {
+        /*Customer customerDelete = customerTable.getSelectionModel().getSelectedItem();
+        if(customerDelete != null) {
+            String message = "Are you sure you want to delete " + customerTable.getSelectionModel().getSelectedItem().getCustomerName() + "?";
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("ALERT: Delete Part Selected");
+            alert.setHeaderText("Confirm");
+            alert.setContentText(message);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    PreparedStatement ps = DBConnection.getConnection().prepareStatement("DELETE customer.*, address.* FROM customer, address WHERE customer.customerId = ? AND customer.addressId = address.addressId");
+                    ps.setInt(1, customerDelete.getCustomerId());
+                    ps.execute();
+                    //update customer table
+                    allCustomers.remove(customerDelete);
+                    generateCustomerTable();
+                    customerTable.refresh();
 
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            } else {
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Error");
+                alert.setContentText("Please select Part");
+                alert.showAndWait();
+            }
+
+        }*/
     }
 
     @FXML
@@ -111,7 +159,31 @@ public class MainScreenController implements Initializable {
 
     }
 
-    public void generateCustomerTable(){
+    @FXML
+    void viewAllHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void viewMonthHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void viewWeekHandler(ActionEvent event) {
+
+    }
+    public void generateAppointmentTable(){
+        appointmentTable.getItems().setAll(queryAppointments());
+        appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+        appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+    }
+
+        public void generateCustomerTable(){
         customerTable.getItems().setAll(queryCustomers());
         customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
@@ -119,14 +191,30 @@ public class MainScreenController implements Initializable {
         customerCityColumn.setCellValueFactory(new PropertyValueFactory<>("customerCity"));
         customerCountryColumn.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
         customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
-        /*appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
-        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
-        appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));*/
-    }
 
-    public static ObservableList<Customer> queryCustomers() {
+    }
+    public static ObservableList<Appointment> queryAppointments() {
+        String query = "SELECT appointment.appointmentId, appointment.customerId, appointment.title, appointment.type, appointment.start, appointment.end FROM appointment";
+        try {
+            ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(query);
+            while (rs.next()) {
+                int id = rs.getInt("appointment.appointmentID");
+                int customerId = rs.getInt("appointment.customerID");
+                String title = rs.getString("appointment.title");
+                String type = rs.getString("appointment.type");
+                LocalDateTime start = rs.getTimestamp("appointment.start").toLocalDateTime();
+                LocalDateTime end = rs.getTimestamp("appointment.end").toLocalDateTime();
+                allAppointments.add(new Appointment(id, customerId, title, type, start, end));
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return allAppointments;
+    }
+        public static ObservableList<Customer> queryCustomers() {
         String query = "SELECT customer.customerId, customer.customerName, customer.addressId, address.address, address.postalCode, city.cityId, city.city, country.country, address.phone "
                 + "FROM customer, address, city, country "
                 + "WHERE customer.addressId = address.addressId AND address.cityId = city.cityId AND city.countryId = country.countryId;";
@@ -152,5 +240,6 @@ public class MainScreenController implements Initializable {
         @Override
     public void initialize(URL location, ResourceBundle resources) {
         generateCustomerTable();
+        generateAppointmentTable();
     }
 }

@@ -2,22 +2,22 @@ package Model;
 
 public class City {
 
-    private int cityID;
+    private int cityId;
     private String city;
-    private int countryID;
+    private int countryId;
 
-    public City(int cityID, String city, int countryID) {
-        this.cityID = cityID;
+    public City(int cityId, String city, int countryId) {
+        this.cityId = cityId;
         this.city = city;
-        this.countryID = countryID;
+        this.countryId = countryId;
     }
 
-    public int getCityID() {
-        return cityID;
+    public int getCityId() {
+        return cityId;
     }
 
-    public void setCityID(int cityID) {
-        this.cityID = cityID;
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     public String getCity() {
@@ -28,11 +28,11 @@ public class City {
         this.city = city;
     }
 
-    public int getCountryID() {
-        return countryID;
+    public int getCountryId() {
+        return countryId;
     }
 
-    public void setCountryID(int countryID) {
-        this.countryID = countryID;
+    public void setCountryId(int countryId) {
+        this.countryId = countryId;
     }
 }

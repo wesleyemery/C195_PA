@@ -62,7 +62,7 @@ public class  LoginController implements Initializable {
     void exit(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Alert: Exiting the Program");
+        alert.setHeaderText("Alert: Exiting the Scheduling System");
         alert.setContentText("Would you like to continue?");
 
         Optional<ButtonType> button = alert.showAndWait();
@@ -136,7 +136,7 @@ public class  LoginController implements Initializable {
             if (rs.next()) {
                 //int userId = results.getInt("userId");
                 //System.out.println(ps.getUpdateCount() + " user found.");
-                currentUser.setUserID(rs.getInt("userId"));
+                currentUser.setUserId(rs.getInt("userId"));
                 currentUser.setUserName(rs.getString("userName"));
                 currentUser.setPassword(rs.getString("password"));
             } else { // user not found

@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 public class Appointment {
 
-    private int appointmentID;
-    private int customerID;
-    private int userID;
+    private int appointmentId;
+    private int customerId;
+    private int userId;
     private String title;
     private String description;
     private String location;
@@ -16,10 +16,12 @@ public class Appointment {
     private LocalDateTime start;
     private LocalDateTime end;
 
-    public Appointment(int appointmentID, int customerID, int userID, String title, String description, String location, String contact, String type, String url, LocalDateTime start, LocalDateTime end) {
-        this.appointmentID = appointmentID;
-        this.customerID = customerID;
-        this.userID = userID;
+    public Appointment() {}
+
+    public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, String contact, String type, String url, LocalDateTime start, LocalDateTime end) {
+        this.appointmentId = appointmentId;
+        this.customerId = customerId;
+        this.userId = userId;
         this.title = title;
         this.description = description;
         this.location = location;
@@ -29,29 +31,37 @@ public class Appointment {
         this.start = start;
         this.end = end;
     }
-
-    public int getAppointmentID() {
-        return appointmentID;
+    public Appointment(int appointmentId, int customerId, String title, String type, LocalDateTime start, LocalDateTime end) {
+        this.appointmentId = appointmentId;
+        this.customerId = customerId;
+        this.title = title;
+        this.type = type;
+        this.start = start;
+        this.end = end;
     }
 
-    public void setAppointmentID(int appointmentID) {
-        this.appointmentID = appointmentID;
+    public int getAppointmentId() {
+        return appointmentId;
     }
 
-    public int getCustomerID() {
-        return customerID;
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
     }
 
-    public void setCustomerID(int customerID) {
-        this.customerID = customerID;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public int getUserID() {
-        return userID;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getTitle() {
