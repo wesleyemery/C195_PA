@@ -34,7 +34,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <TableView layoutX="20.0" layoutY="119.0" prefHeight="200.0" prefWidth="797.0">
+      <TableView fx:id="appointmentTable" layoutX="20.0" layoutY="119.0" prefHeight="200.0" prefWidth="797.0">
         <columns>
           <TableColumn fx:id="appointmentIDColumn" prefWidth="45.0" text="ID" />
           <TableColumn fx:id="appointmentTitleColumn" prefWidth="150.0" text="Title" />
@@ -61,7 +61,7 @@
             <Button fx:id="deleteAppointmentBtn" mnemonicParsing="false" onAction="#deleteAppointmentHandler" text="Delete" />
          </children>
       </HBox>
-      <TableView layoutX="24.0" layoutY="459.0" prefHeight="200.0" prefWidth="797.0">
+      <TableView fx:id="customerTable" layoutX="24.0" layoutY="459.0" prefHeight="200.0" prefWidth="797.0">
         <columns>
           <TableColumn fx:id="customerIDColumn" prefWidth="45.0" text="ID" />
           <TableColumn fx:id="customerNameColumn" prefWidth="150.0" text="Name" />

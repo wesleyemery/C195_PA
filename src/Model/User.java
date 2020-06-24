@@ -6,12 +6,22 @@ public class User {
 
     private int userID;
     private String userName;
+    private String password;
     private Boolean active;
 
-    public User(int userID, String userName, Boolean active) {
-        this.userID = userID;
+    public User(String userName, String password) {
         this.userName = userName;
-        this.active = active;
+        this.password = password;
+    }
+
+    public User() {};
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getUserID() {

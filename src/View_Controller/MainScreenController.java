@@ -1,29 +1,39 @@
 package View_Controller;
 
+import Model.Appointment;
+import Model.Customer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
-public class MainScreenController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    @FXML
-    private TableColumn<?, ?> appointmentIDColumn;
-
-    @FXML
-    private TableColumn<?, ?> appointmentTitleColumn;
+public class MainScreenController implements Initializable {
 
     @FXML
-    private TableColumn<?, ?> appointmentTypeColumn;
+    private TableView<Appointment> appointmentTable;
 
     @FXML
-    private TableColumn<?, ?> appointmentStartColumn;
+    private TableColumn<Appointment, Integer> appointmentIDColumn;
 
     @FXML
-    private TableColumn<?, ?> appointmentEndColumn;
+    private TableColumn<Appointment, String> appointmentTitleColumn;
 
     @FXML
-    private TableColumn<?, ?> appointmentCustomerColumn;
+    private TableColumn<Appointment, String> appointmentTypeColumn;
+
+    @FXML
+    private TableColumn<Appointment, String> appointmentStartColumn;
+
+    @FXML
+    private TableColumn<Appointment, String> appointmentEndColumn;
+
+    @FXML
+    private TableColumn<Appointment, Integer> appointmentCustomerColumn;
 
     @FXML
     private Button newAppointmentBtn;
@@ -35,22 +45,25 @@ public class MainScreenController {
     private Button deleteAppointmentBtn;
 
     @FXML
-    private TableColumn<?, ?> customerIDColumn;
+    private TableView<Customer> customerTable;
 
     @FXML
-    private TableColumn<?, ?> customerNameColumn;
+    private TableColumn<Customer, Integer> customerIDColumn;
 
     @FXML
-    private TableColumn<?, ?> customerAddressColumn;
+    private TableColumn<Customer, String> customerNameColumn;
 
     @FXML
-    private TableColumn<?, ?> customerCountryColumn;
+    private TableColumn<Customer, String> customerAddressColumn;
 
     @FXML
-    private TableColumn<?, ?> customerCityColumn;
+    private TableColumn<Customer, String> customerCountryColumn;
 
     @FXML
-    private TableColumn<?, ?> customerPhoneColumn;
+    private TableColumn<Customer, String> customerCityColumn;
+
+    @FXML
+    private TableColumn<Customer, String> customerPhoneColumn;
 
     @FXML
     private Button newCustomerBtn;
@@ -91,4 +104,8 @@ public class MainScreenController {
 
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }
