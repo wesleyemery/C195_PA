@@ -2,6 +2,7 @@ package View_Controller;
 
 import Model.Appointment;
 import Model.Customer;
+import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +35,21 @@ public class MainScreenController implements Initializable {
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
+    @FXML
+    private ComboBox<String> cbReport;
+
+    @FXML
+    private Button btnExecute;
+
+    @FXML
+    void btnExecuteAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cbReportAction(ActionEvent event) {
+
+    }
     @FXML
     private TableView<Appointment> appointmentTable;
 
@@ -112,7 +128,7 @@ public class MainScreenController implements Initializable {
         if(appointmentDelete != null) {
             String message = "Are you sure you want to delete " + appointmentTable.getSelectionModel().getSelectedItem().getTitle() + " appointment?";
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("ALERT: Delete Part Selected");
+            alert.setTitle("ALERT: Delete Selected");
             alert.setHeaderText("Confirm");
             alert.setContentText(message);
             Optional<ButtonType> result = alert.showAndWait();
@@ -132,7 +148,7 @@ public class MainScreenController implements Initializable {
             } else {
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
-                alert.setContentText("Please select Part");
+                alert.setContentText("Please select appointment");
                 alert.showAndWait();
             }
 
@@ -145,7 +161,7 @@ public class MainScreenController implements Initializable {
         if(customerDelete != null) {
             String message = "Are you sure you want to delete " + customerTable.getSelectionModel().getSelectedItem().getCustomerName() + "?";
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("ALERT: Delete Part Selected");
+            alert.setTitle("ALERT: Delete Selected");
             alert.setHeaderText("Confirm");
             alert.setContentText(message);
             Optional<ButtonType> result = alert.showAndWait();
@@ -168,7 +184,7 @@ public class MainScreenController implements Initializable {
             } else {
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Error");
-                alert.setContentText("Please select Part");
+                alert.setContentText("Please select Customer");
                 alert.showAndWait();
             }
 

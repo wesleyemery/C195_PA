@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Utils.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,8 +12,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sun.text.normalizer.Utility;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 
 public class addCustomerController {
@@ -52,6 +58,31 @@ public class addCustomerController {
 
     @FXML
     void saveCustomerHandler(ActionEvent event) {
+        String name = customerNameTextField.getText().trim();
+        String phone = customerPhoneTextField.getText().trim();
+        String address = customerAddressTextField.getText().trim();
+        String city = customerCityTextField.getText().trim();
+        String zipCode = customerPostalCodeTextField.getText().trim();
+
+
+        try{
+
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("INSERT INTO address(address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) " +
+                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);",Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1,address);
+            ps.setString(2, "none");
+            ps.setString(3, city);
+            ps.setString(4, "none");
+            ps.setString(5, phone);
+            ps.setString(6, Utility.Time.now()));
+            ps.setString(7, "app user");
+            ps.setString(8, getTimestamp());
+            ps.setString(9, "app user");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
     private void backToMain(ActionEvent event) {
