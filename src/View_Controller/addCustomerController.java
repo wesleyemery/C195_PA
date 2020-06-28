@@ -58,7 +58,7 @@ public class addCustomerController {
 
     @FXML
     void saveCustomerHandler(ActionEvent event) {
-        String name = customerNameTextField.getText().trim();
+       /* String name = customerNameTextField.getText().trim();
         String phone = customerPhoneTextField.getText().trim();
         String address = customerAddressTextField.getText().trim();
         String city = customerCityTextField.getText().trim();
@@ -81,7 +81,8 @@ public class addCustomerController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        if (customerNameTextField.getText().isEmpty() || customerAddressTextField.getText().isEmpty() || customerCityTextField.getText().isEmpty() || customerPostalCodeTextField.getText().isEmpty() ||  customerPhoneTextField.getText().isEmpty())
+            errorMessage("Something is not filled out");*/
 
 
     }

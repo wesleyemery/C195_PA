@@ -30,6 +30,28 @@ public class DataGenerator {
         return result > 0;
     }
 
+    public boolean addToCityTable(String city){
+        String query = "INSERT INTO city(city, countryId, createDate, createdBy, lastUpdateBy) VALUES \n" +
+                "(" + "'" + city + "'," + "'1', '2020-06-24 00:00:00','admin', 'admin');";
+        int result = SqlHelper.getInstance().update(query);
+        return result > 0;
+    }
+
+    public boolean addToAddressTable(String address, String postalCode, String phoneNumber){
+        String query = "INSERT INTO `address` VALUES \n" +
+                "(4," +"'" + address + "'," + "'',1,'" + postalCode + "'," + "'" + phoneNumber + "'," + "'2019-01-01 00:00:00','admin','2019-01-01 00:00:00','admin');";
+        int result = SqlHelper.getInstance().update(query);
+        return result > 0;
+
+    }
+
+    public boolean addToCustomerTable(String customerName){
+        String query = "INSERT INTO customer(customerName, addressId, active, createDate, createdBy, lastUpdateBy) VALUES \n" +
+                "("+ "'" + customerName + "'," + "1,1,'2019-01-01 00:00:00','test','test');";
+        int result = SqlHelper.getInstance().update(query);
+        return result > 0;
+    }
+
     public boolean populateAddressTable() {
         String query = "INSERT INTO `address` VALUES \n" +
                 "(1,'123 Main','',1,'11111','555-1212','2019-01-01 00:00:00','test','2019-01-01 00:00:00','test'),\n" +

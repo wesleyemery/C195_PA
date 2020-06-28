@@ -32,8 +32,8 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
 
-        /*DataGenerator data = new DataGenerator();
-        data.populateCustomerTable();*/
+        DataGenerator data = new DataGenerator();
+        data.addToCustomerTable("Matty Mac");
         Connection connection = DBConnection.getConnection(); //Connect to DB
         DBQuery.setStatement(connection);
         Statement statement = DBQuery.getStatement();
