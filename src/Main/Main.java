@@ -8,10 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Utils.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,12 +30,45 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
 
+        Connection connection = DBConnection.getConnection(); //Connect to DB
+        String insertStatement = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy) VALUES(?, ?, ?, ?);";
+
+        String countryName;
+        String createDate = "2020-06-29 00:00:00";
+        String createdBy = "admin";
+        String lastUpdateBy = "admin";
+
+        //Get User Input
+        System.out.println("Enter a country: ");
+        Scanner keyboard = new Scanner(System.in);
+        countryName = keyboard.nextLine();
+
+        DBQuery.setPreparedStatement(connection, insertStatement); //Create PreparedStatement
+
+        PreparedStatement ps = DBQuery.getPreparedStatement();
+
+        //Key-value Mapping
+        ps.setString(1,countryName);
+        ps.setString(2, createDate);
+        ps.setString(3, createdBy);
+        ps.setString(4, lastUpdateBy);
+        ps.execute();
+
+        if(ps.getUpdateCount() > 0)
+            System.out.println(ps.getUpdateCount() + " rows impacted!");
+        else
+            System.out.println("No Change!");
+
+
+
+        launch(args);
+        DBConnection.closeConnection();
+        /*DBQuery.setPreparedStatement(connection);
+        Statement statement = DBQuery.getStatement();
+
         DataGenerator data = new DataGenerator();
         data.addToCustomerTable("Matty Mac");
-        Connection connection = DBConnection.getConnection(); //Connect to DB
-        DBQuery.setStatement(connection);
-        Statement statement = DBQuery.getStatement();
-        /*String country, createDate, createdBy, lastUpdateBy;
+        String country, createDate, createdBy, lastUpdateBy;
         Scanner keyboard = new Scanner(System.in);
         System.out.print("Enter a Country: ");
         country = keyboard.nextLine();
@@ -52,7 +83,7 @@ public class Main extends Application {
         String insertStatement = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy)" +
                 "VALUES(" + "'" + country + "','" +  createDate + "','" + createdBy + "','" + lastUpdateBy + "'" +
                 ")";
-*/
+
         //SQL update statement
         String updateStatement = "UPDATE country SET country = 'Japan' WHERE country = 'Canada'";
 
@@ -60,31 +91,31 @@ public class Main extends Application {
         String deleteStatement = "DELETE from country WHERE country = 'Japan'";
 
         //Execute SQL Statement
-        //statement.execute(insertStatement);
-        //statement.execute(updateStatement);
+        statement.execute(insertStatement);
+        statement.execute(updateStatement);
 
         //Confirm rows effected
-        /*if(statement.getUpdateCount() > 0)
+        if(statement.getUpdateCount() > 0)
             System.out.println(statement.getUpdateCount() + " row(s) affected");
         else
-            System.out.println("No change!");*/
+            System.out.println("No change!");
 
 
 
-        //String selectStatement = "SELECT * FROM country WHERE " + country;
+        String selectStatement = "SELECT * FROM country WHERE " + country;
 
-        /*try {
+        try {
             statement.execute(insertStatement); //Execute statement
 
             if (statement.getUpdateCount() > 0)
                 System.out.println(statement.getUpdateCount() + " row(s) impacted!");
             else
-                System.out.println("No change!");*/
+                System.out.println("No change!");
 
             //ResultSet rs = statement.getResultSet();
 
             // Forward Scroll ResultSet
-            /*while (rs.next()) {
+            while (rs.next()) {
                 int countryID = rs.getInt("countryId");
                 String countryName = rs.getString("country");
                 LocalDate date = rs.getDate("createDate").toLocalDate();
@@ -95,11 +126,10 @@ public class Main extends Application {
                 //Display Record
                 System.out.println(countryID + " | " + countryName + " | " + date + "  " + time + " | " + createdBy + " | " + lastUpdate);
 
-            }*/
-       /* } catch (SQLException e) {
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }*/
-        launch(args);
-        DBConnection.closeConnection();
+
     }
 }

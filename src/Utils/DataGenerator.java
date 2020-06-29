@@ -11,7 +11,7 @@ public class DataGenerator {
     }
 
     public boolean populateCountryTable() {
-        String query = "INSERT INTO country VALUES(country, createDate, createdBy, lastUpdateBy) \n" +
+        String query = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy) VALUES \n" +
                 "('US','2020-06-24 00:00:00','admin', 'admin'),\n" +
                 "('Canada','2020-06-24 00:00:00','admin', 'admin'),\n" +
                 "('Brazil','2020-06-24 00:00:00','admin', 'admin');";

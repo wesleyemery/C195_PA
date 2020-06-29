@@ -58,33 +58,23 @@ public class addCustomerController {
 
     @FXML
     void saveCustomerHandler(ActionEvent event) {
-       /* String name = customerNameTextField.getText().trim();
+        String name = customerNameTextField.getText().trim();
         String phone = customerPhoneTextField.getText().trim();
         String address = customerAddressTextField.getText().trim();
         String city = customerCityTextField.getText().trim();
         String zipCode = customerPostalCodeTextField.getText().trim();
 
 
-        try{
 
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement("INSERT INTO address(address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) " +
-                    "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);",Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1,address);
-            ps.setString(2, "none");
-            ps.setString(3, city);
-            ps.setString(4, "none");
-            ps.setString(5, phone);
-            ps.setString(6, Utility.Time.now()));
-            ps.setString(7, "app user");
-            ps.setString(8, getTimestamp());
-            ps.setString(9, "app user");
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if (customerNameTextField.getText().isEmpty() || customerAddressTextField.getText().isEmpty() || customerCityTextField.getText().isEmpty() || customerPostalCodeTextField.getText().isEmpty() ||  customerPhoneTextField.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please enter data in all fields!");
+            alert.showAndWait();
+        }else {
+
+
         }
-        if (customerNameTextField.getText().isEmpty() || customerAddressTextField.getText().isEmpty() || customerCityTextField.getText().isEmpty() || customerPostalCodeTextField.getText().isEmpty() ||  customerPhoneTextField.getText().isEmpty())
-            errorMessage("Something is not filled out");*/
-
-
     }
     private void backToMain(ActionEvent event) {
         try {
