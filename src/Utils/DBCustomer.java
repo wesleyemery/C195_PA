@@ -5,6 +5,29 @@ import javafx.scene.control.Alert;
 import java.sql.*;
 
 public class DBCustomer {
+
+    public static Integer getCustomerId(String customerName, Integer addressId) {
+        try{
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT customerId FROM customer WHERE customerName = ? AND addressId = ?;");
+            ps.setString(1, customerName);
+            ps.setInt(2, addressId);
+
+            ResultSet rs = ps.executeQuery();
+
+            Integer id = null;
+
+            if(rs.next()) {
+                id = rs.getInt("customerId");
+            }
+
+            rs.close();
+            return id;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public static Integer addToCustomerTable(String customerName, Integer addressId, Integer active) {
 
         try {
@@ -43,7 +66,42 @@ public class DBCustomer {
         }
     }
 
+    public static Integer updateCustomerTable(Integer customerId, String customerName, Integer addressId, Integer active) {
 
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("UPDATE customer SET customerName = ?, "
+                    +"addressId = ?, "
+                    +"active = ?, "
+                    +"createDate = ?, "
+                    +"createdBy = ? "
+                    +"WHERE "
+                    +"customerId = ?");
+            ps.setString(1, customerName);
+            ps.setInt(2, addressId);
+            ps.setInt(3, active);
+            ps.setTimestamp(4, now());
+            ps.setString(5, "admin");
+            ps.setInt(6, customerId);
+
+            ps.executeUpdate();
+
+
+            if (ps.getUpdateCount() == 0)
+                System.out.println("Customer creation failed");
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setContentText("Added to customer table successfully");
+                alert.showAndWait();
+            }
+
+            ps.close();
+            return customerId;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public static Timestamp now() {
         return new java.sql.Timestamp(System.currentTimeMillis());
     }

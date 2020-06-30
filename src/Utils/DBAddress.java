@@ -19,7 +19,7 @@ public class DBAddress {
             Integer id = null;
 
             if(rs.next()) {
-                id = rs.getInt("cityId");
+                id = rs.getInt("addressId");
             }
 
             rs.close();

@@ -1,22 +1,17 @@
 package Model;
 
-public class City {
+public class City extends Country{
 
-    private int cityId;
+    private Integer cityId;
     private String city;
-    private int countryId;
+    private Integer countryId;
+    private String country;
 
-    public City(int cityId, String city, int countryId) {
-        this.cityId = cityId;
-        this.city = city;
-        this.countryId = countryId;
-    }
-
-    public int getCityId() {
+    public Integer getCityId() {
         return cityId;
     }
 
-    public void setCityId(int cityId) {
+    public void setCityId(Integer cityId) {
         this.cityId = cityId;
     }
 
@@ -28,11 +23,19 @@ public class City {
         this.city = city;
     }
 
-    public int getCountryId() {
+    public Integer getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(int countryId) {
+    public void setCountryId(Integer countryId) {
         this.countryId = countryId;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 }

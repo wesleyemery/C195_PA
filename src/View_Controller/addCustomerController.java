@@ -4,6 +4,7 @@ import Utils.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,13 +13,15 @@ import javafx.stage.Stage;
 import sun.text.normalizer.Utility;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class addCustomerController {
+public class addCustomerController implements Initializable {
     @FXML
     private TextField customerNameTextField;
 
@@ -121,5 +124,10 @@ public class addCustomerController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }

@@ -1,28 +1,20 @@
 package Model;
 
-public class Address {
+public class Address extends City{
 
-    private int addressID;
+    private Integer addressID;
     private String address;
     private String address2;
-    private int cityID;
+    private Integer cityID;
     private String postalCode;
     private String phone;
 
-    public Address(int addressID, String address, String address2, int cityID, String postalCode, String phone) {
-        this.addressID = addressID;
-        this.address = address;
-        this.address2 = address2;
-        this.cityID = cityID;
-        this.postalCode = postalCode;
-        this.phone = phone;
-    }
 
-    public int getAddressID() {
+    public Integer getAddressID() {
         return addressID;
     }
 
-    public void setAddressID(int addressID) {
+    public void setAddressID(Integer addressID) {
         this.addressID = addressID;
     }
 
@@ -42,11 +34,11 @@ public class Address {
         this.address2 = address2;
     }
 
-    public int getCityID() {
+    public Integer getCityID() {
         return cityID;
     }
 
-    public void setCityID(int cityID) {
+    public void setCityID(Integer cityID) {
         this.cityID = cityID;
     }
 

@@ -1,14 +1,16 @@
 package Model;
 
-public class Customer {
+public class Customer extends Address{
 
-    private int customerId;
-    private String customerName, customerAddress, customerCity, customerCountry, customerPhone;
-    private int addressId;
-    private Boolean active;
+    private Integer customerId;
+    private String customerName, customerAddress, customerCity, customerCountry, customerPhone, postalCode;;
+    private Integer addressId;
+    private Integer active;
 
-    public Customer(){}
-    public Customer(int customerId, String customerName, int addressId, String customerAddress, String customerCity, String customerCountry, String customerPhone) {
+    public Customer() {}
+
+
+    public Customer(Integer customerId, String customerName, Integer addressId, String customerAddress, String customerCity, String customerCountry, String customerPhone) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.addressId = addressId;
@@ -18,11 +20,13 @@ public class Customer {
         this.customerPhone = customerPhone;
     }
 
-    public int getCustomerId() {
+
+
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 
@@ -32,6 +36,22 @@ public class Customer {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public Integer getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(Integer addressId) {
+        this.addressId = addressId;
+    }
+
+    public Integer getActive() {
+        return active;
+    }
+
+    public void setActive(Integer active) {
+        this.active = active;
     }
 
     public String getCustomerAddress() {
@@ -66,19 +86,13 @@ public class Customer {
         this.customerPhone = customerPhone;
     }
 
-    public int getAddressId() {
-        return addressId;
+    @Override
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
+    @Override
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 }
