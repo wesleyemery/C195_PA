@@ -27,7 +27,7 @@ public class DBCountry {
         }
     }
 
-    public Integer addToCountryTable(String country) {
+    public static Integer addToCountryTable(String country) {
         try {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement("INSERT INTO country(country, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES" +
                     "(?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);

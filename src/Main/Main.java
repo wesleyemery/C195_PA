@@ -31,7 +31,7 @@ public class Main extends Application {
     public static void main(String[] args) throws SQLException {
 
         Connection connection = DBConnection.getConnection(); //Connect to DB
-        String insertStatement = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy) VALUES(?, ?, ?, ?);";
+        /*String insertStatement = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy) VALUES(?, ?, ?, ?);";
 
         String countryName;
         String createDate = "2020-06-29 00:00:00";
@@ -57,7 +57,7 @@ public class Main extends Application {
         if(ps.getUpdateCount() > 0)
             System.out.println(ps.getUpdateCount() + " rows impacted!");
         else
-            System.out.println("No Change!");
+            System.out.println("No Change!");*/
 
 
 

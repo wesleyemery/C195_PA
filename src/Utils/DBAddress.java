@@ -8,14 +8,35 @@ import java.sql.SQLException;
 import java.sql.*;
 
 public class DBAddress {
+    public static Integer getAddressId(String address, Integer cityId) {
+        try{
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT addressId FROM address WHERE address = ? AND cityId = ?;");
+            ps.setString(1, address);
+            ps.setInt(2, cityId);
 
-    public Integer addToAddressTable(String address, Integer cityId, String postalCode, String phoneNumber){
+            ResultSet rs = ps.executeQuery();
+
+            Integer id = null;
+
+            if(rs.next()) {
+                id = rs.getInt("cityId");
+            }
+
+            rs.close();
+            return id;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public static Integer addToAddressTable(String address, Integer cityId, String postalCode, String phoneNumber){
 
         try{
             PreparedStatement ps = DBConnection.getConnection().prepareStatement("INSERT INTO address(address, address2, cityId, postalCode, phone, createDate, createdBy, lastUpdate, lastUpdateBy) " +
                     "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,address);
-            ps.setString(2, "");
+            ps.setString(2, "None");
             ps.setInt(3, cityId);
             ps.setString(4, postalCode);
             ps.setString(5, phoneNumber);

@@ -1,16 +1,13 @@
 package View_Controller;
 
-import Utils.DBConnection;
+import Utils.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sun.text.normalizer.Utility;
 
@@ -44,6 +41,11 @@ public class addCustomerController {
     private Button cancelBtn;
 
     @FXML
+    private TextField customerCountryTextField;
+
+    @FXML
+    private CheckBox customerActiveCheckBox;
+    @FXML
     void cancelHandler(ActionEvent event) {
         String message = "Are you sure you want to cancel?";
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -62,7 +64,9 @@ public class addCustomerController {
         String phone = customerPhoneTextField.getText().trim();
         String address = customerAddressTextField.getText().trim();
         String city = customerCityTextField.getText().trim();
+        String country = customerCountryTextField.getText().trim();
         String zipCode = customerPostalCodeTextField.getText().trim();
+        Integer active = customerActiveCheckBox.isSelected()?1:0;
 
 
 
@@ -72,6 +76,31 @@ public class addCustomerController {
             alert.setContentText("Please enter data in all fields!");
             alert.showAndWait();
         }else {
+            Integer countryId = DBCountry.getCountryId(country);
+            if ( countryId == null )
+                countryId = DBCountry.addToCountryTable(country);
+
+
+            Integer cityId = DBCity.getCityId(city, countryId);
+            //System.out.println("Cityid = " + cityId);
+
+            if ( cityId == null ){
+                cityId = DBCity.addToCityTable(city, countryId);
+            }
+
+            Integer addressId = DBAddress.getAddressId(address, cityId);
+
+            if (addressId == null) {
+                addressId = DBAddress.addToAddressTable(address, cityId, zipCode, phone);
+            }
+
+            Integer customerId = DBCustomer.addToCustomerTable(name, addressId, active);
+
+            if (customerId == null) {
+                customerId = DBCustomer.addToCustomerTable(name, addressId, active);
+            }
+
+            backToMain(event);
 
 
         }
