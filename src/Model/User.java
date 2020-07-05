@@ -4,7 +4,7 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class User {
 
-    private int userId;
+    private Integer userId;
     private String userName;
     private String password;
     private Boolean active;
@@ -24,7 +24,7 @@ public class User {
         this.password = password;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 

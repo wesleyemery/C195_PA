@@ -10,7 +10,7 @@ public class Customer extends Address{
     public Customer() {}
 
 
-    public Customer(Integer customerId, String customerName, Integer addressId, String customerAddress, String customerCity, String customerCountry, String customerPhone) {
+    public Customer(Integer customerId, String customerName, Integer addressId, String customerAddress, String postalCode, String customerCity, String customerCountry, String customerPhone) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.addressId = addressId;
@@ -18,6 +18,7 @@ public class Customer extends Address{
         this.customerCity = customerCity;
         this.customerCountry = customerCountry;
         this.customerPhone = customerPhone;
+        this.postalCode = postalCode;
     }
 
 
@@ -86,13 +87,11 @@ public class Customer extends Address{
         this.customerPhone = customerPhone;
     }
 
-    @Override
-    public String getPostalCode() {
+    public String getCustomerPostalCode() {
         return postalCode;
     }
 
-    @Override
-    public void setPostalCode(String postalCode) {
+    public void setCustomerPostalCode(String postalCode) {
         this.postalCode = postalCode;
     }
 }

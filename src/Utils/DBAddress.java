@@ -10,7 +10,7 @@ import java.sql.*;
 public class DBAddress {
     public static Integer getAddressId(String address, Integer cityId) {
         try{
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT addressId FROM address WHERE address = ? AND cityId = ?;");
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT addressId FROM address WHERE address = ? AND cityId = ?");
             ps.setString(1, address);
             ps.setInt(2, cityId);
 

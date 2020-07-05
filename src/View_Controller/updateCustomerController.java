@@ -90,7 +90,7 @@ public class updateCustomerController implements Initializable {
 
             if(!(country == customer.getCountry())){
                 countryId = DBCountry.getCountryId(country);
-                if (!(countryId != null))
+                if (countryId != null)
                     countryId = DBCountry.addToCountryTable(country);
             }
 
@@ -99,16 +99,17 @@ public class updateCustomerController implements Initializable {
 
             if(!(city == customer.getCity())){
                 cityId = DBCity.getCityId(city, countryId);
-                if (!(cityId != null))
+                if (cityId != null)
                     cityId = DBCity.addToCityTable(city, cityId);
             }
 
             //Address Table
             Integer addressId = customer.getAddressId();
 
-            if (!(city == customer.getCity()) || address == customer.getAddress() || phone != customer.getPhone() || zipCode != customer.getPostalCode())  {
-                addressId = DBAddress.getAddressId(address, cityId);
-                if (!(addressId != null))
+            if (city != customer.getCity() || address != customer.getAddress() || phone != customer.getPhone() || zipCode != customer.getPostalCode())  {
+                if (cityId != null)
+                    addressId = DBAddress.getAddressId(address, cityId);
+                if (addressId != null)
                     addressId = DBAddress.addToAddressTable(address, cityId, zipCode, phone);
             }
 
@@ -117,7 +118,7 @@ public class updateCustomerController implements Initializable {
 
             if(!(name == customer.getCustomerName() || addressId == customer.getAddressID() || active == customer.getActive())) {
                 customerId = DBCustomer.getCustomerId(name, addressId);
-                if (!(customerId != null))
+                if (customerId != null)
                     customerId = DBCustomer.updateCustomerTable(customerId, name, addressId, active);
             }
             backToMain(event);
@@ -143,19 +144,17 @@ public class updateCustomerController implements Initializable {
         }
     }
 
-    public void populateCustomerFields(Customer customer){
-        customer = customer;
-        /*address = address;
-        city = city;
-        country = country;*/
+    public void populateCustomerFields(Customer selectedCustomer){
+        this.customer = selectedCustomer;
 
-        customerNameTextField.setText(customer.getCustomerName());
-        /*customerPhoneTextField.setText(address.getPhone());
-        customerAddressTextField.setText((address.getAddress()));
-        customerPostalCodeTextField.setText(address.getPostalCode());
-        customerCityTextField.setText(city.getCity());
-        customerCountryTextField.setText(country.getCountry());*/
-       // customerActiveCheckBox.setSelected(customer.getActive() == 1);
+
+        customerNameTextField.setText(selectedCustomer.getCustomerName());
+        customerPhoneTextField.setText(selectedCustomer.getCustomerPhone());
+        customerAddressTextField.setText((selectedCustomer.getCustomerAddress()));
+        customerPostalCodeTextField.setText(selectedCustomer.getCustomerPostalCode());
+        customerCityTextField.setText(selectedCustomer.getCustomerCity());
+        customerCountryTextField.setText(selectedCustomer.getCustomerCountry());
+        //customerActiveCheckBox.setSelected(selectedCustomer.getActive() == 1);
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

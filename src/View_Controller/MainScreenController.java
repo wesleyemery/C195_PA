@@ -1,5 +1,6 @@
 package View_Controller;
 
+import Model.Address;
 import Model.Appointment;
 import Model.Customer;
 import Model.User;
@@ -236,6 +237,7 @@ public class MainScreenController implements Initializable {
     @FXML
     void updateCustomerHandler(ActionEvent event) throws IOException {
         Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+        //Address address = address.getAddress();
         if (!(selectedCustomer == null)){
             try{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/updateCustomerScreen.fxml"));
@@ -318,7 +320,7 @@ public class MainScreenController implements Initializable {
         return allAppointments;
     }
         public static ObservableList<Customer> queryCustomers() {
-        String query = "SELECT customer.customerId, customer.customerName, customer.addressId, address.address, address.postalCode, city.cityId, city.city, country.country, address.phone "
+        String query = "SELECT customer.customerId, customer.customerName, address.addressId, address.address, address.postalCode, city.cityId, city.city, country.country, address.phone "
                 + "FROM customer, address, city, country "
                 + "WHERE customer.addressId = address.addressId AND address.cityId = city.cityId AND city.countryId = country.countryId;";
         try {
@@ -328,11 +330,12 @@ public class MainScreenController implements Initializable {
                 Integer id = rs.getInt("customer.customerId");
                 String name = rs.getString("customer.customerName");
                 String address = rs.getString("address.address");
-                Integer addressId = rs.getInt("customer.addressId");
+                Integer addressId = rs.getInt("address.addressId");
+                String postalCode = rs.getString("address.postalCode");
                 String city = rs.getString("city.city");
                 String country = rs.getString("country.country");
                 String phone = rs.getString("address.phone");
-                allCustomers.add(new Customer(id, name, addressId, address, city, country, phone));
+                allCustomers.add(new Customer(id, name, addressId, address, postalCode, city, country, phone));
             }
         } catch (SQLException e) {
             e.printStackTrace();
