@@ -66,7 +66,7 @@ public class DBCustomer {
         }
     }
 
-    public static Integer updateCustomerTable(Integer customerId, String customerName, Integer addressId, Integer active) {
+    public static Integer updateToCustomerTable(Integer customerId, String customerName, Integer addressId, Integer active) {
 
         try {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement("UPDATE customer SET customerName = ?, "

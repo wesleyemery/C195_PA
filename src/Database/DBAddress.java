@@ -1,6 +1,7 @@
 package Utils;
 
 
+import Model.Address;
 import javafx.scene.control.Alert;
 
 import java.sql.PreparedStatement;
@@ -69,6 +70,24 @@ public class DBAddress {
             return null;
         }
 
+    }
+
+    public static boolean updateToAddressTable(Address address) {
+        String query = "update address set address=?, address2=?, cityId=?, postalCode=?, phone=? " +
+                "where addressId=?";
+        try {
+            PreparedStatement ps = DBConnection.getInstance().connection().prepareStatement(query);
+            ps.setString(1, address.getAddress());
+            ps.setString(2, address.getAddress2());
+            ps.setInt(3, address.getCityId());
+            ps.setString(4, address.getPostalCode());
+            ps.setString(5, address.getPhone());
+            ps.setInt(6, address.getAddressID());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static Timestamp now() {

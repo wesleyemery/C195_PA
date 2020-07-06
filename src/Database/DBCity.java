@@ -13,14 +13,14 @@ public class DBCity {
 
             ResultSet rs = ps.executeQuery();
 
-            Integer id = null;
+            Integer cityId = null;
 
             if(rs.next()) {
-                id = rs.getInt("cityId");
+                cityId = rs.getInt("cityId");
             }
 
             rs.close();
-            return id;
+            return cityId;
 
         } catch (SQLException e) {
             e.printStackTrace();

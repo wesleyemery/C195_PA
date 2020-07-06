@@ -1,10 +1,10 @@
 package View_Controller;
 
 import Model.*;
-import Utils.DBAddress;
-import Utils.DBCity;
-import Utils.DBCountry;
-import Utils.DBCustomer;
+import Database.DBAddress;
+import Database.DBCity;
+import Database.DBCountry;
+import Database.DBCustomer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -88,9 +88,9 @@ public class updateCustomerController implements Initializable {
             //Country Table
             Integer countryId = customer.getCountryId();
 
-            if(!(country == customer.getCountry())){
+            if(country != customer.getCountry()){
                 countryId = DBCountry.getCountryId(country);
-                if (countryId != null)
+                if (countryId == null)
                     countryId = DBCountry.addToCountryTable(country);
             }
 
@@ -99,27 +99,32 @@ public class updateCustomerController implements Initializable {
 
             if(!(city == customer.getCity())){
                 cityId = DBCity.getCityId(city, countryId);
-                if (cityId != null)
-                    cityId = DBCity.addToCityTable(city, cityId);
+                if (cityId == null){
+                    System.out.println("test");
+                    cityId = DBCity.addToCityTable(city, countryId);}
             }
 
             //Address Table
             Integer addressId = customer.getAddressId();
 
+
             if (city != customer.getCity() || address != customer.getAddress() || phone != customer.getPhone() || zipCode != customer.getPostalCode())  {
-                if (cityId != null)
-                    addressId = DBAddress.getAddressId(address, cityId);
-                if (addressId != null)
+                /*if (cityId != null)
+                    addressId = DBAddress.getAddressId(address, cityId);*/
+                if (addressId == null){
                     addressId = DBAddress.addToAddressTable(address, cityId, zipCode, phone);
+                    //addressId = DBAddress.updateToAddressTable(address);
+                    }
             }
 
             //Customer Table
             Integer customerId = customer.getCustomerId();
 
             if(!(name == customer.getCustomerName() || addressId == customer.getAddressID() || active == customer.getActive())) {
-                customerId = DBCustomer.getCustomerId(name, addressId);
-                if (customerId != null)
-                    customerId = DBCustomer.updateCustomerTable(customerId, name, addressId, active);
+                //customerId = DBCustomer.getCustomerId(name, addressId);
+                //if (customerId != null)
+
+                    customerId = DBCustomer.updateToCustomerTable(customerId, name, addressId, active);
             }
             backToMain(event);
 
