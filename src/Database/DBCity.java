@@ -1,4 +1,4 @@
-package Utils;
+package Database;
 
 import javafx.scene.control.Alert;
 
@@ -7,20 +7,20 @@ import java.sql.*;
 public class DBCity {
     public static Integer getCityId(String city, Integer countryId) {
         try{
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT cityId FROM city WHERE city = ? AND countryId = ?;");
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT cityId FROM city WHERE city = ? AND countryId = ?");
             ps.setString(1, city);
             ps.setInt(2, countryId);
 
             ResultSet rs = ps.executeQuery();
 
-            Integer cityId = null;
+            Integer id = null;
 
             if(rs.next()) {
-                cityId = rs.getInt("cityId");
+                id = rs.getInt("cityId");
             }
 
             rs.close();
-            return cityId;
+            return id;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -34,9 +34,9 @@ public class DBCity {
                     "(?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, city);
             ps.setInt(2, countryId);
-            ps.setTimestamp(3, now());
+            ps.setString(3, Utils.Time.dateTime());
             ps.setString(4, "admin");
-            ps.setTimestamp(5, now());
+            ps.setString(5, Utils.Time.dateTime());
             ps.setString(6, "admin");
 
             ps.executeUpdate();
@@ -65,7 +65,31 @@ public class DBCity {
         }
     }
 
-    public static Timestamp now() {
-        return new java.sql.Timestamp(System.currentTimeMillis());
+    public static Integer updateToCityTable(String city, Integer countryId, Integer cityId) {
+        String query = "update city set city=?, countryId=? " +
+                "where cityId=?";
+        try {
+            PreparedStatement ps = DBConnection.getInstance().connection().prepareStatement(query);
+            ps.setString(1, city);
+            ps.setInt(2, countryId);
+            ps.setInt(3, cityId);
+
+            ps.executeUpdate();
+
+            if (ps.getUpdateCount() == 0)
+                System.out.println("Address creation failed");
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setContentText("Updated to address table successfully");
+                alert.showAndWait();
+            }
+            ps.close();
+            return cityId;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
 }

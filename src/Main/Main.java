@@ -1,25 +1,24 @@
 package Main;
 
-import Utils.DBConnection;
-import Utils.DBQuery;
+import Database.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import Utils.*;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Scanner;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.TimeZone;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/View_Controller/LoginView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/LoginView.fxml"));
         primaryStage.setTitle("Scheduling System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
@@ -30,7 +29,22 @@ public class Main extends Application {
 
     public static void main(String[] args) throws SQLException {
 
+        /*String time = Utils.Time.dateTime();
+        System.out.println("Date: " + time);
+
+        ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("America")).forEach(System.out::println);
+        LocalDate parisDate = LocalDate.of(2019, 10, 26);
+        LocalTime parisTime = LocalTime.of(01,00);
+        ZoneId parisZoneId = ZoneId.of("Europe/Paris");
+        ZonedDateTime parisZDT = ZonedDateTime.of(parisDate, parisTime, parisZoneId);
+        ZoneId localZoneID = ZoneId.of(TimeZone.getDefault().getID());*/
+
+
         Connection connection = DBConnection.getConnection(); //Connect to DB
+        launch(args);
+        DBConnection.closeConnection();
+
+
         /*String insertStatement = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy) VALUES(?, ?, ?, ?);";
 
         String countryName;
@@ -61,8 +75,7 @@ public class Main extends Application {
 
 
 
-        launch(args);
-        DBConnection.closeConnection();
+
         /*DBQuery.setPreparedStatement(connection);
         Statement statement = DBQuery.getStatement();
 

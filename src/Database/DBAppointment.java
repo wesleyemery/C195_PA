@@ -1,4 +1,4 @@
-package Utils;
+package Database;
 
 import Model.Customer;
 import Model.User;
@@ -87,9 +87,7 @@ public class DBAppointment {
         }
     }*/
 
-    public static Timestamp now() {
-        return new java.sql.Timestamp(System.currentTimeMillis());
-    }
+
 
 
 }

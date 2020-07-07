@@ -1,4 +1,4 @@
-package View_Controller;
+package Controller;
 
 import Database.DBAddress;
 import Database.DBCity;

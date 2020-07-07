@@ -1,4 +1,4 @@
-package View_Controller;
+package Controller;
 
 import Database.DBConnection;
 import Model.Appointment;
@@ -192,7 +192,7 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void newAppointmentHandler(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/addAppointmentScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/addAppointmentScreen.fxml"));
         addAppointmentController controller = new addAppointmentController();
         Stage stage = (Stage) newAppointmentBtn.getScene().getWindow();
 
@@ -205,7 +205,7 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void newCustomerHandler(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/addCustomerScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/addCustomerScreen.fxml"));
         addCustomerController controller = new addCustomerController();
         Stage stage = (Stage) newCustomerBtn.getScene().getWindow();
 
@@ -219,7 +219,7 @@ public class MainScreenController implements Initializable {
 
     @FXML
     void updateAppointmentHandler(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/updateAppointmentScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/updateAppointmentScreen.fxml"));
         updateAppointmentController controller = new updateAppointmentController();
         Stage stage = (Stage) updateAppointmentBtn.getScene().getWindow();
 
@@ -236,7 +236,7 @@ public class MainScreenController implements Initializable {
         //Address address = address.getAddress();
         if (!(selectedCustomer == null)){
             try{
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/updateCustomerScreen.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/updateCustomerScreen.fxml"));
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(loader.load()));
                 updateCustomerController controller = loader.getController();

@@ -1,7 +1,8 @@
 package Utils;
 
+import Database.DBConnection;
+
 import java.sql.SQLException;
-import Utils.DBConnection;
 
 public class SqlHelper {
 

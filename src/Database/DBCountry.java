@@ -1,4 +1,4 @@
-package Utils;
+package Database;
 
 import javafx.scene.control.Alert;
 
@@ -32,9 +32,9 @@ public class DBCountry {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement("INSERT INTO country(country, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES" +
                     "(?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, country);
-            ps.setTimestamp(2, now());
+            ps.setString(2, Utils.Time.dateTime());
             ps.setString(3, "admin");
-            ps.setTimestamp(4, now());
+            ps.setString(4, Utils.Time.dateTime());
             ps.setString(5, "admin");
 
             ps.executeUpdate();
@@ -63,8 +63,6 @@ public class DBCountry {
         }
     }
 
-    public static Timestamp now() {
-        return new java.sql.Timestamp(System.currentTimeMillis());
-    }
+
 
 }

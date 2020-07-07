@@ -1,7 +1,10 @@
-package View_Controller;
+package Controller;
 
 import Database.DBConnection;
+import Database.DBUser;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -74,7 +77,7 @@ public class  LoginController implements Initializable {
     void login(ActionEvent event) throws IOException {
         String userName = userNameField.getText();
         String password = passwordField.getText();
-        boolean userNameValid, passwordValid;
+        boolean userNameValid = false, passwordValid = false;
 
         //validation
         if (userName.isEmpty() || userName==null) {
@@ -93,8 +96,20 @@ public class  LoginController implements Initializable {
             alert.show();
             passwordValid = false;
         } else{
-            userNameValid = true;
-            passwordValid = true;
+            ObservableList<User> allUsers =  FXCollections.observableArrayList();
+            allUsers = DBUser.queryUsers();
+            for (User u:allUsers) {
+                if(u.getUserName().equals(userName)){
+                    userNameValid = true;
+                    if(u.getPassword().equals(password)){
+                        passwordValid = true;
+                        break;
+                    }
+                }
+
+            }
+
+
             if (userNameValid && passwordValid) {
                     /*User inputUser = new User(userName, password);
                     currentUser = existingUser(inputUser);
@@ -105,7 +120,7 @@ public class  LoginController implements Initializable {
                     alert.showAndWait();*/
                     // Sets current user for the current session
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View_Controller/MainScreen.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainScreen.fxml"));
                 MainScreenController controller = new MainScreenController();
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
@@ -115,6 +130,20 @@ public class  LoginController implements Initializable {
                 stage.setScene(scene);
                 stage.show();
                 }
+            else if(userNameValid == false){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(errorTitle);
+                alert.setHeaderText("Error");
+                alert.setContentText("Username is invalid");
+                alert.show();
+            }else if(userNameValid && passwordValid == false){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(errorTitle);
+                alert.setHeaderText("Error");
+                alert.setContentText("Password is invalid");
+                alert.show();
+            }
+
             }
         }
 

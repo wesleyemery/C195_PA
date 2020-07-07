@@ -1,7 +1,8 @@
-package Utils;
+package Database;
 
 
 import Model.Address;
+import Model.Customer;
 import javafx.scene.control.Alert;
 
 import java.sql.PreparedStatement;
@@ -31,6 +32,28 @@ public class DBAddress {
             return null;
         }
     }
+
+    public static Integer getAddressIdFromCustomer(String name) {
+        try{
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT addressId FROM address WHERE customerName=?");
+            ps.setString(1, name);
+
+            ResultSet rs = ps.executeQuery();
+
+            Integer id = null;
+
+            if(rs.next()) {
+                id = rs.getInt("addressId");
+            }
+
+            rs.close();
+            return id;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public static Integer addToAddressTable(String address, Integer cityId, String postalCode, String phoneNumber){
 
         try{
@@ -41,9 +64,9 @@ public class DBAddress {
             ps.setInt(3, cityId);
             ps.setString(4, postalCode);
             ps.setString(5, phoneNumber);
-            ps.setTimestamp(6, now());
+            ps.setString(6, Utils.Time.dateTime());
             ps.setString(7, "admin");
-            ps.setTimestamp(8, now());
+            ps.setString(8, Utils.Time.dateTime());
             ps.setString(9, "admin");
 
             ps.executeUpdate();
@@ -72,25 +95,34 @@ public class DBAddress {
 
     }
 
-    public static boolean updateToAddressTable(Address address) {
-        String query = "update address set address=?, address2=?, cityId=?, postalCode=?, phone=? " +
+    public static Integer updateToAddressTable(Integer addressId, String address, Integer cityId, String postalCode, String phoneNumber) {
+        String query = "update address set address=?,  cityId=?, postalCode=?, phone=? " +
                 "where addressId=?";
         try {
             PreparedStatement ps = DBConnection.getInstance().connection().prepareStatement(query);
-            ps.setString(1, address.getAddress());
-            ps.setString(2, address.getAddress2());
-            ps.setInt(3, address.getCityId());
-            ps.setString(4, address.getPostalCode());
-            ps.setString(5, address.getPhone());
-            ps.setInt(6, address.getAddressID());
-            return ps.executeUpdate() > 0;
+            ps.setString(1, address);
+            ps.setInt(2, cityId);
+            ps.setString(3, postalCode);
+            ps.setString(4, phoneNumber);
+            ps.setInt(5, addressId);
+
+            ps.executeUpdate();
+
+            if (ps.getUpdateCount() == 0)
+                System.out.println("Address creation failed");
+            else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Success");
+                alert.setContentText("Updated to address table successfully");
+                alert.showAndWait();
+            }
+            ps.close();
+            return addressId;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
-    public static Timestamp now() {
-        return new java.sql.Timestamp(System.currentTimeMillis());
-    }
+
 }

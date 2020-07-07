@@ -1,4 +1,4 @@
-package Utils;
+package Database;
 
 import javafx.scene.control.Alert;
 
@@ -28,6 +28,8 @@ public class DBCustomer {
             return null;
         }
     }
+
+
     public static Integer addToCustomerTable(String customerName, Integer addressId, Integer active) {
 
         try {
@@ -36,9 +38,9 @@ public class DBCustomer {
             ps.setString(1, customerName);
             ps.setInt(2, addressId);
             ps.setInt(3, active);
-            ps.setTimestamp(4, now());
+            ps.setString(4, Utils.Time.dateTime());
             ps.setString(5, "admin");
-            ps.setTimestamp(6, now());
+            ps.setString(6, Utils.Time.dateTime());
             ps.setString(7, "admin");
 
             ps.executeUpdate();
@@ -79,7 +81,7 @@ public class DBCustomer {
             ps.setString(1, customerName);
             ps.setInt(2, addressId);
             ps.setInt(3, active);
-            ps.setTimestamp(4, now());
+            ps.setTimestamp(4, Utils.Time.now());
             ps.setString(5, "admin");
             ps.setInt(6, customerId);
 
@@ -102,8 +104,6 @@ public class DBCustomer {
             return null;
         }
     }
-    public static Timestamp now() {
-        return new java.sql.Timestamp(System.currentTimeMillis());
-    }
+
 }
 

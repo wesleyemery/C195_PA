@@ -1,4 +1,4 @@
-package View_Controller;
+package Controller;
 
 import Model.*;
 import Database.DBAddress;
@@ -86,7 +86,7 @@ public class updateCustomerController implements Initializable {
             alert.showAndWait();
         }else {
             //Country Table
-            Integer countryId = customer.getCountryId();
+            Integer countryId = this.customer.getCountryId();
 
             if(country != customer.getCountry()){
                 countryId = DBCountry.getCountryId(country);
@@ -95,37 +95,42 @@ public class updateCustomerController implements Initializable {
             }
 
             //City Table
-            Integer cityId = customer.getCityId();
+            Integer cityId = this.customer.getCityId();
 
-            if(!(city == customer.getCity())){
+            if(city != customer.getCity()){
                 cityId = DBCity.getCityId(city, countryId);
                 if (cityId == null){
-                    System.out.println("test");
                     cityId = DBCity.addToCityTable(city, countryId);}
+                else{
+                    cityId = DBCity.updateToCityTable(city,countryId,cityId);
+
+                }
             }
 
             //Address Table
-            Integer addressId = customer.getAddressId();
-
+            //Integer addressId = DBAddress.getAddressIdFromCustomer(this.customer.getCustomerName());
+            Integer addressId = this.customer.getAddressId();
 
             if (city != customer.getCity() || address != customer.getAddress() || phone != customer.getPhone() || zipCode != customer.getPostalCode())  {
                 /*if (cityId != null)
                     addressId = DBAddress.getAddressId(address, cityId);*/
-                if (addressId == null){
+                if (addressId == null) {
                     addressId = DBAddress.addToAddressTable(address, cityId, zipCode, phone);
-                    //addressId = DBAddress.updateToAddressTable(address);
+                } else{
+                    addressId = DBAddress.updateToAddressTable(addressId, address, cityId, zipCode, phone);
                     }
             }
 
             //Customer Table
             Integer customerId = customer.getCustomerId();
 
-            if(!(name == customer.getCustomerName() || addressId == customer.getAddressID() || active == customer.getActive())) {
-                //customerId = DBCustomer.getCustomerId(name, addressId);
+            if(name != customer.getCustomerName() || addressId != customer.getAddressID() || active != customer.getActive()) {
+                //Integer customerId = DBCustomer.getCustomerId(name, addressId);
                 //if (customerId != null)
 
                     customerId = DBCustomer.updateToCustomerTable(customerId, name, addressId, active);
             }
+
             backToMain(event);
 
         }
@@ -133,7 +138,7 @@ public class updateCustomerController implements Initializable {
 
     private void backToMain(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainScreen.fxml"));
             MainScreenController controller = new MainScreenController();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
