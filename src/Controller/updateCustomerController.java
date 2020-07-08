@@ -52,9 +52,7 @@ public class updateCustomerController implements Initializable {
     private Button updateCustomerBtn;
 
     Customer customer;
-    City city;
-    Country country;
-    Address address;
+
 
     @FXML
     void cancelHandler(ActionEvent event) {
@@ -162,7 +160,7 @@ public class updateCustomerController implements Initializable {
         this.customer = selectedCustomer;
         customerCountryTextField.setEditable(false);
         customerCountryTextField.setDisable(true);
-
+        customerActiveCheckBox.setDisable(true);
 
         customerNameTextField.setText(selectedCustomer.getCustomerName());
         customerPhoneTextField.setText(selectedCustomer.getCustomerPhone());
@@ -170,7 +168,6 @@ public class updateCustomerController implements Initializable {
         customerPostalCodeTextField.setText(selectedCustomer.getCustomerPostalCode());
         customerCityTextField.setText(selectedCustomer.getCustomerCity());
         customerCountryTextField.setText(selectedCustomer.getCustomerCountry());
-        //customerActiveCheckBox.setSelected(selectedCustomer.getActive() == 1);
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
