@@ -86,23 +86,27 @@ public class updateCustomerController implements Initializable {
             alert.showAndWait();
         }else {
             //Country Table
-            Integer countryId = this.customer.getCountryId();
+            //Integer countryId = this.customer.getCountryId();
+            Integer countryId = DBCountry.getCountryId(this.customer.getCustomerCountry());
 
-            if(country != customer.getCountry()){
-                countryId = DBCountry.getCountryId(country);
+
+            if(!(country.equals(customer.getCountry()))){
+                //countryId = DBCountry.getCountryId(country);
                 if (countryId == null)
                     countryId = DBCountry.addToCountryTable(country);
             }
 
             //City Table
-            Integer cityId = this.customer.getCityId();
 
-            if(city != customer.getCity()){
-                cityId = DBCity.getCityId(city, countryId);
+            Integer cityId = DBCity.getCityIdFromAddressId(this.customer.getAddressId());
+
+
+            if(!(city.equals(this.customer.getCustomerCity()))){
+                //cityId = DBCity.getCityId(city, countryId);
                 if (cityId == null){
                     cityId = DBCity.addToCityTable(city, countryId);}
                 else{
-                    cityId = DBCity.updateToCityTable(city,countryId,cityId);
+                    cityId = DBCity.updateToCityTable(city, countryId, cityId);
 
                 }
             }
@@ -156,6 +160,8 @@ public class updateCustomerController implements Initializable {
 
     public void populateCustomerFields(Customer selectedCustomer){
         this.customer = selectedCustomer;
+        customerCountryTextField.setEditable(false);
+        customerCountryTextField.setDisable(true);
 
 
         customerNameTextField.setText(selectedCustomer.getCustomerName());
@@ -168,6 +174,7 @@ public class updateCustomerController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
 
     }
 }

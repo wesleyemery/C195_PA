@@ -84,7 +84,7 @@ public class addAppointmentController implements Initializable {
 
     private void backToMain(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainScreen.fxml"));
             MainScreenController controller = new MainScreenController();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 

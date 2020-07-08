@@ -27,6 +27,28 @@ public class DBCity {
             return null;
         }
     }
+    public static Integer getCityIdFromAddressId(Integer addressId) {
+        try{
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT cityId FROM address WHERE addressId=?");
+
+            ps.setInt(1, addressId);
+
+            ResultSet rs = ps.executeQuery();
+
+            Integer id = null;
+
+            if(rs.next()) {
+                id = rs.getInt("cityId");
+            }
+
+            rs.close();
+            return id;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public static Integer addToCityTable(String city, Integer countryId) {
         try {
@@ -34,9 +56,9 @@ public class DBCity {
                     "(?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, city);
             ps.setInt(2, countryId);
-            ps.setString(3, Utils.Time.dateTime());
+            ps.setTimestamp(3, Utils.Time.now());
             ps.setString(4, "admin");
-            ps.setString(5, Utils.Time.dateTime());
+            ps.setTimestamp(5, Utils.Time.now());
             ps.setString(6, "admin");
 
             ps.executeUpdate();
