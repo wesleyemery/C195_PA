@@ -21,7 +21,9 @@ public class Customer extends Address{
         this.postalCode = postalCode;
     }
 
-
+    public Customer(String customerName) {
+        this.customerName = customerName;
+    }
 
     public Integer getCustomerId() {
         return customerId;

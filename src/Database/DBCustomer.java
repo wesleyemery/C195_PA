@@ -1,10 +1,14 @@
 package Database;
 
+import Model.Customer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
 
 public class DBCustomer {
+
 
     public static Integer getCustomerId(String customerName, Integer addressId) {
         try{
@@ -104,6 +108,8 @@ public class DBCustomer {
             return null;
         }
     }
+
+
 
 }
 

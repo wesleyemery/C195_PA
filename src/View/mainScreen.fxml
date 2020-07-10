@@ -72,21 +72,13 @@
       </HBox>
       <HBox layoutX="549.0" layoutY="52.0" prefHeight="19.0" prefWidth="262.0" spacing="10.0">
          <children>
-            <RadioButton fx:id="radioBtnViewAll" mnemonicParsing="false" onAction="#viewAllHandler" selected="true" text="View All">
+            <RadioButton fx:id="radioAll" mnemonicParsing="false" onAction="#allAction" selected="true" text="View All">
                <toggleGroup>
-                  <ToggleGroup fx:id="viewBy" />
+                  <ToggleGroup fx:id="dateSelect" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton fx:id="radioBtnViewWeek" mnemonicParsing="false" onAction="#viewWeekHandler" text="View Week">
-               <toggleGroup>
-                  <ToggleGroup fx:id="viewBy" />
-               </toggleGroup>
-            </RadioButton>
-            <RadioButton fx:id="radioBtnViewMonth" mnemonicParsing="false" onAction="#viewMonthHandler" text="View Month">
-               <toggleGroup>
-                  <ToggleGroup fx:id="viewBy" />
-               </toggleGroup>
-            </RadioButton>
+            <RadioButton fx:id="radioWeek" mnemonicParsing="false" onAction="#weekAction" text="View Week" toggleGroup="$dateSelect" />
+            <RadioButton fx:id="radioMonth" mnemonicParsing="false" onAction="#monthAction" text="View Month" toggleGroup="$dateSelect" />
          </children>
       </HBox>
       <ImageView fitHeight="36.0" fitWidth="51.0" layoutX="22.0" layoutY="576.0" pickOnBounds="true" preserveRatio="true">

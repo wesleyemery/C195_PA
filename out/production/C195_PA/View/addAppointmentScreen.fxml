@@ -69,7 +69,6 @@
             <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Label fx:id="customerNameLabel" />
-                  <ChoiceBox fx:id="customerChoiceBox" disable="true" prefWidth="150.0" visible="false" />
                   <ComboBox fx:id="customerComboBox" prefHeight="27.0" prefWidth="167.0" promptText="Select" />
                </children>
             </StackPane>

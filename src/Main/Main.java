@@ -8,17 +8,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.TimeZone;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/View/LoginView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/loginView.fxml"));
         primaryStage.setTitle("Scheduling System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class  LoginController implements Initializable {
+public class loginController implements Initializable {
 
     @FXML
     private Label loginMessageLabel;
@@ -120,8 +120,8 @@ public class  LoginController implements Initializable {
                     alert.showAndWait();*/
                     // Sets current user for the current session
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/MainScreen.fxml"));
-                MainScreenController controller = new MainScreenController();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/mainScreen.fxml"));
+                mainScreenController controller = new mainScreenController();
                 Stage stage = (Stage) loginButton.getScene().getWindow();
 
                 loader.setController(controller);

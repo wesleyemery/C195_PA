@@ -72,8 +72,8 @@ public class updateAppointmentController {
 
     private void backToMain(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("MainScreen.fxml"));
-            MainScreenController controller = new MainScreenController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/mainScreen.fxml"));
+            mainScreenController controller = new mainScreenController();
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
             loader.setController(controller);

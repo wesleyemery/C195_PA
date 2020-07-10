@@ -26,13 +26,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class MainScreenController implements Initializable {
+public class mainScreenController implements Initializable {
 
 
-    String startMonth = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    String endMonth = LocalDateTime.now().plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-    private static ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+
+    private static ObservableList<Customer> customerArray = FXCollections.observableArrayList();
+    private static ObservableList<Appointment> appointmentArray = FXCollections.observableArrayList();
 
     @FXML
     private ComboBox<String> cbReport;
@@ -110,16 +109,16 @@ public class MainScreenController implements Initializable {
     private Button deleteCustomerBtn;
 
     @FXML
-    private RadioButton radioBtnViewWeek;
+    private RadioButton radioWeek;
 
     @FXML
-    private ToggleGroup viewBy;
+    private ToggleGroup dateSelect;
 
     @FXML
-    private RadioButton radioBtnViewMonth;
+    private RadioButton radioMonth;
 
     @FXML
-    private RadioButton radioBtnViewAll;
+    private RadioButton radioAll;
 
     @FXML
     void deleteAppointmentHandler(ActionEvent event) {
@@ -137,7 +136,7 @@ public class MainScreenController implements Initializable {
                     ps.setInt(1, appointmentDelete.getAppointmentId());
                     ps.execute();
 
-                    allAppointments.clear();
+                    appointmentArray.clear();
                     appointmentTable.setItems(queryAppointments());
                     appointmentTable.refresh();
 
@@ -173,7 +172,7 @@ public class MainScreenController implements Initializable {
                     ps.setInt(1, customerDelete.getCustomerId());
                     ps.execute();
 
-                    allCustomers.clear();
+                    customerArray.clear();
                     customerTable.setItems(queryCustomers());
                     customerTable.refresh();
 
@@ -261,17 +260,20 @@ public class MainScreenController implements Initializable {
     }
 
     @FXML
-    void viewAllHandler(ActionEvent event) {
+    void allAction(ActionEvent event) {
+        generateAppointmentTable();
 
     }
 
     @FXML
-    void viewMonthHandler(ActionEvent event) {
+    void monthAction(ActionEvent event) {
+        generateAppointmentTable();
 
     }
 
     @FXML
-    void viewWeekHandler(ActionEvent event) {
+    void weekAction(ActionEvent event) {
+        generateAppointmentTable();
 
     }
     public void generateAppointmentTable(){
@@ -294,26 +296,32 @@ public class MainScreenController implements Initializable {
         customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
 
     }
-    public static ObservableList<Appointment> queryAppointments() {
-        String query = "SELECT appointment.appointmentId, appointment.customerId, appointment.title, appointment.type, appointment.start, appointment.end FROM appointment";
-        try {
-            ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(query);
-            while (rs.next()) {
-                int id = rs.getInt("appointment.appointmentID");
-                int customerId = rs.getInt("appointment.customerID");
-                String title = rs.getString("appointment.title");
-                String type = rs.getString("appointment.type");
-                LocalDateTime start = rs.getTimestamp("appointment.start").toLocalDateTime();
-                LocalDateTime end = rs.getTimestamp("appointment.end").toLocalDateTime();
-                allAppointments.add(new Appointment(id, customerId, title, type, start, end));
+    public ObservableList<Appointment> queryAppointments() {
+
+        if (radioAll.isSelected()) {
+            appointmentArray.clear();
+            String query = "SELECT appointment.appointmentId, appointment.customerId, appointment.title, appointment.type, appointment.start, appointment.end FROM appointment";
+
+            try {
+                ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(query);
+                while (rs.next()) {
+                    int id = rs.getInt("appointment.appointmentID");
+                    int customerId = rs.getInt("appointment.customerID");
+                    String title = rs.getString("appointment.title");
+                    String type = rs.getString("appointment.type");
+                    LocalDateTime start = rs.getTimestamp("appointment.start").toLocalDateTime();
+                    LocalDateTime end = rs.getTimestamp("appointment.end").toLocalDateTime();
+                    appointmentArray.add(new Appointment(id, customerId, title, type, start, end));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+            return appointmentArray;
+        }/*else if(radioMonth.isSelected()){
+            appointmentArray.clear();
+            String query = "SELECT appointment.appointmentId, appointment.customerId, appointment.title, appointment.type, appointment.start, appointment.end FROM appointment WHERE appointment.start >= " + startMonth + " AND appointment.end <= " + endMonth + " AND userId ="+ currentUserId +";";
 
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return allAppointments;
+        }*/return appointmentArray;
     }
         public static ObservableList<Customer> queryCustomers() {
         String query = "SELECT customer.customerId, customer.customerName, address.addressId, address.address, address.postalCode, city.cityId, city.city, country.country, address.phone "
@@ -331,23 +339,21 @@ public class MainScreenController implements Initializable {
                 String city = rs.getString("city.city");
                 String country = rs.getString("country.country");
                 String phone = rs.getString("address.phone");
-                allCustomers.add(new Customer(id, name, addressId, address, postalCode, city, country, phone));
+                customerArray.add(new Customer(id, name, addressId, address, postalCode, city, country, phone));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return allCustomers;
+        return customerArray;
     }
         @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        allAppointments.clear();
-        allCustomers.clear();
+        appointmentArray.clear();
+        customerArray.clear();
         generateAppointmentTable();
         generateCustomerTable();
-        /*DataGenerator data = new DataGenerator();
-        data.populateAllTables();*/
+
 
         }
 }
