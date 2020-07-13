@@ -12,7 +12,7 @@ public class Appointment {
     private String location;
     private String contact;
     private String type;
-    private String url;
+    private String url, strStart, strEnd;
     private LocalDateTime start;
     private LocalDateTime end;
 
@@ -40,6 +40,14 @@ public class Appointment {
         this.end = end;
     }
 
+    public Appointment(int appointmentId, int customerId, String title, String type, String strStart, String strEnd) {
+        this.appointmentId = appointmentId;
+        this.customerId = customerId;
+        this.title = title;
+        this.type = type;
+        this.strStart = strStart;
+        this.strEnd = strEnd;
+    }
     public int getAppointmentId() {
         return appointmentId;
     }

@@ -3,6 +3,7 @@ package Controller;
 import Database.DBConnection;
 import Model.Appointment;
 import Model.Customer;
+import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +23,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -32,6 +35,7 @@ public class mainScreenController implements Initializable {
 
     private static ObservableList<Customer> customerArray = FXCollections.observableArrayList();
     private static ObservableList<Appointment> appointmentArray = FXCollections.observableArrayList();
+    User user;
 
     @FXML
     private ComboBox<String> cbReport;
@@ -259,6 +263,30 @@ public class mainScreenController implements Initializable {
 
     }
 
+
+    public void appointmentTime15() {
+
+
+        LocalDateTime localDateTime =Utils.Time.getLocalDateTime();
+        LocalDateTime localDateTimeAdd15 = Utils.Time.getLocalDateTimeAdd15();
+
+        String query = "SELECT * FROM appointment WHERE userId = "+ user.getUserId() +" AND start BETWEEN '" + localDateTime + "' AND '" + localDateTimeAdd15 + "';";
+        try {
+            PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Alert");
+                alert.setHeaderText("You have an up coming appointment.");
+                alert.setContentText("You have an appointment in 15 minutes.");
+                alert.showAndWait();
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     @FXML
     void allAction(ActionEvent event) {
         generateAppointmentTable();
@@ -300,28 +328,69 @@ public class mainScreenController implements Initializable {
 
         if (radioAll.isSelected()) {
             appointmentArray.clear();
-            String query = "SELECT appointment.appointmentId, appointment.customerId, appointment.title, appointment.type, appointment.start, appointment.end FROM appointment";
+            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment";
 
             try {
                 ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(query);
                 while (rs.next()) {
-                    int id = rs.getInt("appointment.appointmentID");
-                    int customerId = rs.getInt("appointment.customerID");
-                    String title = rs.getString("appointment.title");
-                    String type = rs.getString("appointment.type");
-                    LocalDateTime start = rs.getTimestamp("appointment.start").toLocalDateTime();
-                    LocalDateTime end = rs.getTimestamp("appointment.end").toLocalDateTime();
+                    int id = rs.getInt("appointmentID");
+                    int customerId = rs.getInt("customerID");
+                    String title = rs.getString("title");
+                    String type = rs.getString("type");
+                    LocalDateTime start = rs.getTimestamp("start").toLocalDateTime();
+                    LocalDateTime end = rs.getTimestamp("end").toLocalDateTime();
                     appointmentArray.add(new Appointment(id, customerId, title, type, start, end));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
             return appointmentArray;
-        }/*else if(radioMonth.isSelected()){
+        } else if(radioMonth.isSelected()){
             appointmentArray.clear();
-            String query = "SELECT appointment.appointmentId, appointment.customerId, appointment.title, appointment.type, appointment.start, appointment.end FROM appointment WHERE appointment.start >= " + startMonth + " AND appointment.end <= " + endMonth + " AND userId ="+ currentUserId +";";
-
-        }*/return appointmentArray;
+            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getMonth() + "' AND appointment.end <= '" + Utils.Time.getEndOfMonth() + "' AND userId='9';";
+            System.out.println(query);
+            try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
+                 ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("appointment.appointmentId");
+                    int customerId = rs.getInt("appointment.customerId");
+                    String title = rs.getString("appointment.title");
+                    String type = rs.getString("appointment.type");
+                    String start = rs.getString("appointment.start");
+                    String timeStart = Utils.Time.getStartDateTime(start);
+                    String end = rs.getString("appointment.end");
+                    String timeEnd = Utils.Time.getEndDateTime(end);
+                    appointmentArray.add(new Appointment(id, customerId, title, type, timeStart, timeEnd));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return appointmentArray;
+        } else if(radioWeek.isSelected()) {
+            appointmentArray.clear();
+            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getMonth() + "' AND appointment.end <= '" + Utils.Time.getEndOfMonth() + "' AND userId='9';";
+            System.out.println(query);
+            try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
+                 ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("appointment.appointmentId");
+                    int customerId = rs.getInt("appointment.customerId");
+                    String title = rs.getString("appointment.title");
+                    String type = rs.getString("appointment.type");
+                    String start = rs.getString("appointment.start");
+                    String timeStart = Utils.Time.getStartDateTime(start);
+                    String end = rs.getString("appointment.end");
+                    String timeEnd = Utils.Time.getEndDateTime(end);
+                    appointmentArray.add(new Appointment(id, customerId, title, type, timeStart, timeEnd));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return appointmentArray;
+        }
+        else {
+            return appointmentArray;
+        }
     }
         public static ObservableList<Customer> queryCustomers() {
         String query = "SELECT customer.customerId, customer.customerName, address.addressId, address.address, address.postalCode, city.cityId, city.city, country.country, address.phone "
@@ -353,6 +422,7 @@ public class mainScreenController implements Initializable {
         customerArray.clear();
         generateAppointmentTable();
         generateCustomerTable();
+
 
 
         }

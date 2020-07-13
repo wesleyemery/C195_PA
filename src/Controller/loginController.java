@@ -180,16 +180,7 @@ public class loginController implements Initializable {
         return currentUser;
     }
 
-    /*private void logLogin(String username, boolean wasSuccessful) throws IOException {
-        ZonedDateTime now = ZonedDateTime.now(ZoneId.systemDefault());
-        if (wasSuccessful) {
-            SchedulerApplication.bufferedWriter.write(now.format(loggingDTF) + " SUCCESSFUL login for: " + username);
-            SchedulerApplication.bufferedWriter.newLine();
-        } else {
-            SchedulerApplication.bufferedWriter.write(now.format(loggingDTF) + " FAILED login for: " + username);
-            SchedulerApplication.bufferedWriter.newLine();
-        }
-    }*/
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

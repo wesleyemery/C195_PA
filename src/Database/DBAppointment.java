@@ -4,15 +4,33 @@ import Model.Customer;
 import Model.User;
 
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+import java.util.TimeZone;
+
+import static Utils.Time.now;
 
 public class DBAppointment {
 
 
-   /* public static boolean addToAppointmentTable(Customer customer, String title, String type, String date, String startTime, String endTime, String description) {
+    //2020-08-22 15:00:00.0
+    /*public String getFormatedDate(String startDate){
+        ZoneId currentZoneId = ZoneId.of(TimeZone.getDefault().getID());
+        //get local offset
+        ZoneOffset offset = ZoneId.of(currentZoneId.toString()).getRules().getOffset(Instant.now());
+        //create a ZonedDateTime object with the UTC date from BD and convert it to local time
+        ZonedDateTime dbDateTime = ZonedDateTime.parse(startDate.replace(" ", "T") + ZoneOffset.UTC + "[" + ZoneId.of("UTC") + "]");
+        Instant utcToLocalInstant = dbDateTime.toInstant();
+        ZonedDateTime utcToLocal = utcToLocalInstant.atZone(currentZoneId);
+        //creating date time string that SQL will accept
+        String date = String.valueOf(utcToLocal.toLocalDate());
+        String time = String.valueOf(utcToLocal.toLocalTime());
+        String localDateTimeString = date + " " + time;
+        return localDateTimeString;
+    }*/
+
+   /* public static boolean addToAppointmentTable(Integer customerId, String title, String type, String date, String startTime, String endTime, String description) {
         User user = new User();
         Integer currentUserId = user.getUserId();
         try {
@@ -34,7 +52,7 @@ public class DBAppointment {
                             + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ",
                     Statement.RETURN_GENERATED_KEYS);
 
-            ps.setInt(1, customer.getCustomerId());
+            ps.setInt(1, customerId);
             ps.setInt(2, currentUserId);
             ps.setString(3, title); //title
             ps.setString(4, description); //description
@@ -47,7 +65,7 @@ public class DBAppointment {
 
             LocalDateTime startLocalDateTime = LocalDateTime.parse(
                     startDateTime,
-                    DateTimeFormatter.ofPattern("yyyy-M-d h:mm a"));
+                    DateTimeFormatter.ofPattern("MM/dd/yyyy hh:mm a"));
 
             ZonedDateTime startZonedDateTime = startLocalDateTime.atZone(Objects.requireNonNull(getZoneId(location)));
             Timestamp startTimestamp = Timestamp.from(startZonedDateTime.toInstant());
@@ -81,13 +99,13 @@ public class DBAppointment {
             ps.close();
             return success;
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         }
-    }*/
+    }
 
 
 
-
+*/
 }

@@ -61,7 +61,7 @@ public class addAppointmentController implements Initializable {
 
 
     @FXML
-    private ComboBox<Customer> customerComboBox;
+    private ComboBox<String> customerComboBox;
 
     @FXML
     private Button saveAppointmentBtn;
@@ -100,18 +100,21 @@ public class addAppointmentController implements Initializable {
             alert.setTitle("Error");
             alert.setContentText("Please enter data in all fields!");
             alert.showAndWait();
-        }else {}
+        }else {
+
+
+        }
 
     }
 
     public static ObservableList<Customer> queryAllCustomerNames(){
-        String query = "SELECT customer.customerName FROM customer;";
+        String query = "SELECT customerName FROM customer;";
         try {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
                 //Integer customerId = rs.getInt("customer.customerId");
-                String customerName = rs.getString("customer.customerName");
+                String customerName = rs.getString("customerName");
                 customerArray.add(new Customer(customerName));
             }
         } catch (SQLException e) {
@@ -141,6 +144,10 @@ public class addAppointmentController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         customerArray.clear();
         queryAllCustomerNames();
-        customerComboBox.setItems(customerArray);
+        ObservableList<String> customerNames = FXCollections.observableArrayList();
+        for (Customer c:customerArray) {
+            customerNames.add(c.getCustomerName());
+        }
+        customerComboBox.setItems(customerNames);
     }
 }
