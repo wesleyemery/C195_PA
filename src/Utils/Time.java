@@ -55,6 +55,14 @@ public class Time {
         String endOfMonth = LocalDateTime.now().plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         return endOfMonth;
     }
+    public static String getWeek() {
+        String week = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return week;
+    }
+    public static String getWeekLater() {
+        String weekLater = LocalDateTime.now().plusWeeks(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        return weekLater;
+    }
 
     public static String getStartDateTime(String start) {
         ZoneId zoneId = ZoneId.of(TimeZone.getDefault().getID());

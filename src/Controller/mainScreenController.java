@@ -348,7 +348,7 @@ public class mainScreenController implements Initializable {
         } else if(radioMonth.isSelected()){
             appointmentArray.clear();
             String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getMonth() + "' AND appointment.end <= '" + Utils.Time.getEndOfMonth() + "' AND userId='9';";
-            System.out.println(query);
+            //System.out.println(query);
             try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
                  ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
@@ -368,8 +368,8 @@ public class mainScreenController implements Initializable {
             return appointmentArray;
         } else if(radioWeek.isSelected()) {
             appointmentArray.clear();
-            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getMonth() + "' AND appointment.end <= '" + Utils.Time.getEndOfMonth() + "' AND userId='9';";
-            System.out.println(query);
+            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getWeek() + "' AND appointment.end <= '" + Utils.Time.getWeekLater() + "' AND userId='9';";
+            //System.out.println(query);
             try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
                  ResultSet rs = statement.executeQuery()) {
                 while (rs.next()) {
