@@ -87,4 +87,14 @@ public class Time {
         String localDateTimeString = date + " " + time;
         return localDateTimeString;
     }
+
+    public static String getTimestamp() {
+        ZonedDateTime tS = ZonedDateTime.now(ZoneOffset.UTC);
+        String date = String.valueOf(tS.toLocalDate());
+        String time = String.valueOf(tS.toLocalTime());
+        String dateTimeString = date + " " + time;
+        return dateTimeString;
+    }
+
+
 }
