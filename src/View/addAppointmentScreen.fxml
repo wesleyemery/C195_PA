@@ -46,7 +46,7 @@
             <Label text="Description:" GridPane.rowIndex="10" />
             <Label fx:id="userNameLabel" GridPane.columnIndex="1" />
             <TextField fx:id="appointmentTitleTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <DatePicker fx:id="endDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <DatePicker fx:id="endDate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <TextField fx:id="appointmentTypeTextField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
             <TextArea fx:id="appointmentDescriptionTextArea" prefHeight="200.0" prefWidth="493.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
@@ -62,11 +62,11 @@
             <StackPane alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <children>
                   <Label fx:id="customerNameLabel" />
-                  <ComboBox fx:id="customerComboBox" prefHeight="27.0" prefWidth="167.0" promptText="Select" />
+                  <ComboBox fx:id="customerCb" prefHeight="27.0" prefWidth="167.0" promptText="Select" />
                </children>
             </StackPane>
             <Label text="Start Date:" GridPane.rowIndex="4" />
-            <DatePicker fx:id="startDatePicker" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="startDate" onAction="#startDateAction" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <Label layoutX="103.0" layoutY="39.0" text="New Appointment">

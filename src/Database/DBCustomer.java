@@ -10,7 +10,7 @@ import java.sql.*;
 public class DBCustomer {
 
 
-    public static Integer getCustomerId(String customerName, Integer addressId) {
+    /*public static Integer getCustomerId(String customerName, Integer addressId) {
         try{
             PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT customerId FROM customer WHERE customerName = ? AND addressId = ?;");
             ps.setString(1, customerName);
@@ -31,7 +31,7 @@ public class DBCustomer {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
 
     public static Integer addToCustomerTable(String customerName, Integer addressId, Integer active) {
@@ -108,7 +108,26 @@ public class DBCustomer {
             return null;
         }
     }
+    public static Integer getCustomerId(String customerName) {
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT customerId FROM customer WHERE customerName = ?;");
+            ps.setString(1, customerName);
 
+            ResultSet rs = ps.executeQuery();
+
+            Integer id = null;
+
+            if (rs.next()) {
+                id = rs.getInt("customerId");
+            }
+
+            rs.close();
+            return id;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 }

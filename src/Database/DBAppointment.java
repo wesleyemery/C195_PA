@@ -1,5 +1,6 @@
 package Database;
 
+import Controller.addAppointmentController;
 import Model.Customer;
 import Model.User;
 
@@ -19,6 +20,7 @@ public class DBAppointment {
 
    public static boolean addToAppointmentTable(Integer customerId, String title, String type,  String description) {
         User user = new User();
+        addAppointmentController add = new addAppointmentController();
         Integer currentUserId = user.getUserId();
         try {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement("INSERT INTO appointment ("
@@ -40,15 +42,15 @@ public class DBAppointment {
                     Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1, customerId);
-            ps.setInt(2, currentUserId);
+            ps.setInt(2, 1);
             ps.setString(3, title);
             ps.setString(4, description);
             ps.setString(5, "");
             ps.setString(6, "");
             ps.setString(7, type);
             ps.setString(8, "");
-            ps.setString(9, Controller.addAppointmentController.getStartDateTime());
-            ps.setString(10, Controller.addAppointmentController.getEndDateTime());
+            ps.setString(9, add.getStartDateTime());
+            ps.setString(10, add.getEndDateTime());
             ps.setString(11, Utils.Time.getTimestamp());
             ps.setString(12, "admin");
             ps.setString(13, Utils.Time.getTimestamp());
