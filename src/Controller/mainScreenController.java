@@ -111,6 +111,30 @@ public class mainScreenController implements Initializable {
     private RadioButton radioAll;
 
     @FXML
+    private Button customerReportButton;
+
+    @FXML
+    private Button scheduleReportButton;
+
+    @FXML
+    private Button appointmentReportButton;
+
+    @FXML
+    void appointmentReportButtonAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void customerReportButtonAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void scheduleReportButtonAction(ActionEvent event) {
+
+    }
+
+   /* @FXML
     private Button reportsButton;
 
     @FXML
@@ -124,7 +148,8 @@ public class mainScreenController implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    }
+    }*/
+
     @FXML
     void deleteAppointmentAction(ActionEvent event) {
         Appointment appointmentDelete = appointmentTable.getSelectionModel().getSelectedItem();
