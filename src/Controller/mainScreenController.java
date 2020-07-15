@@ -37,21 +37,7 @@ public class mainScreenController implements Initializable {
     private static ObservableList<Appointment> appointmentArray = FXCollections.observableArrayList();
     User user;
 
-    @FXML
-    private ComboBox<String> cbReport;
 
-    @FXML
-    private Button btnExecute;
-
-    @FXML
-    void btnExecuteAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cbReportAction(ActionEvent event) {
-
-    }
     @FXML
     private TableView<Appointment> appointmentTable;
 
@@ -74,13 +60,13 @@ public class mainScreenController implements Initializable {
     private TableColumn<Appointment, Integer> appointmentCustomerColumn;
 
     @FXML
-    private Button newAppointmentBtn;
+    private Button newAppointmentButton;
 
     @FXML
-    private Button updateAppointmentBtn;
+    private Button updateAppointmentButton;
 
     @FXML
-    private Button deleteAppointmentBtn;
+    private Button deleteAppointmentButton;
 
     @FXML
     private TableView<Customer> customerTable;
@@ -125,7 +111,22 @@ public class mainScreenController implements Initializable {
     private RadioButton radioAll;
 
     @FXML
-    void deleteAppointmentHandler(ActionEvent event) {
+    private Button reportsButton;
+
+    @FXML
+    void reportsButtonAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/reportsScreen.fxml"));
+        reportsController controller = new reportsController();
+        Stage stage = (Stage) reportsButton.getScene().getWindow();
+
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    @FXML
+    void deleteAppointmentAction(ActionEvent event) {
         Appointment appointmentDelete = appointmentTable.getSelectionModel().getSelectedItem();
         if(appointmentDelete != null) {
             String message = "Are you sure you want to delete " + appointmentTable.getSelectionModel().getSelectedItem().getTitle() + " appointment?";
@@ -194,10 +195,10 @@ public class mainScreenController implements Initializable {
     }
 
     @FXML
-    void newAppointmentHandler(ActionEvent event) throws IOException {
+    void newAppointmentAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/addAppointmentScreen.fxml"));
         addAppointmentController controller = new addAppointmentController();
-        Stage stage = (Stage) newAppointmentBtn.getScene().getWindow();
+        Stage stage = (Stage) newAppointmentButton.getScene().getWindow();
 
         loader.setController(controller);
         Parent root = loader.load();
@@ -221,10 +222,10 @@ public class mainScreenController implements Initializable {
     }
 
     @FXML
-    void updateAppointmentHandler(ActionEvent event) throws IOException {
+    void updateAppointmentAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/updateAppointmentScreen.fxml"));
         updateAppointmentController controller = new updateAppointmentController();
-        Stage stage = (Stage) updateAppointmentBtn.getScene().getWindow();
+        Stage stage = (Stage) updateAppointmentButton.getScene().getWindow();
 
         loader.setController(controller);
         Parent root = loader.load();

@@ -247,5 +247,9 @@ public class addAppointmentController implements Initializable {
         setHours();
         startCb.setItems(hoursArray);
         endCb.setItems(hoursArray);
+
+        /*ZoneId zoneId = ZoneId.of(TimeZone.getDefault().getID());
+        ZoneOffset oS = ZoneId.of(zoneId.toString()).getRules().getOffset(Instant.now());
+        String localDateTime = startDate.getValue().toString() + "T" + startCb.getValue().toString() + ":00" + oS + "[" + zoneId + "]";*/
     }
 }
