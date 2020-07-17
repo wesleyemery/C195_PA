@@ -130,8 +130,16 @@ public class mainScreenController implements Initializable {
     }
 
     @FXML
-    void scheduleReportButtonAction(ActionEvent event) {
+    void scheduleReportButtonAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/scheduleReportScreen.fxml"));
+        scheduleReportController controller = new scheduleReportController();
+        Stage stage = (Stage) scheduleReportButton.getScene().getWindow();
 
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
    /* @FXML
@@ -139,15 +147,7 @@ public class mainScreenController implements Initializable {
 
     @FXML
     void reportsButtonAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/reportsScreen.fxml"));
-        reportsController controller = new reportsController();
-        Stage stage = (Stage) reportsButton.getScene().getWindow();
 
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }*/
 
     @FXML
