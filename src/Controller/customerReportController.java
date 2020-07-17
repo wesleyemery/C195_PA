@@ -1,6 +1,7 @@
 package Controller;
 
 
+import Database.DBConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +15,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 
 public class customerReportController implements Initializable{
 
     @FXML
-    private TextArea textArea;
+    private TextArea customerTextArea;
 
     @FXML
     private Button backButton;
@@ -48,8 +52,24 @@ public class customerReportController implements Initializable{
         }
     }
 
+    public void getCustomerReport() {
+        try {
+            Statement sm = DBConnection.getConnection().createStatement();
+            String query = "SELECT COUNT(customerId) FROM customer";
+            ResultSet rs = sm.executeQuery(query);
+            StringBuilder sbuf = new StringBuilder();
+            sbuf.append("Number of Customers: ");
+            while (rs.next()) {
+                sbuf.append(rs.getInt("count(customerId)"));}
+            sm.close();
+            customerTextArea.setText(sbuf.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();}
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        getCustomerReport();
     }
 }

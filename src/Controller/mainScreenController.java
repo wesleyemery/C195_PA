@@ -120,13 +120,29 @@ public class mainScreenController implements Initializable {
     private Button appointmentReportButton;
 
     @FXML
-    void appointmentReportButtonAction(ActionEvent event) {
+    void appointmentReportButtonAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/appointmentReportScreen.fxml"));
+        appointmentReportController controller = new appointmentReportController();
+        Stage stage = (Stage) appointmentReportButton.getScene().getWindow();
 
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
-    void customerReportButtonAction(ActionEvent event) {
+    void customerReportButtonAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/customerReportScreen.fxml"));
+        customerReportController controller = new customerReportController();
+        Stage stage = (Stage) customerReportButton.getScene().getWindow();
 
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML

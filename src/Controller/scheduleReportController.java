@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class scheduleReportController implements Initializable {
 
     @FXML
-    private TextArea textArea;
+    private TextArea scheduleTextArea;
 
     @FXML
     private Button backButton;
@@ -52,17 +52,17 @@ public class scheduleReportController implements Initializable {
 
     public void getScheduleReport() {
         try {
-            Statement statement = DBConnection.getConnection().createStatement();
+            Statement sm = DBConnection.getConnection().createStatement();
             String query = "SELECT title, start, end FROM appointment;";
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = sm.executeQuery(query);
             StringBuilder sbuf = new StringBuilder();
             sbuf.append("Schedule: \n\n");
             sbuf.append(String.format("%1$-45s %2$-45s %3$-45s \n", "Title", "Start (UTC)", "End (UTC)"));
             sbuf.append("\n");
             while (rs.next()) {
                 sbuf.append(String.format("%1$-30s %2$-35s %3$-35s \n", rs.getString("title"), rs.getString("start"), rs.getString("end")));}
-            statement.close();
-            textArea.setText(sbuf.toString());
+            sm.close();
+            scheduleTextArea.setText(sbuf.toString());
         } catch (SQLException e) {
             e.printStackTrace();}
     }
