@@ -77,7 +77,7 @@ public class addAppointmentController implements Initializable {
     }
     
     @FXML
-    void cancelHandler(ActionEvent event) {
+    void cancelAction(ActionEvent event) {
         String message = "Are you sure you want to cancel?";
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("ALERT: Cancel");
@@ -90,7 +90,7 @@ public class addAppointmentController implements Initializable {
     }
 
     @FXML
-    void saveAppointmentHandler(ActionEvent event) {
+    void saveAppointmentAction(ActionEvent event) {
 
         String title = titleTextField.getText();
         String startDateValue = startDate.getValue().toString();

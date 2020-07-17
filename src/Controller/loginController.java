@@ -28,19 +28,16 @@ import java.util.ResourceBundle;
 public class loginController implements Initializable {
 
     @FXML
-    private Label loginMessageLabel;
-
-    @FXML
     private Label userNameLabel;
 
     @FXML
     private Label passwordLabel;
 
     @FXML
-    private TextField userNameField;
+    private TextField userNameTextField;
 
     @FXML
-    private PasswordField passwordField;
+    private PasswordField passwordTextField;
 
     @FXML
     private Button exitButton;
@@ -48,11 +45,6 @@ public class loginController implements Initializable {
     @FXML
     private Button loginButton;
 
-    @FXML
-    private Label lblLanguage;
-
-    @FXML
-    private ImageView flagIcon;
 
     private ResourceBundle rb;
     Locale locale;
@@ -60,7 +52,7 @@ public class loginController implements Initializable {
     private String errorPassword, errorBlank, errorTitle, exitMessage, exitHeader, loginTitle, loginHeader;
 
     @FXML
-    void exit(ActionEvent event) {
+    void exitAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText("Alert: Exiting the Scheduling System");
@@ -74,9 +66,9 @@ public class loginController implements Initializable {
     }
 
     @FXML
-    void login(ActionEvent event) throws IOException {
-        String userName = userNameField.getText();
-        String password = passwordField.getText();
+    void loginAction(ActionEvent event) throws IOException {
+        String userName = userNameTextField.getText();
+        String password = passwordTextField.getText();
         boolean userNameValid = false, passwordValid = false;
 
         //validation
@@ -149,8 +141,8 @@ public class loginController implements Initializable {
 
 
     public void textFieldGenerate(){
-        userNameField.setText(rb.getString("user"));
-        passwordField.setText(rb.getString("password"));
+        userNameTextField.setText(rb.getString("user"));
+        passwordTextField.setText(rb.getString("password"));
     }
 
     User existingUser(User loginAttempt) {
