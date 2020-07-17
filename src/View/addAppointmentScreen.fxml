@@ -45,10 +45,10 @@
             <Label text="Type:" GridPane.rowIndex="9" />
             <Label text="Description:" GridPane.rowIndex="10" />
             <Label fx:id="userNameLabel" GridPane.columnIndex="1" />
-            <TextField fx:id="appointmentTitleTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="titleTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <DatePicker fx:id="endDate" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-            <TextField fx:id="appointmentTypeTextField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <TextArea fx:id="appointmentDescriptionTextArea" prefHeight="200.0" prefWidth="493.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+            <TextField fx:id="typeTextField" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <TextArea fx:id="descriptionTextArea" prefHeight="200.0" prefWidth="493.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <ComboBox fx:id="startCb" prefWidth="150.0" promptText="Select" />

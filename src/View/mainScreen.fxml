@@ -15,14 +15,14 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="696.0" prefWidth="837.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TableView fx:id="appointmentTable" layoutX="20.0" layoutY="80.0" prefHeight="200.0">
+      <TableView fx:id="apptTable" layoutX="20.0" layoutY="80.0" prefHeight="200.0">
         <columns>
-          <TableColumn fx:id="appointmentIDColumn" prefWidth="45.0" text="ID" />
-          <TableColumn fx:id="appointmentTitleColumn" prefWidth="150.0" text="Title" />
-            <TableColumn fx:id="appointmentTypeColumn" prefWidth="130.0" text="Type" />
-            <TableColumn fx:id="appointmentStartColumn" prefWidth="175.0" text="Start Time" />
-            <TableColumn fx:id="appointmentEndColumn" prefWidth="200.0" text="End Time" />
-            <TableColumn fx:id="appointmentCustomerColumn" prefWidth="100.0" text="Customer ID" />
+          <TableColumn fx:id="apptIdCol" prefWidth="45.0" text="ID" />
+          <TableColumn fx:id="apptTitleCol" prefWidth="150.0" text="Title" />
+            <TableColumn fx:id="apptTypeCol" prefWidth="130.0" text="Type" />
+            <TableColumn fx:id="apptStartCol" prefWidth="175.0" text="Start Time" />
+            <TableColumn fx:id="apptEndCol" prefWidth="200.0" text="End Time" />
+            <TableColumn fx:id="apptCustomerCol" prefWidth="100.0" text="Customer ID" />
         </columns>
       </TableView>
       <Label layoutX="72.0" layoutY="48.0" text="Appointments:">
@@ -42,14 +42,14 @@
             <Button fx:id="deleteAppointmentButton" mnemonicParsing="false" onAction="#deleteAppointmentAction" text="Delete" />
          </children>
       </HBox>
-      <TableView fx:id="customerTable" layoutX="20.0" layoutY="342.0" prefHeight="200.0">
+      <TableView fx:id="custTable" layoutX="20.0" layoutY="342.0" prefHeight="200.0">
         <columns>
-          <TableColumn fx:id="customerIDColumn" prefWidth="45.0" text="ID" />
-          <TableColumn fx:id="customerNameColumn" prefWidth="150.0" text="Name" />
-            <TableColumn fx:id="customerAddressColumn" prefWidth="130.0" text="Address" />
-            <TableColumn fx:id="customerCountryColumn" prefWidth="175.0" text="Country" />
-            <TableColumn fx:id="customerCityColumn" prefWidth="175.0" text="City" />
-            <TableColumn fx:id="customerPhoneColumn" prefWidth="124.0" text="Phone" />
+          <TableColumn fx:id="custIdCol" prefWidth="45.0" text="ID" />
+          <TableColumn fx:id="custNameCol" prefWidth="150.0" text="Name" />
+            <TableColumn fx:id="custAddressCol" prefWidth="130.0" text="Address" />
+            <TableColumn fx:id="custCountryCol" prefWidth="175.0" text="Country" />
+            <TableColumn fx:id="custCityCol" prefWidth="175.0" text="City" />
+            <TableColumn fx:id="custPhoneCol" prefWidth="124.0" text="Phone" />
         </columns>
       </TableView>
       <ImageView fitHeight="36.0" fitWidth="51.0" layoutX="22.0" layoutY="306.0" pickOnBounds="true" preserveRatio="true">
@@ -64,9 +64,9 @@
       </Label>
       <HBox layoutX="653.0" layoutY="553.0" prefHeight="27.0" prefWidth="170.0" spacing="10.0">
          <children>
-            <Button fx:id="newCustomerBtn" mnemonicParsing="false" onAction="#newCustomerHandler" text="New" />
-            <Button fx:id="updateCustomerBtn" mnemonicParsing="false" onAction="#updateCustomerHandler" text="Update" />
-            <Button fx:id="deleteCustomerBtn" mnemonicParsing="false" onAction="#deleteCustomerHandler" text="Delete" />
+            <Button fx:id="newCustomerButton" mnemonicParsing="false" onAction="#newCustomerAction" text="New" />
+            <Button fx:id="updateCustomerButton" mnemonicParsing="false" onAction="#updateCustomerAction" text="Update" />
+            <Button fx:id="deleteCustomerButton" mnemonicParsing="false" onAction="#deleteCustomerAction" text="Delete" />
          </children>
       </HBox>
       <HBox layoutX="549.0" layoutY="52.0" prefHeight="19.0" prefWidth="262.0" spacing="10.0">

@@ -35,16 +35,15 @@
             <Label text="Address:" GridPane.rowIndex="2" />
             <Label text="City:" GridPane.rowIndex="4" />
             <Label prefWidth="57.0" text="Phone:" GridPane.rowIndex="1" />
-            <Label fx:id="customerNameLabel" GridPane.columnIndex="1" />
-            <TextField fx:id="customerNameTextField" promptText="Name" GridPane.columnIndex="1" />
-            <TextField fx:id="customerAddressTextField" promptText="Street Address" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="customerPhoneTextField" minWidth="150.0" prefWidth="150.0" promptText="Phone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="customerCityTextField" minWidth="150.0" prefWidth="150.0" promptText="City" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="nameTextField" promptText="Name" GridPane.columnIndex="1" />
+            <TextField fx:id="addressTextField" promptText="Street Address" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="phoneTextField" minWidth="150.0" prefWidth="150.0" promptText="Phone" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="cityTextField" minWidth="150.0" prefWidth="150.0" promptText="City" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Postal Code:" textAlignment="RIGHT" GridPane.rowIndex="5" />
-            <TextField fx:id="customerPostalCodeTextField" minWidth="150.0" prefWidth="150.0" promptText="Postal Code" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextField fx:id="postalCodeTextField" minWidth="150.0" prefWidth="150.0" promptText="Postal Code" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Country:" textAlignment="RIGHT" GridPane.rowIndex="6" />
-            <TextField fx:id="customerCountryTextField" minWidth="150.0" prefWidth="150.0" promptText="Country" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <CheckBox fx:id="customerActiveCheckBox" mnemonicParsing="false" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="countryTextField" minWidth="150.0" prefWidth="150.0" promptText="Country" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <CheckBox fx:id="activeCb" mnemonicParsing="false" selected="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label prefHeight="0.0" prefWidth="35.0" text="Active:" GridPane.rowIndex="3" />
          </children>
       </GridPane>
@@ -58,7 +57,7 @@
             <Image url="@../Style/customer.png" />
          </image>
       </ImageView>
-      <Button fx:id="cancelBtn" layoutX="487.0" layoutY="418.0" mnemonicParsing="false" onAction="#cancelHandler" prefWidth="52.0" text="Cancel" />
-      <Button fx:id="updateCustomerBtn" layoutX="409.0" layoutY="418.0" mnemonicParsing="false" onAction="#updateCustomerHandler" text="Update " />
+      <Button fx:id="cancelButton" layoutX="487.0" layoutY="418.0" mnemonicParsing="false" onAction="#cancelAction" prefWidth="52.0" text="Cancel" />
+      <Button fx:id="updateCustomerButton" layoutX="409.0" layoutY="418.0" mnemonicParsing="false" onAction="#updateCustomerAction" text="Update " />
    </children>
 </AnchorPane>

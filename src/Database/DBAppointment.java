@@ -18,7 +18,7 @@ public class DBAppointment {
     //2020-08-22 15:00:00.0
 
 
-   public static boolean addToAppointmentTable(Integer customerId, String title, String type,  String description) {
+   public static boolean addToAppointmentTable(Integer customerId, String title, String startTime, String endTime, String type,  String description) {
         User user = new User();
         addAppointmentController add = new addAppointmentController();
         Integer currentUserId = user.getUserId();
@@ -49,8 +49,8 @@ public class DBAppointment {
             ps.setString(6, "");
             ps.setString(7, type);
             ps.setString(8, "");
-            ps.setString(9, add.getStartDateTime());
-            ps.setString(10, add.getEndDateTime());
+            ps.setString(9, startTime);
+            ps.setString(10, endTime);
             ps.setString(11, Utils.Time.getTimestamp());
             ps.setString(12, "admin");
             ps.setString(13, Utils.Time.getTimestamp());

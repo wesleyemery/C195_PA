@@ -21,41 +21,40 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class updateCustomerController implements Initializable {
-    @FXML
-    private Label customerNameLabel;
-
-    @FXML
-    private TextField customerNameTextField;
-
-    @FXML
-    private TextField customerAddressTextField;
-
-    @FXML
-    private TextField customerCountryTextField;
-
-    @FXML
-    private TextField customerPostalCodeTextField;
-
-    @FXML
-    private CheckBox customerActiveCheckBox;
-
-    @FXML
-    private TextField customerCityTextField;
-    @FXML
-    private Button cancelBtn;
-
-    @FXML
-    private TextField customerPhoneTextField;
 
 
     @FXML
-    private Button updateCustomerBtn;
+    private TextField nameTextField;
+
+    @FXML
+    private TextField addressTextField;
+
+    @FXML
+    private TextField countryTextField;
+
+    @FXML
+    private TextField postalCodeTextField;
+
+    @FXML
+    private CheckBox activeCb;
+
+    @FXML
+    private TextField cityTextField;
+    @FXML
+    private Button cancelButton;
+
+    @FXML
+    private TextField phoneTextField;
+
+
+    @FXML
+    private Button updateCustomerButton;
 
     Customer customer;
 
 
     @FXML
-    void cancelHandler(ActionEvent event) {
+    void cancelAction(ActionEvent event) {
         String message = "Are you sure you want to cancel?";
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("ALERT: Cancel");
@@ -68,16 +67,16 @@ public class updateCustomerController implements Initializable {
     }
 
     @FXML
-    void updateCustomerHandler(ActionEvent event) {
-        String name = customerNameTextField.getText().trim();
-        String phone = customerPhoneTextField.getText().trim();
-        String address = customerAddressTextField.getText().trim();
-        String city = customerCityTextField.getText().trim();
-        String country = customerCountryTextField.getText().trim();
-        String zipCode = customerPostalCodeTextField.getText().trim();
-        Integer active = customerActiveCheckBox.isSelected()?1:0;
+    void updateCustomerAction(ActionEvent event) {
+        String name = nameTextField.getText().trim();
+        String phone = phoneTextField.getText().trim();
+        String address = addressTextField.getText().trim();
+        String city = cityTextField.getText().trim();
+        String country = countryTextField.getText().trim();
+        String zipCode = postalCodeTextField.getText().trim();
+        Integer active = activeCb.isSelected()?1:0;
 
-        if (customerNameTextField.getText().isEmpty() || customerAddressTextField.getText().isEmpty() || customerCityTextField.getText().isEmpty() || customerPostalCodeTextField.getText().isEmpty() ||  customerPhoneTextField.getText().isEmpty()) {
+        if (nameTextField.getText().isEmpty() || addressTextField.getText().isEmpty() || cityTextField.getText().isEmpty() || postalCodeTextField.getText().isEmpty() ||  phoneTextField.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Please enter data in all fields!");
@@ -158,16 +157,16 @@ public class updateCustomerController implements Initializable {
 
     public void populateCustomerFields(Customer selectedCustomer){
         this.customer = selectedCustomer;
-        customerCountryTextField.setEditable(false);
-        customerCountryTextField.setDisable(true);
-        customerActiveCheckBox.setDisable(true);
+        countryTextField.setEditable(false);
+        countryTextField.setDisable(true);
+        activeCb.setDisable(true);
 
-        customerNameTextField.setText(selectedCustomer.getCustomerName());
-        customerPhoneTextField.setText(selectedCustomer.getCustomerPhone());
-        customerAddressTextField.setText((selectedCustomer.getCustomerAddress()));
-        customerPostalCodeTextField.setText(selectedCustomer.getCustomerPostalCode());
-        customerCityTextField.setText(selectedCustomer.getCustomerCity());
-        customerCountryTextField.setText(selectedCustomer.getCustomerCountry());
+        nameTextField.setText(selectedCustomer.getCustomerName());
+        phoneTextField.setText(selectedCustomer.getCustomerPhone());
+        addressTextField.setText((selectedCustomer.getCustomerAddress()));
+        postalCodeTextField.setText(selectedCustomer.getCustomerPostalCode());
+        cityTextField.setText(selectedCustomer.getCustomerCity());
+        countryTextField.setText(selectedCustomer.getCustomerCountry());
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

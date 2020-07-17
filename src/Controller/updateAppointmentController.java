@@ -13,49 +13,39 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class updateAppointmentController {
+
     @FXML
     private Label userNameLabel;
+
+    @FXML
+    private TextField titleTextField;
+
+    @FXML
+    private DatePicker endDate;
+
+    @FXML
+    private TextField typeTextField;
+
+    @FXML
+    private ComboBox<?> startCb;
+
+    @FXML
+    private ComboBox<?> endCb;
 
     @FXML
     private Label customerNameLabel;
 
     @FXML
-    private TextField appointmentTitleTextField;
+    private ComboBox<?> customerCb;
 
     @FXML
-    private DatePicker datePicker;
+    private DatePicker startDate;
 
     @FXML
-    private TextField appointmentTypeTextField;
+    private Button saveAppointmentBtn;
 
-    @FXML
-    private TextField startHourTextField;
-
-    @FXML
-    private TextField startMinuteTextField;
-
-    @FXML
-    private ChoiceBox<?> startAmPmChoiceBox;
-
-    @FXML
-    private TextField endHourTextField;
-
-    @FXML
-    private TextField endMinuteTextField;
-
-    @FXML
-    private ChoiceBox<?> endAmPmChoiceBox;
-
-    @FXML
-    private ComboBox<?> customerComboBox;
-
-    @FXML
-    private DatePicker datePicker1;
     @FXML
     private Button cancelBtn;
-
-    @FXML
-    private Button updateCustomerBtn;
 
     @FXML
     void cancelHandler(ActionEvent event) {
@@ -89,7 +79,12 @@ public class updateAppointmentController {
     }
 
     @FXML
-    void updateCustomerHandler(ActionEvent event) {
+    void saveAppointmentHandler(ActionEvent event) {
+
+    }
+
+    @FXML
+    void startDateAction(ActionEvent event) {
 
     }
 

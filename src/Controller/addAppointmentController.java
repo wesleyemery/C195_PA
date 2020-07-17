@@ -34,7 +34,7 @@ public class addAppointmentController implements Initializable {
     private Label userNameLabel;
 
     @FXML
-    private TextField appointmentTitleTextField;
+    private TextField titleTextField;
 
     @FXML
     public DatePicker startDate;
@@ -43,10 +43,10 @@ public class addAppointmentController implements Initializable {
     public DatePicker endDate;
 
     @FXML
-    private TextField appointmentTypeTextField;
+    private TextField typeTextField;
 
     @FXML
-    private TextArea appointmentDescriptionTextArea;
+    private TextArea descriptionTextArea;
 
     @FXML
     private ComboBox<LocalTime> startCb;
@@ -92,31 +92,33 @@ public class addAppointmentController implements Initializable {
     @FXML
     void saveAppointmentHandler(ActionEvent event) {
 
-        String title = appointmentTitleTextField.getText().trim();
+        String title = titleTextField.getText();
         LocalDate startDateValue = startDate.getValue();
         LocalDate endDateValue = endDate.getValue();
         LocalTime start = startCb.getValue();
         LocalTime end = endCb.getValue();
-        String type = appointmentTypeTextField.getText().trim();
-        String description = appointmentDescriptionTextArea.getText().trim();
+        String type = typeTextField.getText().trim();
+        String description = descriptionTextArea.getText().trim();
 
 
-        if (appointmentTitleTextField.getText().isEmpty() || appointmentTypeTextField.getText().isEmpty() || appointmentDescriptionTextArea.getText().isEmpty()) {
+        if (titleTextField.getText().isEmpty() || typeTextField.getText().isEmpty() || descriptionTextArea.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Please enter data in all fields!");
             alert.showAndWait();
-        }else if (start == null || end == null || startDate == null || endDate == null ) {
+        }else if (startCb.getValue() == null || endCb.getValue() == null || startDate.getValue() == null || endDate.getValue() == null ) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Please enter time and date data!");
             alert.showAndWait();
         }else {
-            //addToAppointmentTable(Integer customerId, String title, String type,  String description)
+
             String name = customerCb.getValue();
-            String starttime = getEndDateTime();
-            System.out.println(starttime);
-            DBAppointment.addToAppointmentTable(DBCustomer.getCustomerId(name), title, type, description);
+            String startTime = getStartDateTime();
+            String endTime = getEndDateTime();
+            //addToAppointmentTable(Integer customerId, String title, String startTime, String endTime, String type,  String description)
+            DBAppointment.addToAppointmentTable(DBCustomer.getCustomerId(name), title, startTime, endTime, type, description);
+            backToMain(event);
         }
 
     }
@@ -129,10 +131,14 @@ public class addAppointmentController implements Initializable {
         hoursArray.add(3, LocalTime.parse("10:30"));
         hoursArray.add(4, LocalTime.parse("11:00"));
         hoursArray.add(5, LocalTime.parse("11:30"));
-        hoursArray.add(6, LocalTime.parse("14:00"));
-        hoursArray.add(7, LocalTime.parse("14:30"));
-        hoursArray.add(8, LocalTime.parse("15:00"));
-        hoursArray.add(9, LocalTime.parse("15:30"));
+        hoursArray.add(6, LocalTime.parse("12:00"));
+        hoursArray.add(7, LocalTime.parse("12:30"));
+        hoursArray.add(8, LocalTime.parse("13:00"));
+        hoursArray.add(9, LocalTime.parse("13:30"));
+        hoursArray.add(10, LocalTime.parse("14:00"));
+        hoursArray.add(11, LocalTime.parse("14:30"));
+        hoursArray.add(12, LocalTime.parse("15:00"));
+        hoursArray.add(13, LocalTime.parse("15:30"));
 
         return hoursArray;
     }
@@ -148,7 +154,6 @@ public class addAppointmentController implements Initializable {
         date = String.valueOf(utcDateTime.toLocalDate());
         time = String.valueOf(utcDateTime.toLocalTime());
         String dateTimeString = date + " " + time;
-        System.out.println(dateTimeString);
         return dateTimeString;
     }
 
@@ -157,8 +162,8 @@ public class addAppointmentController implements Initializable {
     public String getEndDateTime() {
         ZoneId zoneId = ZoneId.of(TimeZone.getDefault().getID());
         ZoneOffset oS = ZoneId.of(zoneId.toString()).getRules().getOffset(Instant.now());
-        String localDateTimeString = endDate.getValue().toString() +"T" + endCb.getValue().toString() + ":00" + oS + "[" + zoneId + "]";
-        ZonedDateTime dateTime = ZonedDateTime.parse(localDateTimeString);
+        String localDateTime = endDate.getValue().toString() +"T" + endCb.getValue().toString() + ":00" + oS + "[" + zoneId + "]";
+        ZonedDateTime dateTime = ZonedDateTime.parse(localDateTime);
         Instant localToUtcInstant = dateTime.toInstant();
         ZonedDateTime utcDateTime = localToUtcInstant.atZone(ZoneOffset.UTC);
         String date, time;

@@ -39,25 +39,25 @@ public class mainScreenController implements Initializable {
 
 
     @FXML
-    private TableView<Appointment> appointmentTable;
+    private TableView<Appointment> apptTable;
 
     @FXML
-    private TableColumn<Appointment, Integer> appointmentIDColumn;
+    private TableColumn<Appointment, Integer> apptIdCol;
 
     @FXML
-    private TableColumn<Appointment, String> appointmentTitleColumn;
+    private TableColumn<Appointment, String> apptTitleCol;
 
     @FXML
-    private TableColumn<Appointment, String> appointmentTypeColumn;
+    private TableColumn<Appointment, String> apptTypeCol;
 
     @FXML
-    private TableColumn<Appointment, String> appointmentStartColumn;
+    private TableColumn<Appointment, String> apptStartCol;
 
     @FXML
-    private TableColumn<Appointment, String> appointmentEndColumn;
+    private TableColumn<Appointment, String> apptEndCol;
 
     @FXML
-    private TableColumn<Appointment, Integer> appointmentCustomerColumn;
+    private TableColumn<Appointment, Integer> apptCustomerCol;
 
     @FXML
     private Button newAppointmentButton;
@@ -67,8 +67,27 @@ public class mainScreenController implements Initializable {
 
     @FXML
     private Button deleteAppointmentButton;
+    @FXML
+    private TableView<Customer> custTable;
 
     @FXML
+    private TableColumn<Customer, Integer> custIdCol;
+
+    @FXML
+    private TableColumn<Customer, String> custNameCol;
+
+    @FXML
+    private TableColumn<Customer, String> custAddressCol;
+
+    @FXML
+    private TableColumn<Customer, String> custCountryCol;
+
+    @FXML
+    private TableColumn<Customer, String> custCityCol;
+
+    @FXML
+    private TableColumn<Customer, String> custPhoneCol;
+   /* @FXML
     private TableView<Customer> customerTable;
 
     @FXML
@@ -87,16 +106,16 @@ public class mainScreenController implements Initializable {
     private TableColumn<Customer, String> customerCityColumn;
 
     @FXML
-    private TableColumn<Customer, String> customerPhoneColumn;
+    private TableColumn<Customer, String> customerPhoneColumn;*/
 
     @FXML
-    private Button newCustomerBtn;
+    private Button newCustomerButton;
 
     @FXML
-    private Button updateCustomerBtn;
+    private Button updateCustomerButton;
 
     @FXML
-    private Button deleteCustomerBtn;
+    private Button deleteCustomerButton;
 
     @FXML
     private RadioButton radioWeek;
@@ -158,19 +177,12 @@ public class mainScreenController implements Initializable {
         stage.show();
     }
 
-   /* @FXML
-    private Button reportsButton;
-
-    @FXML
-    void reportsButtonAction(ActionEvent event) throws IOException {
-
-    }*/
 
     @FXML
     void deleteAppointmentAction(ActionEvent event) {
-        Appointment appointmentDelete = appointmentTable.getSelectionModel().getSelectedItem();
+        Appointment appointmentDelete = apptTable.getSelectionModel().getSelectedItem();
         if(appointmentDelete != null) {
-            String message = "Are you sure you want to delete " + appointmentTable.getSelectionModel().getSelectedItem().getTitle() + " appointment?";
+            String message = "Are you sure you want to delete " + apptTable.getSelectionModel().getSelectedItem().getTitle() + " appointment?";
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("ALERT: Delete Selected");
             alert.setHeaderText("Confirm");
@@ -183,8 +195,8 @@ public class mainScreenController implements Initializable {
                     ps.execute();
 
                     appointmentArray.clear();
-                    appointmentTable.setItems(queryAppointments());
-                    appointmentTable.refresh();
+                    apptTable.setItems(queryAppointments());
+                    apptTable.refresh();
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -200,10 +212,10 @@ public class mainScreenController implements Initializable {
     }
 
     @FXML
-    void deleteCustomerHandler(ActionEvent event) {
-        Customer customerDelete = customerTable.getSelectionModel().getSelectedItem();
+    void deleteCustomerAction(ActionEvent event) {
+        Customer customerDelete = custTable.getSelectionModel().getSelectedItem();
         if(customerDelete != null) {
-            String message = "Are you sure you want to delete " + customerTable.getSelectionModel().getSelectedItem().getCustomerName() + "?";
+            String message = "Are you sure you want to delete " + custTable.getSelectionModel().getSelectedItem().getCustomerName() + "?";
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("ALERT: Delete Selected");
             alert.setHeaderText("Confirm");
@@ -219,8 +231,8 @@ public class mainScreenController implements Initializable {
                     ps.execute();
 
                     customerArray.clear();
-                    customerTable.setItems(queryCustomers());
-                    customerTable.refresh();
+                    custTable.setItems(queryCustomers());
+                    custTable.refresh();
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -249,10 +261,10 @@ public class mainScreenController implements Initializable {
     }
 
     @FXML
-    void newCustomerHandler(ActionEvent event) throws IOException {
+    void newCustomerAction(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/addCustomerScreen.fxml"));
         addCustomerController controller = new addCustomerController();
-        Stage stage = (Stage) newCustomerBtn.getScene().getWindow();
+        Stage stage = (Stage) newCustomerButton.getScene().getWindow();
 
         loader.setController(controller);
         Parent root = loader.load();
@@ -276,8 +288,8 @@ public class mainScreenController implements Initializable {
     }
 
     @FXML
-    void updateCustomerHandler(ActionEvent event) throws IOException {
-        Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+    void updateCustomerAction(ActionEvent event) throws IOException {
+        Customer selectedCustomer = custTable.getSelectionModel().getSelectedItem();
         //Address address = address.getAddress();
         if (!(selectedCustomer == null)){
             try{
@@ -291,23 +303,10 @@ public class mainScreenController implements Initializable {
             }
         }else
             return;
-
-       /* updateCustomerController controller = new updateCustomerController();
-        controller.populateCustomerFields(selectedCustomer);
-
-        Stage stage = (Stage) updateAppointmentBtn.getScene().getWindow();
-
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();*/
-
     }
 
 
     public void appointmentTime15() {
-
 
         LocalDateTime localDateTime =Utils.Time.getLocalDateTime();
         LocalDateTime localDateTimeAdd15 = Utils.Time.getLocalDateTimeAdd15();
@@ -329,41 +328,39 @@ public class mainScreenController implements Initializable {
             e.printStackTrace();
         }
     }
+
     @FXML
     void allAction(ActionEvent event) {
         generateAppointmentTable();
-
     }
 
     @FXML
     void monthAction(ActionEvent event) {
         generateAppointmentTable();
-
     }
 
     @FXML
     void weekAction(ActionEvent event) {
         generateAppointmentTable();
-
     }
     public void generateAppointmentTable(){
-        appointmentTable.getItems().setAll(queryAppointments());
-        appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        appointmentTitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        appointmentTypeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        appointmentStartColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
-        appointmentEndColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
-        appointmentCustomerColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        apptTable.getItems().setAll(queryAppointments());
+        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        apptCustomerCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
     }
 
         public void generateCustomerTable(){
-        customerTable.getItems().setAll(queryCustomers());
-        customerIDColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
-        customerCityColumn.setCellValueFactory(new PropertyValueFactory<>("customerCity"));
-        customerCountryColumn.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
-        customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
+        custTable.getItems().setAll(queryCustomers());
+        custIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        custNameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        custAddressCol.setCellValueFactory(new PropertyValueFactory<>("customerAddress"));
+        custCityCol.setCellValueFactory(new PropertyValueFactory<>("customerCity"));
+        custCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountry"));
+        custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
 
     }
     public ObservableList<Appointment> queryAppointments() {
@@ -390,9 +387,9 @@ public class mainScreenController implements Initializable {
         } else if(radioMonth.isSelected()){
             appointmentArray.clear();
             String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getMonth() + "' AND appointment.end <= '" + Utils.Time.getEndOfMonth() + "' AND userId='1';";
-            System.out.println(query);
-            try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
-                 ResultSet rs = statement.executeQuery()) {
+            //System.out.println(query);
+            try (PreparedStatement sm = DBConnection.getConnection().prepareStatement(query);
+                 ResultSet rs = sm.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("appointment.appointmentId");
                     int customerId = rs.getInt("appointment.customerId");
@@ -412,8 +409,8 @@ public class mainScreenController implements Initializable {
             appointmentArray.clear();
             String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getWeek() + "' AND appointment.end <= '" + Utils.Time.getWeekLater() + "' AND userId='1';";
             //System.out.println(query);
-            try (PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
-                 ResultSet rs = statement.executeQuery()) {
+            try (PreparedStatement sm = DBConnection.getConnection().prepareStatement(query);
+                 ResultSet rs = sm.executeQuery()) {
                 while (rs.next()) {
                     int id = rs.getInt("appointment.appointmentId");
                     int customerId = rs.getInt("appointment.customerId");
@@ -464,8 +461,6 @@ public class mainScreenController implements Initializable {
         customerArray.clear();
         generateAppointmentTable();
         generateCustomerTable();
-
-
 
         }
 }
