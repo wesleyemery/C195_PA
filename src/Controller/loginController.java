@@ -179,7 +179,7 @@ public class loginController implements Initializable {
         locale = Locale.getDefault();
         rb = ResourceBundle.getBundle("Languages/language", locale.getDefault());
         textFieldGenerate();
-        if (locale.getDefault().getLanguage().equals("es") ||  locale.getDefault().getLanguage().equals("en")) {
+        if (locale.getDefault().getLanguage().equals("es") ||  locale.getDefault().getLanguage().equals("en") || locale.getDefault().getLanguage().equals("mx")) {
             errorPassword = rb.getString("errorPassword");
             errorBlank = rb.getString("errorBlank");
             errorTitle = rb.getString("errorTitle");

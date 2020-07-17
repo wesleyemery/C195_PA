@@ -10,11 +10,11 @@ import java.sql.SQLException;
 import java.sql.*;
 
 public class DBAddress {
-    public static Integer getAddressId(String address, Integer cityId) {
+    public static Integer getAddressId(String address) {
         try{
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT addressId FROM address WHERE address = ? AND cityId = ?");
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT addressId FROM address WHERE address = ? ");
             ps.setString(1, address);
-            ps.setInt(2, cityId);
+
 
             ResultSet rs = ps.executeQuery();
 
@@ -64,12 +64,15 @@ public class DBAddress {
             ps.setInt(3, cityId);
             ps.setString(4, postalCode);
             ps.setString(5, phoneNumber);
-            ps.setString(6, Utils.Time.dateTime());
+            ps.setTimestamp(6, Utils.Time.now());
             ps.setString(7, "admin");
-            ps.setString(8, Utils.Time.dateTime());
+            ps.setTimestamp(8, Utils.Time.now());
             ps.setString(9, "admin");
 
             ps.executeUpdate();
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            Integer id = null;
+
             if(ps.getUpdateCount() == 0)
                 System.out.println("Address creation failed");
             else {
@@ -78,9 +81,6 @@ public class DBAddress {
                 alert.setContentText("Added to address table successfully");
                 alert.showAndWait();
             }
-            ResultSet generatedKeys = ps.getGeneratedKeys();
-
-            Integer id = null;
 
             if (generatedKeys.next()) {
                 id = generatedKeys.getInt(1);

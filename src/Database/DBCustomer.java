@@ -129,6 +129,25 @@ public class DBCustomer {
         }
     }
 
+    public static String getCustomerName(int customerId) {
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT customerName FROM customer WHERE customerId = ?;");
+            ps.setInt(1, customerId);
 
+            ResultSet rs = ps.executeQuery();
+
+            String name = null;
+
+            if (rs.next()) {
+                name = rs.getString("customerName");
+            }
+
+            rs.close();
+            return name;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 

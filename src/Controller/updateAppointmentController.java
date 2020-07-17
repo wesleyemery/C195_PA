@@ -1,6 +1,8 @@
 package Controller;
 
+import Database.DBAppointment;
 import Database.DBConnection;
+import Database.DBCustomer;
 import Model.Appointment;
 import Model.Customer;
 import javafx.collections.FXCollections;
@@ -22,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -62,7 +65,7 @@ public class updateAppointmentController implements Initializable {
 
     @FXML
     private Button cancelBtn;
-
+    ObservableList<String> customerNames = FXCollections.observableArrayList();
     private static ObservableList<Customer> customerArray = FXCollections.observableArrayList();
     private static ObservableList<LocalTime> hoursArray = FXCollections.observableArrayList();
     Appointment appointment;
@@ -101,28 +104,42 @@ public class updateAppointmentController implements Initializable {
             e.printStackTrace();
         }
     }
-    private void timeDateSetter() {
-        String startDateTime = appointment.getStart();
-        if (startDateTime.isEmpty())
+    private void startDateTimeSetter() {
+        LocalDateTime startDateTime = appointment.getStart();
+        String startDateTimeStr = startDateTime.toString();
+        if (startDateTimeStr.isEmpty())
             System.out.println("The StartDateTime variable is empty: " + startDateTime);
         else {
-            startDate1 = LocalDate.parse(startDateTime.substring(0, startDateTime.indexOf(' ')));
-            startTime = LocalTime.parse(startDateTime.substring(11, 16), DateTimeFormatter.ofPattern("HH:mm"));
+            startDate1 = LocalDate.parse(startDateTimeStr.substring(0, startDateTimeStr.indexOf('T')));
+            startTime = LocalTime.parse(startDateTimeStr.substring(11, 16), DateTimeFormatter.ofPattern("HH:mm"));
         }
     }
-    /*public void getSelectedCustomer(int customerId) {
-        for (Customer customer : customerArray) {
 
-            if (customer.getCustomerId() == customerId) customerCb.setValue(customer);
+    private void endDateTimeSetter() {
+        LocalDateTime endDateTime = appointment.getEnd();
+        String endDateTimeStr = endDateTime.toString();
+        if (endDateTimeStr.isEmpty())
+            System.out.println("The StartDateTime variable is empty: " + endDateTime);
+        else {
+            endDate1 = LocalDate.parse(endDateTimeStr.substring(0, endDateTimeStr.indexOf('T')));
+            endTime = LocalTime.parse(endDateTimeStr.substring(11, 16), DateTimeFormatter.ofPattern("HH:mm"));
         }
-    }*/
+    }
+    public void setCustomerNames() {
+        for (Customer c:customerArray) {
+            customerNames.add(c.getCustomerName());
+        }
+    }
 
-    public void populateAppointmentFields(Appointment selectedAppointment) {
-        //timeDateSetter();
-        this.appointment = selectedAppointment;
+    public void populateAppointmentFields(Appointment appointment) {
+
+        this.appointment = appointment;
+        startDateTimeSetter();
+        endDateTimeSetter();
         titleTextField.setText(appointment.getTitle());
         typeTextField.setText(appointment.getTitle());
-        //getSelectedCustomer(appointment.getCustomerId());
+        String customerName = DBCustomer.getCustomerName(appointment.getCustomerId());
+        customerCb.setValue(customerName);
         startDate.setValue(startDate1);
         startCb.setValue(startTime);
         endDate.setValue(endDate1);
@@ -130,9 +147,45 @@ public class updateAppointmentController implements Initializable {
 
     }
 
+
     @FXML
     void saveAppointmentHandler(ActionEvent event) {
+        String title = titleTextField.getText();
+        String type = typeTextField.getText();
+        String customer = customerCb.getValue();
+        LocalDate startDate1 = startDate.getValue();
+        LocalTime start = startCb.getSelectionModel().getSelectedItem();
+        LocalDate endDate1 = endDate.getValue();
+        LocalTime end = endCb.getSelectionModel().getSelectedItem();
 
+        if (typeTextField.getText().isEmpty() || titleTextField.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please enter data in all fields!");
+            alert.showAndWait();
+        } else if(customer.isEmpty() || customer == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please enter customer data!");
+            alert.showAndWait();
+        }else if (startCb.getValue() == null || endCb.getValue() == null || startDate.getValue() == null || endDate.getValue() == null ) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please enter time and date data!");
+            alert.showAndWait();
+        } else if (end != null && start != null) {
+            if (end.isBefore(start) || end.equals(start)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("End Time cannot be at the same time or before the Start Time.");
+                alert.showAndWait();
+            }
+        } else {
+            String startStr = start.toString();
+            String endStr = end.toString();
+            DBAppointment.updateToAppointmentTable(appointment.getCustomerId(), title, startStr, endStr, type, appointment.getAppointmentId());
+            backToMain(event);
+        }
     }
 
     @FXML
@@ -180,10 +233,11 @@ public class updateAppointmentController implements Initializable {
 
         //customerArray.clear();
         queryAllCustomerNames();
-        ObservableList<String> customerNames = FXCollections.observableArrayList();
+        setCustomerNames();
+        /*ObservableList<String> customerNames = FXCollections.observableArrayList();
         for (Customer c:customerArray) {
             customerNames.add(c.getCustomerName());
-        }
+        }*/
         startDate.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
@@ -206,6 +260,7 @@ public class updateAppointmentController implements Initializable {
         setHours();
         startCb.setItems(hoursArray);
         endCb.setItems(hoursArray);
+
     }
 }
 

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ResourceBundleManager">
+    <file url="file://$PROJECT_DIR$/src/Languages/language_en_MX.properties" />
+    <file url="file://$PROJECT_DIR$/src/Languages/language_en_US.properties" />
+    <file url="file://$PROJECT_DIR$/src/Languages/language_es_ES.properties" />
+  </component>
+</project>

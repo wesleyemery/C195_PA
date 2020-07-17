@@ -66,6 +66,7 @@ public class updateCustomerController implements Initializable {
         }
     }
 
+
     @FXML
     void updateCustomerAction(ActionEvent event) {
         String name = nameTextField.getText().trim();

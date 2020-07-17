@@ -68,6 +68,8 @@ public class addAppointmentController implements Initializable {
     private Button cancelBtn;
 
     Customer customer = new Customer();
+    ObservableList<String> customerNames = FXCollections.observableArrayList();
+
     private static ObservableList<Customer> customerArray = FXCollections.observableArrayList();
     private static ObservableList<LocalTime> hoursArray = FXCollections.observableArrayList();
     
@@ -75,7 +77,12 @@ public class addAppointmentController implements Initializable {
     void startDateAction(ActionEvent event) {
         endDate.setValue(startDate.getValue());
     }
-    
+
+    public void setCustomerNames() {
+        for (Customer c:customerArray) {
+            customerNames.add(c.getCustomerName());
+        }
+    }
     @FXML
     void cancelAction(ActionEvent event) {
         String message = "Are you sure you want to cancel?";
@@ -99,7 +106,7 @@ public class addAppointmentController implements Initializable {
         LocalTime end = endCb.getValue();
         String type = typeTextField.getText().trim();
         String description = descriptionTextArea.getText().trim();
-        StringBuilder validationErrors = new StringBuilder();
+        //StringBuilder validationErrors = new StringBuilder();
 
 
         if (titleTextField.getText().isEmpty() || typeTextField.getText().isEmpty() || descriptionTextArea.getText().isEmpty()) {
@@ -219,10 +226,7 @@ public class addAppointmentController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         customerArray.clear();
         queryAllCustomerNames();
-        ObservableList<String> customerNames = FXCollections.observableArrayList();
-        for (Customer c:customerArray) {
-            customerNames.add(c.getCustomerName());
-        }
+        setCustomerNames();
        /* hoursArray.clear();
         hoursArray.add(0, LocalTime.parse("09:00"));
         hoursArray.add(1, LocalTime.parse("09:30"));

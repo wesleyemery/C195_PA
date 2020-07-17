@@ -89,7 +89,7 @@ public class addCustomerController implements Initializable {
                 cityId = DBCity.addToCityTable(city, countryId);
             }
 
-            Integer addressId = DBAddress.getAddressId(address, cityId);
+            Integer addressId = DBAddress.getAddressId(address);
 
             if (addressId == null) {
                 addressId = DBAddress.addToAddressTable(address, cityId, zipCode, phone);

@@ -277,15 +277,15 @@ public class mainScreenController implements Initializable {
     @FXML
     void updateAppointmentAction(ActionEvent event) throws IOException {
 
-        Appointment selectedAppointment = apptTable.getSelectionModel().getSelectedItem();
+        Appointment appointment = apptTable.getSelectionModel().getSelectedItem();
         //Address address = address.getAddress();
-        if (!(selectedAppointment == null)){
+        if (!(appointment == null)){
             try{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/updateAppointmentScreen.fxml"));
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(loader.load()));
                 updateAppointmentController controller = loader.getController();
-                controller.populateAppointmentFields(selectedAppointment);
+                controller.populateAppointmentFields(appointment);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -378,12 +378,12 @@ public class mainScreenController implements Initializable {
             try {
                 ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(query);
                 while (rs.next()) {
-                    int id = rs.getInt("appointmentID");
+                    int id = rs.getInt("appointmentId");
                     int customerId = rs.getInt("customerID");
                     String title = rs.getString("title");
                     String type = rs.getString("type");
-                    String start = rs.getTimestamp("start").toLocalDateTime().toString();
-                    String end = rs.getTimestamp("end").toLocalDateTime().toString();
+                    LocalDateTime start = rs.getTimestamp("start").toLocalDateTime();
+                    LocalDateTime end = rs.getTimestamp("end").toLocalDateTime();
                     appointmentArray.add(new Appointment(id, customerId, title, type, start, end));
                 }
             } catch (SQLException e) {
@@ -401,11 +401,9 @@ public class mainScreenController implements Initializable {
                     int customerId = rs.getInt("appointment.customerId");
                     String title = rs.getString("appointment.title");
                     String type = rs.getString("appointment.type");
-                    String start = rs.getString("appointment.start");
-                    String timeStart = Utils.Time.getStartDateTime(start);
-                    String end = rs.getString("appointment.end");
-                    String timeEnd = Utils.Time.getEndDateTime(end);
-                    appointmentArray.add(new Appointment(id, customerId, title, type, timeStart, timeEnd));
+                    LocalDateTime start = rs.getTimestamp("start").toLocalDateTime();
+                    LocalDateTime end = rs.getTimestamp("end").toLocalDateTime();
+                    appointmentArray.add(new Appointment(id, customerId, title, type, start, end));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -422,11 +420,9 @@ public class mainScreenController implements Initializable {
                     int customerId = rs.getInt("appointment.customerId");
                     String title = rs.getString("appointment.title");
                     String type = rs.getString("appointment.type");
-                    String start = rs.getString("appointment.start");
-                    String timeStart = Utils.Time.getStartDateTime(start);
-                    String end = rs.getString("appointment.end");
-                    String timeEnd = Utils.Time.getEndDateTime(end);
-                    appointmentArray.add(new Appointment(id, customerId, title, type, timeStart, timeEnd));
+                    LocalDateTime start = rs.getTimestamp("start").toLocalDateTime();
+                    LocalDateTime end = rs.getTimestamp("end").toLocalDateTime();
+                    appointmentArray.add(new Appointment(id, customerId, title, type, start, end));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
