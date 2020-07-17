@@ -276,15 +276,21 @@ public class mainScreenController implements Initializable {
 
     @FXML
     void updateAppointmentAction(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/updateAppointmentScreen.fxml"));
-        updateAppointmentController controller = new updateAppointmentController();
-        Stage stage = (Stage) updateAppointmentButton.getScene().getWindow();
 
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        Appointment selectedAppointment = apptTable.getSelectionModel().getSelectedItem();
+        //Address address = address.getAddress();
+        if (!(selectedAppointment == null)){
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/updateAppointmentScreen.fxml"));
+                Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(loader.load()));
+                updateAppointmentController controller = loader.getController();
+                controller.populateAppointmentFields(selectedAppointment);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else
+            return;
     }
 
     @FXML
@@ -376,8 +382,8 @@ public class mainScreenController implements Initializable {
                     int customerId = rs.getInt("customerID");
                     String title = rs.getString("title");
                     String type = rs.getString("type");
-                    LocalDateTime start = rs.getTimestamp("start").toLocalDateTime();
-                    LocalDateTime end = rs.getTimestamp("end").toLocalDateTime();
+                    String start = rs.getTimestamp("start").toLocalDateTime().toString();
+                    String end = rs.getTimestamp("end").toLocalDateTime().toString();
                     appointmentArray.add(new Appointment(id, customerId, title, type, start, end));
                 }
             } catch (SQLException e) {

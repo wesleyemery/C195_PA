@@ -93,12 +93,13 @@ public class addAppointmentController implements Initializable {
     void saveAppointmentHandler(ActionEvent event) {
 
         String title = titleTextField.getText();
-        LocalDate startDateValue = startDate.getValue();
-        LocalDate endDateValue = endDate.getValue();
+        String startDateValue = startDate.getValue().toString();
+        String endDateValue = endDate.getValue().toString();
         LocalTime start = startCb.getValue();
         LocalTime end = endCb.getValue();
         String type = typeTextField.getText().trim();
         String description = descriptionTextArea.getText().trim();
+        StringBuilder validationErrors = new StringBuilder();
 
 
         if (titleTextField.getText().isEmpty() || typeTextField.getText().isEmpty() || descriptionTextArea.getText().isEmpty()) {
@@ -111,6 +112,13 @@ public class addAppointmentController implements Initializable {
             alert.setTitle("Error");
             alert.setContentText("Please enter time and date data!");
             alert.showAndWait();
+        } else if (end != null && start != null) {
+            if (end.isBefore(start) || end.equals(start)) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("End Time cannot be at the same time or before the Start Time.");
+                alert.showAndWait();
+            }
         }else {
 
             String name = customerCb.getValue();
@@ -120,6 +128,7 @@ public class addAppointmentController implements Initializable {
             DBAppointment.addToAppointmentTable(DBCustomer.getCustomerId(name), title, startTime, endTime, type, description);
             backToMain(event);
         }
+
 
     }
 
@@ -253,8 +262,5 @@ public class addAppointmentController implements Initializable {
         startCb.setItems(hoursArray);
         endCb.setItems(hoursArray);
 
-        /*ZoneId zoneId = ZoneId.of(TimeZone.getDefault().getID());
-        ZoneOffset oS = ZoneId.of(zoneId.toString()).getRules().getOffset(Instant.now());
-        String localDateTime = startDate.getValue().toString() + "T" + startCb.getValue().toString() + ":00" + oS + "[" + zoneId + "]";*/
     }
 }
