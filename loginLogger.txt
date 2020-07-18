@@ -10,3 +10,13 @@ Jul 18, 2020 12:59:37 PM Controller.loginController loginLogger
 INFO: User Username successfully logged in.
 Jul 18, 2020 1:01:22 PM Controller.loginController loginLogger
 INFO: User Username successfully logged in.
+Jul 18, 2020 1:08:28 PM Controller.loginController loginLogger
+INFO: User Username successfully logged in.
+Jul 18, 2020 1:12:52 PM Controller.loginController loginLogger
+INFO: User Username successfully logged in.
+Jul 18, 2020 1:22:37 PM Controller.loginController loginLogger
+INFO: User Username successfully logged in.
+Jul 18, 2020 1:27:04 PM Controller.loginController loginLogger
+INFO: User Username successfully logged in.
+Jul 18, 2020 1:37:23 PM Controller.loginController loginLogger
+INFO: User Username successfully logged in.

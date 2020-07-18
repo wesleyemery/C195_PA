@@ -10,28 +10,7 @@ import java.sql.*;
 public class DBCustomer {
 
 
-    /*public static Integer getCustomerId(String customerName, Integer addressId) {
-        try{
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT customerId FROM customer WHERE customerName = ? AND addressId = ?;");
-            ps.setString(1, customerName);
-            ps.setInt(2, addressId);
 
-            ResultSet rs = ps.executeQuery();
-
-            Integer id = null;
-
-            if(rs.next()) {
-                id = rs.getInt("customerId");
-            }
-
-            rs.close();
-            return id;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }*/
 
 
     public static Integer addToCustomerTable(String customerName, Integer addressId, Integer active) {
@@ -50,7 +29,7 @@ public class DBCustomer {
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
 
-            Integer id = null;
+            Integer customerid = null;
             if (ps.getUpdateCount() == 0)
                 System.out.println("Customer creation failed");
             else {
@@ -60,11 +39,10 @@ public class DBCustomer {
                 alert.showAndWait();
             }
             if (generatedKeys.next()) {
-                id = generatedKeys.getInt(1);
+                customerid = generatedKeys.getInt(1);
             }
 
-            ps.close();
-            return id;
+            return customerid;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,7 +79,6 @@ public class DBCustomer {
                 alert.showAndWait();
             }
 
-            ps.close();
             return customerId;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,14 +92,13 @@ public class DBCustomer {
 
             ResultSet rs = ps.executeQuery();
 
-            Integer id = null;
+            Integer customerid = null;
 
             if (rs.next()) {
-                id = rs.getInt("customerId");
+                customerid = rs.getInt("customerId");
             }
 
-            rs.close();
-            return id;
+            return customerid;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -142,7 +118,6 @@ public class DBCustomer {
                 name = rs.getString("customerName");
             }
 
-            rs.close();
             return name;
         } catch (SQLException e) {
             e.printStackTrace();

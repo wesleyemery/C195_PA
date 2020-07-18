@@ -12,14 +12,13 @@ public class DBCountry {
 
             ResultSet rs = ps.executeQuery();
 
-            Integer id = null;
+            Integer countryid = null;
 
             if(rs.next()) {
-                id = rs.getInt("countryId");
+                countryid = rs.getInt("countryId");
             }
 
-            rs.close();
-            return id;
+            return countryid;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,7 +39,7 @@ public class DBCountry {
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
 
-            Integer id = null;
+            Integer countryid = null;
             if (ps.getUpdateCount() == 0)
                 System.out.println("Country creation failed");
             else {
@@ -50,11 +49,10 @@ public class DBCountry {
                 alert.showAndWait();
             }
             if (generatedKeys.next()) {
-                id = generatedKeys.getInt(1);
+                countryid = generatedKeys.getInt(1);
             }
 
-            ps.close();
-            return id;
+            return countryid;
 
         } catch (
                 SQLException e) {

@@ -32,32 +32,7 @@ public class DBUser {
         return allUsers;
     }
 
-    public static Integer queryUserIdbyName(String user) {
 
-        String query = "SELECT userId "
-                + "FROM user where userName = ?;";
-
-        try {
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
-            ps.setString(1, user);
-            ResultSet rs = ps.executeQuery();
-
-            Integer id = null;
-
-            if (rs.next()) {
-                 id = rs.getInt("userId");
-
-            }
-
-            rs.close();
-            return id;
-        } catch (
-                SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
     public static Integer queryUserId() {
 
@@ -68,15 +43,14 @@ public class DBUser {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
-            Integer id = null;
+            Integer userid = null;
 
             if (rs.next()) {
-                id = rs.getInt("userId");
+                userid = rs.getInt("userId");
 
             }
 
-            rs.close();
-            return id;
+            return userid;
         } catch (
                 SQLException e) {
             e.printStackTrace();

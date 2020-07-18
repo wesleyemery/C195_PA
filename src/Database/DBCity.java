@@ -13,14 +13,13 @@ public class DBCity {
 
             ResultSet rs = ps.executeQuery();
 
-            Integer id = null;
+            Integer cityid = null;
 
             if(rs.next()) {
-                id = rs.getInt("cityId");
+                cityid = rs.getInt("cityId");
             }
 
-            rs.close();
-            return id;
+            return cityid;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,14 +34,13 @@ public class DBCity {
 
             ResultSet rs = ps.executeQuery();
 
-            Integer id = null;
+            Integer cityid = null;
 
             if(rs.next()) {
-                id = rs.getInt("cityId");
+                cityid = rs.getInt("cityId");
             }
 
-            rs.close();
-            return id;
+            return cityid;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,7 +62,7 @@ public class DBCity {
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
 
-            Integer id = null;
+            Integer cityid = null;
             if (ps.getUpdateCount() == 0)
                 System.out.println("City creation failed");
             else {
@@ -74,11 +72,10 @@ public class DBCity {
                 alert.showAndWait();
             }
             if (generatedKeys.next()) {
-                id = generatedKeys.getInt(1);
+                cityid = generatedKeys.getInt(1);
             }
 
-            ps.close();
-            return id;
+            return cityid;
 
         } catch (
                 SQLException e) {

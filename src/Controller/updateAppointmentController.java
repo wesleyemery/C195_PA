@@ -111,7 +111,7 @@ public class updateAppointmentController implements Initializable {
         startDateTimeSetter();
         endDateTimeSetter();
         titleTextField.setText(appointment.getTitle());
-        typeTextField.setText(appointment.getTitle());
+        typeTextField.setText(appointment.getType());
         String customerName = DBCustomer.getCustomerName(appointment.getCustomerId());
         customerCb.setValue(customerName);
         startDate.setValue(startDate1);
@@ -211,21 +211,8 @@ public class updateAppointmentController implements Initializable {
             if (end.isBefore(start) ||  end.equals(start)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setContentText("End Time cannot be at the same time or before the Start Time.");
+                alert.setContentText("End Time is overlapping with the Start Time.");
                 alert.showAndWait();
-            }
-        }
-
-        Integer id = DBUser.queryUserId();
-        if (id != null){
-            String st = getStartDateTime() + ":00";
-            String et = getEndDateTime() + ":00";
-            if (DBAppointment.isOverlap(st, et, id)) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Error");
-                alert.setContentText("This appointment overlaps with another");
-                alert.showAndWait();
-                return;
             }
         }
 

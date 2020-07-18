@@ -18,14 +18,13 @@ public class DBAddress {
 
             ResultSet rs = ps.executeQuery();
 
-            Integer id = null;
+            Integer addressid = null;
 
             if(rs.next()) {
-                id = rs.getInt("addressId");
+                addressid = rs.getInt("addressId");
             }
 
-            rs.close();
-            return id;
+            return addressid;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,14 +39,13 @@ public class DBAddress {
 
             ResultSet rs = ps.executeQuery();
 
-            Integer id = null;
+            Integer addressid = null;
 
             if(rs.next()) {
-                id = rs.getInt("addressId");
+                addressid = rs.getInt("addressId");
             }
 
-            rs.close();
-            return id;
+            return addressid;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,7 +69,7 @@ public class DBAddress {
 
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
-            Integer id = null;
+            Integer addressid = null;
 
             if(ps.getUpdateCount() == 0)
                 System.out.println("Address creation failed");
@@ -83,11 +81,10 @@ public class DBAddress {
             }
 
             if (generatedKeys.next()) {
-                id = generatedKeys.getInt(1);
+                addressid = generatedKeys.getInt(1);
             }
 
-            ps.close();
-            return id;
+            return addressid;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -116,7 +113,6 @@ public class DBAddress {
                 alert.setContentText("Updated to address table successfully");
                 alert.showAndWait();
             }
-            ps.close();
             return addressId;
         } catch (SQLException e) {
             e.printStackTrace();
