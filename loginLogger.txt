@@ -1,0 +1,4 @@
+Jul 18, 2020 12:25:19 PM Controller.loginController loginLogger
+INFO: Invalid UserName or Password.
+Jul 18, 2020 12:25:40 PM Controller.loginController loginLogger
+INFO: User Username successfully logged in.

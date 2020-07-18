@@ -24,6 +24,10 @@ import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class loginController implements Initializable {
 
@@ -109,12 +113,14 @@ public class loginController implements Initializable {
                     userNameValid = true;
                     if(u.getPassword().equals(password)){
                         passwordValid = true;
+                        currentUser = u;
                         break;
                     }
                 }
 
             }
             if (userNameValid && passwordValid) {
+                loginLogger(currentUser);
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/mainScreen.fxml"));
                 mainScreenController controller = new mainScreenController();
                 Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -151,6 +157,25 @@ public class loginController implements Initializable {
 
     public User getCurrentUser() {
         return this.currentUser;
+    }
+
+    // similar method found in C195LoggerExample
+    private void loginLogger(User user) {
+        Logger log = Logger.getLogger("loginLogger.txt");
+        log.setLevel(Level.INFO);
+        try {
+            FileHandler fileHandler = new FileHandler("loginLogger.txt", true);
+            SimpleFormatter simpleFormatter = new SimpleFormatter();
+            fileHandler.setFormatter(simpleFormatter);
+            log.addHandler(fileHandler);
+        } catch (Exception e) {
+            Logger.getLogger(loginController.class.getName()).log(Level.SEVERE, null, e);
+        }
+        if (user != null) {
+            log.log(Level.INFO, "User " + user.getUserName() + " successfully logged in.");
+        } else {
+            log.log(Level.INFO, "Invalid UserName or Password.");
+        }
     }
 
 
