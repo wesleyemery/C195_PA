@@ -3,6 +3,7 @@ package Controller;
 import Database.DBAppointment;
 import Database.DBConnection;
 import Database.DBCustomer;
+import Database.DBUser;
 import Model.Appointment;
 import Model.Customer;
 import javafx.collections.FXCollections;
@@ -175,6 +176,11 @@ public class updateAppointmentController implements Initializable {
     }
 
     @FXML
+    void startDateAction(ActionEvent event) {
+        endDate.setValue(startDate.getValue());
+    }
+
+    @FXML
     void saveAppointmentAction(ActionEvent event) {
         String title = titleTextField.getText();
         String type = typeTextField.getText();
@@ -211,6 +217,19 @@ public class updateAppointmentController implements Initializable {
             }
         }
 
+        Integer id = DBUser.queryUserId();
+        if (id != null){
+            String st = getStartDateTime() + ":00";
+            String et = getEndDateTime() + ":00";
+            if (DBAppointment.isOverlap(st, et, id)) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Error");
+                alert.setContentText("This appointment overlaps with another");
+                alert.showAndWait();
+                return;
+            }
+        }
+
         int custId = appointment.getCustomerId();
         int apptId = appointment.getAppointmentId();
         String startTime = getStartDateTime();
@@ -220,10 +239,7 @@ public class updateAppointmentController implements Initializable {
 
     }
 
-    @FXML
-    void startDateAction(ActionEvent event) {
 
-    }
 
     public static ObservableList<Customer> queryAllCustomerNames(){
         String query = "SELECT customerId, customerName FROM customer;";

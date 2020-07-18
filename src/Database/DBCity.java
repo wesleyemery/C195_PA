@@ -5,11 +5,11 @@ import javafx.scene.control.Alert;
 import java.sql.*;
 
 public class DBCity {
-    public static Integer getCityId(String city, Integer countryId) {
+    public static Integer getCityId(String city) {
         try{
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT cityId FROM city WHERE city = ? AND countryId = ?");
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT cityId FROM city WHERE city = ?");
             ps.setString(1, city);
-            ps.setInt(2, countryId);
+
 
             ResultSet rs = ps.executeQuery();
 

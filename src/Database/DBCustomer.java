@@ -42,9 +42,9 @@ public class DBCustomer {
             ps.setString(1, customerName);
             ps.setInt(2, addressId);
             ps.setInt(3, active);
-            ps.setString(4, Utils.Time.dateTime());
+            ps.setString(4, Utils.Time.getTimestamp());
             ps.setString(5, "admin");
-            ps.setString(6, Utils.Time.dateTime());
+            ps.setString(6, Utils.Time.getTimestamp());
             ps.setString(7, "admin");
 
             ps.executeUpdate();

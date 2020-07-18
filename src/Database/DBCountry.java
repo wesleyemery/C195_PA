@@ -7,7 +7,7 @@ import java.sql.*;
 public class DBCountry {
     public static Integer getCountryId(String country) {
         try{
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT countryId, country FROM country WHERE country = ?;");
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT countryId FROM country WHERE country = ?;");
             ps.setString(1, country);
 
             ResultSet rs = ps.executeQuery();

@@ -139,7 +139,7 @@ public class addAppointmentController implements Initializable {
 
         Integer id = DBUser.queryUserId();
         if (id != null){
-            String st = Utils.Time.getStartDateTime(start.toString()) + ":00";
+            String st = getStartDateTime() + ":00";
             String et = getEndDateTime() + ":00";
             if (DBAppointment.isOverlap(st, et, id)) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -151,7 +151,6 @@ public class addAppointmentController implements Initializable {
         }
         String name = customerCb.getValue();
         String startTime = getStartDateTime();
-        //String startTime = Utils.Time.getStartDateTime(start.toString());
         String endTime = getEndDateTime();
         //addToAppointmentTable(Integer customerId, String title, String startTime, String endTime, String type,  String description)
         DBAppointment.addToAppointmentTable(DBCustomer.getCustomerId(name), title, startTime, endTime, type, description);
@@ -172,8 +171,6 @@ public class addAppointmentController implements Initializable {
         String dateTimeString = date + " " + time;
         return dateTimeString;
     }
-
-
 
     public String getEndDateTime() {
         ZoneId zoneId = ZoneId.of(TimeZone.getDefault().getID());

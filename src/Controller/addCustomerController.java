@@ -82,7 +82,7 @@ public class addCustomerController implements Initializable {
                 countryId = DBCountry.addToCountryTable(country);
 
 
-            Integer cityId = DBCity.getCityId(city, countryId);
+            Integer cityId = DBCity.getCityId(city);
             //System.out.println("Cityid = " + cityId);
 
             if ( cityId == null ){
