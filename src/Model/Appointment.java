@@ -3,7 +3,6 @@ package Model;
 import java.time.LocalDateTime;
 
 public class Appointment {
-
     private int appointmentId;
     private int customerId;
     private int userId;
@@ -13,12 +12,11 @@ public class Appointment {
     private String contact;
     private String type;
     private String url;
-    private LocalDateTime start;
-    private LocalDateTime end;
+    private String start, end;
 
     public Appointment() {}
 
-    public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, String contact, String type, String url, LocalDateTime start, LocalDateTime end) {
+    public Appointment(int appointmentId, int customerId, int userId, String title, String description, String location, String contact, String type, String url, String start, String end) {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
         this.userId = userId;
@@ -31,7 +29,8 @@ public class Appointment {
         this.start = start;
         this.end = end;
     }
-    public Appointment(int appointmentId, int customerId, String title, String type, LocalDateTime start, LocalDateTime end) {
+
+    public Appointment(int appointmentId, int customerId, String title, String type, String start, String end) {
         this.appointmentId = appointmentId;
         this.customerId = customerId;
         this.title = title;
@@ -39,7 +38,6 @@ public class Appointment {
         this.start = start;
         this.end = end;
     }
-
 
     public int getAppointmentId() {
         return appointmentId;
@@ -113,19 +111,19 @@ public class Appointment {
         this.url = url;
     }
 
-    public LocalDateTime getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(LocalDateTime start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public LocalDateTime getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(LocalDateTime end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 

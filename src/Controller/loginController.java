@@ -48,7 +48,7 @@ public class loginController implements Initializable {
 
     private ResourceBundle rb;
     Locale locale;
-    static User currentUser;
+    static User currentUser = new User();
     private String errorPassword, errorBlank, errorTitle, exitMessage, exitHeader, loginTitle, loginHeader;
 
     @FXML
@@ -103,15 +103,6 @@ public class loginController implements Initializable {
 
 
             if (userNameValid && passwordValid) {
-                    /*User inputUser = new User(userName, password);
-                    currentUser = existingUser(inputUser);
-
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle(loginTitle);
-                    alert.setHeaderText(loginHeader);
-                    alert.showAndWait();*/
-                    // Sets current user for the current session
-
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/mainScreen.fxml"));
                 mainScreenController controller = new mainScreenController();
                 Stage stage = (Stage) loginButton.getScene().getWindow();
@@ -145,31 +136,9 @@ public class loginController implements Initializable {
         passwordTextField.setText(rb.getString("password"));
     }
 
-    User existingUser(User loginAttempt) {
-        User currentUser = new User();
-        try{
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement("SELECT * FROM user WHERE userName=? AND password=?");
-            ps.setString(1, loginAttempt.getUserName());
-            ps.setString(2, loginAttempt.getPassword());
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                //int userId = results.getInt("userId");
-                //System.out.println(ps.getUpdateCount() + " user found.");
-                currentUser.setUserId(rs.getInt("userId"));
-                currentUser.setUserName(rs.getString("userName"));
-                currentUser.setPassword(rs.getString("password"));
-            } else { // user not found
-                System.out.println("Not found.");
-                return null;
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return currentUser;
-    }
 
-    public static User getCurrentUser() {
-        return currentUser;
+    public User getCurrentUser() {
+        return this.currentUser;
     }
 
 

@@ -5,6 +5,7 @@ import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -29,5 +30,58 @@ public class DBUser {
         }
 
         return allUsers;
+    }
+
+    public static Integer queryUserIdbyName(String user) {
+
+        String query = "SELECT userId "
+                + "FROM user where userName = ?;";
+
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
+            ps.setString(1, user);
+            ResultSet rs = ps.executeQuery();
+
+            Integer id = null;
+
+            if (rs.next()) {
+                 id = rs.getInt("userId");
+
+            }
+
+            rs.close();
+            return id;
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static Integer queryUserId() {
+
+        String query = "SELECT * "
+                + "FROM user";
+
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            Integer id = null;
+
+            if (rs.next()) {
+                id = rs.getInt("userId");
+
+            }
+
+            rs.close();
+            return id;
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

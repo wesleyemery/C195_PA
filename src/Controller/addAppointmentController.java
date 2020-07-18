@@ -1,10 +1,9 @@
 package Controller;
 
-import Database.DBAppointment;
-import Database.DBConnection;
-import Database.DBCustomer;
-import Database.DBQuery;
+import Database.*;
+import Model.Appointment;
 import Model.Customer;
+import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,9 +24,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
+import Controller.loginController;
 
 public class addAppointmentController implements Initializable {
     @FXML
@@ -62,17 +64,19 @@ public class addAppointmentController implements Initializable {
     private ComboBox<String> customerCb;
 
     @FXML
-    private Button saveAppointmentBtn;
+    private Button saveAppointmentButton;
 
     @FXML
-    private Button cancelBtn;
+    private Button cancelButton;
 
     Customer customer = new Customer();
+    Appointment appointment;
     ObservableList<String> customerNames = FXCollections.observableArrayList();
 
     private static ObservableList<Customer> customerArray = FXCollections.observableArrayList();
-    private static ObservableList<LocalTime> hoursArray = FXCollections.observableArrayList();
-    
+    private final ObservableList<LocalTime> start = FXCollections.observableArrayList();
+    private final ObservableList<LocalTime> end = FXCollections.observableArrayList();
+
     @FXML
     void startDateAction(ActionEvent event) {
         endDate.setValue(startDate.getValue());
@@ -100,13 +104,12 @@ public class addAppointmentController implements Initializable {
     void saveAppointmentAction(ActionEvent event) {
 
         String title = titleTextField.getText();
-        String startDateValue = startDate.getValue().toString();
-        String endDateValue = endDate.getValue().toString();
+        LocalDate startDateValue = startDate.getValue();
+        LocalDate endDateValue = endDate.getValue();
         LocalTime start = startCb.getValue();
         LocalTime end = endCb.getValue();
         String type = typeTextField.getText().trim();
         String description = descriptionTextArea.getText().trim();
-        //StringBuilder validationErrors = new StringBuilder();
 
 
         if (titleTextField.getText().isEmpty() || typeTextField.getText().isEmpty() || descriptionTextArea.getText().isEmpty()) {
@@ -114,55 +117,52 @@ public class addAppointmentController implements Initializable {
             alert.setTitle("Error");
             alert.setContentText("Please enter data in all fields!");
             alert.showAndWait();
-        }else if (startCb.getValue() == null || endCb.getValue() == null || startDate.getValue() == null || endDate.getValue() == null ) {
+        }
+        if (startCb.getValue() == null || endCb.getValue() == null || startDate.getValue() == null || endDate.getValue() == null ) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Please enter time and date data!");
             alert.showAndWait();
-        } else if (end != null && start != null) {
-            if (end.isBefore(start) || end.equals(start)) {
+        }
+        if (end != null && start != null) {
+            if ( end.equals(start)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setContentText("End Time cannot be at the same time or before the Start Time.");
                 alert.showAndWait();
             }
-        }else {
+        }//isOverlap(String start, String end, int userId)
+       /* int appointmentId = -1;
+        if (appointment != null) {
+            appointmentId = appointment.getAppointmentId();
+        }*/
 
-            String name = customerCb.getValue();
-            String startTime = getStartDateTime();
-            String endTime = getEndDateTime();
-            //addToAppointmentTable(Integer customerId, String title, String startTime, String endTime, String type,  String description)
-            DBAppointment.addToAppointmentTable(DBCustomer.getCustomerId(name), title, startTime, endTime, type, description);
-            backToMain(event);
+        Integer id = DBUser.queryUserId();
+        if (id != null){
+            String st = Utils.Time.getStartDateTime(start.toString()) + ":00";
+            String et = getEndDateTime() + ":00";
+            if (DBAppointment.isOverlap(st, et, id)) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Error");
+                alert.setContentText("This appointment overlaps with another");
+                alert.showAndWait();
+                return;
+            }
         }
+        String name = customerCb.getValue();
+        String startTime = getStartDateTime();
+        //String startTime = Utils.Time.getStartDateTime(start.toString());
+        String endTime = getEndDateTime();
+        //addToAppointmentTable(Integer customerId, String title, String startTime, String endTime, String type,  String description)
+        DBAppointment.addToAppointmentTable(DBCustomer.getCustomerId(name), title, startTime, endTime, type, description);
+        backToMain(event);
 
-
-    }
-
-    public static ObservableList<LocalTime> setHours() {
-        hoursArray.clear();
-        hoursArray.add(0, LocalTime.parse("09:00"));
-        hoursArray.add(1, LocalTime.parse("09:30"));
-        hoursArray.add(2, LocalTime.parse("10:00"));
-        hoursArray.add(3, LocalTime.parse("10:30"));
-        hoursArray.add(4, LocalTime.parse("11:00"));
-        hoursArray.add(5, LocalTime.parse("11:30"));
-        hoursArray.add(6, LocalTime.parse("12:00"));
-        hoursArray.add(7, LocalTime.parse("12:30"));
-        hoursArray.add(8, LocalTime.parse("13:00"));
-        hoursArray.add(9, LocalTime.parse("13:30"));
-        hoursArray.add(10, LocalTime.parse("14:00"));
-        hoursArray.add(11, LocalTime.parse("14:30"));
-        hoursArray.add(12, LocalTime.parse("15:00"));
-        hoursArray.add(13, LocalTime.parse("15:30"));
-
-        return hoursArray;
     }
 
     public String getStartDateTime() {
         ZoneId zoneId = ZoneId.of(TimeZone.getDefault().getID());
         ZoneOffset oS = ZoneId.of(zoneId.toString()).getRules().getOffset(Instant.now());
-        String localDateTime = startDate.getValue().toString() + "T" + startCb.getValue().toString() + ":00" + oS + "[" + zoneId + "]";
+        String localDateTime = startDate.getValue().toString() + "T" + startCb.getValue() + ":00" + oS + "[" + zoneId + "]";
         ZonedDateTime dateTime = ZonedDateTime.parse(localDateTime);
         Instant localUtcInstant = dateTime.toInstant();
         ZonedDateTime utcDateTime = localUtcInstant.atZone(ZoneOffset.UTC);
@@ -178,7 +178,7 @@ public class addAppointmentController implements Initializable {
     public String getEndDateTime() {
         ZoneId zoneId = ZoneId.of(TimeZone.getDefault().getID());
         ZoneOffset oS = ZoneId.of(zoneId.toString()).getRules().getOffset(Instant.now());
-        String localDateTime = endDate.getValue().toString() +"T" + endCb.getValue().toString() + ":00" + oS + "[" + zoneId + "]";
+        String localDateTime = endDate.getValue().toString() +"T" + endCb.getValue() + ":00" + oS + "[" + zoneId + "]";
         ZonedDateTime dateTime = ZonedDateTime.parse(localDateTime);
         Instant localToUtcInstant = dateTime.toInstant();
         ZonedDateTime utcDateTime = localToUtcInstant.atZone(ZoneOffset.UTC);
@@ -190,12 +190,11 @@ public class addAppointmentController implements Initializable {
     }
 
     public static ObservableList<Customer> queryAllCustomerNames(){
-        String query = "SELECT customerId, customerName FROM customer;";
+        String query = "SELECT customerName FROM customer;";
         try {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                Integer customerId = rs.getInt("customer.customerId");
                 String customerName = rs.getString("customerName");
                 customerArray.add(new Customer(customerName));
             }
@@ -203,6 +202,18 @@ public class addAppointmentController implements Initializable {
             e.printStackTrace();
         }
         return customerArray;
+    }
+    public void setTimes() {
+        LocalTime time = LocalTime.of(8, 0);
+        do {
+            start.add(time);
+            end.add(time);
+            time = time.plusMinutes(15);
+        } while (!time.equals(LocalTime.of(17, 15)));
+        start.remove(start.size() - 1);
+        end.remove(0);
+        startCb.setItems(start);
+        endCb.setItems(end);
     }
 
     private void backToMain(ActionEvent event) {
@@ -227,21 +238,6 @@ public class addAppointmentController implements Initializable {
         customerArray.clear();
         queryAllCustomerNames();
         setCustomerNames();
-       /* hoursArray.clear();
-        hoursArray.add(0, LocalTime.parse("09:00"));
-        hoursArray.add(1, LocalTime.parse("09:30"));
-        hoursArray.add(2, LocalTime.parse("10:00"));
-        hoursArray.add(3, LocalTime.parse("10:30"));
-        hoursArray.add(4, LocalTime.parse("11:00"));
-        hoursArray.add(5, LocalTime.parse("11:30"));
-        hoursArray.add(6, LocalTime.parse("14:00"));
-        hoursArray.add(7, LocalTime.parse("14:30"));
-        hoursArray.add(8, LocalTime.parse("15:00"));
-        hoursArray.add(9, LocalTime.parse("15:30"));*/
-        /*for (LocalTime time:hoursArray) {
-            System.out.println(time);
-
-        }*/
 
         startDate.setDayCellFactory(picker -> new DateCell() {
             @Override
@@ -261,10 +257,7 @@ public class addAppointmentController implements Initializable {
 
         endDate.setDisable(true);
         customerCb.setItems(customerNames);
-
-        setHours();
-        startCb.setItems(hoursArray);
-        endCb.setItems(hoursArray);
+        setTimes();
 
     }
 }

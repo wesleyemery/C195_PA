@@ -79,7 +79,7 @@
             <Image url="@../Style/appointment.png" />
          </image>
       </ImageView>
-      <Button fx:id="saveAppointmentBtn" layoutX="484.0" layoutY="631.0" mnemonicParsing="false" onAction="#saveAppointmentAction" text="Save" />
-      <Button fx:id="cancelBtn" layoutX="549.0" layoutY="631.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
+      <Button fx:id="saveAppointmentButton" layoutX="484.0" layoutY="631.0" mnemonicParsing="false" onAction="#saveAppointmentAction" text="Save" />
+      <Button fx:id="cancelButton" layoutX="549.0" layoutY="631.0" mnemonicParsing="false" onAction="#cancelAction" text="Cancel" />
    </children>
 </AnchorPane>

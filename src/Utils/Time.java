@@ -14,7 +14,7 @@ public class Time {
 
     public static String dateTime(){
         Date t = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-ddHH:mm:SS");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         String d = dateFormat.format(t);
         //System.out.println("date:" + d);

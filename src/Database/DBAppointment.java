@@ -20,9 +20,7 @@ public class DBAppointment {
 
 
    public static boolean addToAppointmentTable(Integer customerId, String title, String startTime, String endTime, String type,  String description) {
-        User user = new User();
-        addAppointmentController add = new addAppointmentController();
-        Integer currentUserId = user.getUserId();
+
         try {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement("INSERT INTO appointment ("
                             + "customerId, "
@@ -82,8 +80,7 @@ public class DBAppointment {
                     +"title = ?, "
                     +"start = ?, "
                     +"end = ?, "
-                    +"type = ?, "
-                    +"description = ? "
+                    +"type = ? "
                     +"WHERE "
                     +"appointmentId = ?");
             ps.setInt(1, customerId);
@@ -111,6 +108,26 @@ public class DBAppointment {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public static boolean isOverlap(String start, String end, int userId) {
+
+        String query = "SELECT * FROM appointment WHERE start = ? AND userId = ?";
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
+            ps.setString(1, start);
+            ps.setInt(2, userId);
+            ResultSet rs = ps.executeQuery();
+
+            boolean isOverlap = false;
+            while (rs.next()) isOverlap = true;
+            return isOverlap;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 

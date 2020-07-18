@@ -87,26 +87,6 @@ public class mainScreenController implements Initializable {
 
     @FXML
     private TableColumn<Customer, String> custPhoneCol;
-   /* @FXML
-    private TableView<Customer> customerTable;
-
-    @FXML
-    private TableColumn<Customer, Integer> customerIDColumn;
-
-    @FXML
-    private TableColumn<Customer, String> customerNameColumn;
-
-    @FXML
-    private TableColumn<Customer, String> customerAddressColumn;
-
-    @FXML
-    private TableColumn<Customer, String> customerCountryColumn;
-
-    @FXML
-    private TableColumn<Customer, String> customerCityColumn;
-
-    @FXML
-    private TableColumn<Customer, String> customerPhoneColumn;*/
 
     @FXML
     private Button newCustomerButton;
@@ -289,14 +269,13 @@ public class mainScreenController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else
-            return;
+        }
+
     }
 
     @FXML
     void updateCustomerAction(ActionEvent event) throws IOException {
         Customer selectedCustomer = custTable.getSelectionModel().getSelectedItem();
-        //Address address = address.getAddress();
         if (!(selectedCustomer == null)){
             try{
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/updateCustomerScreen.fxml"));
@@ -307,8 +286,7 @@ public class mainScreenController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else
-            return;
+        }
     }
 
 
@@ -382,9 +360,11 @@ public class mainScreenController implements Initializable {
                     int customerId = rs.getInt("customerID");
                     String title = rs.getString("title");
                     String type = rs.getString("type");
-                    LocalDateTime start = rs.getTimestamp("start").toLocalDateTime();
-                    LocalDateTime end = rs.getTimestamp("end").toLocalDateTime();
-                    appointmentArray.add(new Appointment(id, customerId, title, type, start, end));
+                    String start = rs.getString("start");
+                    String end = rs.getString("end");
+                    String localStart = Utils.Time.getStartDateTime(start);
+                    String localEnd = Utils.Time.getEndDateTime(end);
+                    appointmentArray.add(new Appointment(id, customerId, title, type, localStart, localEnd));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -401,9 +381,11 @@ public class mainScreenController implements Initializable {
                     int customerId = rs.getInt("appointment.customerId");
                     String title = rs.getString("appointment.title");
                     String type = rs.getString("appointment.type");
-                    LocalDateTime start = rs.getTimestamp("start").toLocalDateTime();
-                    LocalDateTime end = rs.getTimestamp("end").toLocalDateTime();
-                    appointmentArray.add(new Appointment(id, customerId, title, type, start, end));
+                    String start = rs.getString("start");
+                    String end = rs.getString("end");
+                    String localStart = Utils.Time.getStartDateTime(start);
+                    String localEnd = Utils.Time.getEndDateTime(end);
+                    appointmentArray.add(new Appointment(id, customerId, title, type, localStart, localEnd));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -411,6 +393,7 @@ public class mainScreenController implements Initializable {
             return appointmentArray;
         } else if(radioWeek.isSelected()) {
             appointmentArray.clear();
+
             String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getWeek() + "' AND appointment.end <= '" + Utils.Time.getWeekLater() + "' AND userId='1';";
             //System.out.println(query);
             try (PreparedStatement sm = DBConnection.getConnection().prepareStatement(query);
@@ -420,9 +403,11 @@ public class mainScreenController implements Initializable {
                     int customerId = rs.getInt("appointment.customerId");
                     String title = rs.getString("appointment.title");
                     String type = rs.getString("appointment.type");
-                    LocalDateTime start = rs.getTimestamp("start").toLocalDateTime();
-                    LocalDateTime end = rs.getTimestamp("end").toLocalDateTime();
-                    appointmentArray.add(new Appointment(id, customerId, title, type, start, end));
+                    String start = rs.getString("start");
+                    String end = rs.getString("end");
+                    String localStart = Utils.Time.getStartDateTime(start);
+                    String localEnd = Utils.Time.getEndDateTime(end);
+                    appointmentArray.add(new Appointment(id, customerId, title, type, localStart, localEnd));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
