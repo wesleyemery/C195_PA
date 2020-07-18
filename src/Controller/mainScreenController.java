@@ -1,5 +1,6 @@
 package Controller;
 
+import Database.DBAppointment;
 import Database.DBConnection;
 import Model.Appointment;
 import Model.Customer;
@@ -290,28 +291,7 @@ public class mainScreenController implements Initializable {
     }
 
 
-    public void appointmentTime15() {
 
-        LocalDateTime localDateTime =Utils.Time.getLocalDateTime();
-        LocalDateTime localDateTimeAdd15 = Utils.Time.getLocalDateTimeAdd15();
-
-        String query = "SELECT * FROM appointment WHERE userId = "+ user.getUserId() +" AND start BETWEEN '" + localDateTime + "' AND '" + localDateTimeAdd15 + "';";
-        try {
-            PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
-
-            if (rs.next()) {
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Alert");
-                alert.setHeaderText("You have an up coming appointment.");
-                alert.setContentText("You have an appointment in 15 minutes.");
-                alert.showAndWait();
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     void allAction(ActionEvent event) {
@@ -443,7 +423,7 @@ public class mainScreenController implements Initializable {
     }
         @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        DBAppointment.appointmentTime15();
         appointmentArray.clear();
         customerArray.clear();
         generateAppointmentTable();

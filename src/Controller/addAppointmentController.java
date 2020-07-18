@@ -131,11 +131,7 @@ public class addAppointmentController implements Initializable {
                 alert.setContentText("End Time cannot be at the same time or before the Start Time.");
                 alert.showAndWait();
             }
-        }//isOverlap(String start, String end, int userId)
-       /* int appointmentId = -1;
-        if (appointment != null) {
-            appointmentId = appointment.getAppointmentId();
-        }*/
+        }
 
         Integer id = DBUser.queryUserId();
         if (id != null){
@@ -236,6 +232,7 @@ public class addAppointmentController implements Initializable {
         queryAllCustomerNames();
         setCustomerNames();
 
+        //Lambda to restrict access to dates outside business hours
         startDate.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {

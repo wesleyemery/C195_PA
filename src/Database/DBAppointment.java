@@ -109,7 +109,28 @@ public class DBAppointment {
             return null;
         }
     }
+    public static void appointmentTime15() {
 
+        LocalDateTime localDateTime = Utils.Time.getLocalDateTime();
+        LocalDateTime localDateTimeAdd15 = Utils.Time.getLocalDateTimeAdd15();
+
+        String query = "SELECT * FROM appointment WHERE userId = '1' AND start BETWEEN '" + localDateTime + "' AND '" + localDateTimeAdd15 + "';";
+        try {
+            PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Alert");
+                alert.setHeaderText("Upcoming Appointment");
+                alert.setContentText("15 minutes till appointment.");
+                alert.showAndWait();
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public static boolean isOverlap(String start, String end, int userId) {
 
         String query = "SELECT * FROM appointment WHERE start = ? AND userId = ?";
