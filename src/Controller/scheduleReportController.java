@@ -53,11 +53,11 @@ public class scheduleReportController implements Initializable {
     public void getScheduleReport() {
         try {
             Statement sm = DBConnection.getConnection().createStatement();
-            String query = "SELECT title, start, end FROM appointment;";
+            String query = "SELECT title, start, end FROM appointment ;";
             ResultSet rs = sm.executeQuery(query);
             StringBuilder sbuf = new StringBuilder();
             sbuf.append("Schedule: \n\n");
-            sbuf.append(String.format("%1$-45s %2$-45s %3$-45s \n", "Title", "Start (UTC)", "End (UTC)"));
+            sbuf.append(String.format("%1$-45s %2$-45s %3$-45s \n", "Title", "Start    ", "End    "));
             sbuf.append("\n");
             while (rs.next()) {
                 sbuf.append(String.format("%1$-30s %2$-35s %3$-35s \n", rs.getString("title"), rs.getString("start"), rs.getString("end")));}

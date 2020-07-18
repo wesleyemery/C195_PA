@@ -1,6 +1,7 @@
 package Controller;
 
 import Database.DBConnection;
+import Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+
 
 public class appointmentReportController implements Initializable {
 
@@ -51,9 +53,11 @@ public class appointmentReportController implements Initializable {
     }
 
     public void getAppointmentReport() {
+
+        int id = 1;
         try {
             Statement sm = DBConnection.getConnection().createStatement();
-            String query = "SELECT COUNT(DISTINCT type) FROM appointment;";
+            String query = "SELECT COUNT(DISTINCT type) FROM appointment WHERE userId = '"+ id +"';";
             ResultSet rs = sm.executeQuery(query);
             StringBuilder sbuf = new StringBuilder();
             sbuf.append(String.format("Number of Appointment Types: "));
