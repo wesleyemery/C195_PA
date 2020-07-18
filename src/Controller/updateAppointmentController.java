@@ -67,7 +67,6 @@ public class updateAppointmentController implements Initializable {
     private Button cancelButton;
     ObservableList<String> customerNames = FXCollections.observableArrayList();
     private static ObservableList<Customer> customerArray = FXCollections.observableArrayList();
-    private static ObservableList<LocalTime> hoursArray = FXCollections.observableArrayList();
     private final ObservableList<LocalTime> start = FXCollections.observableArrayList();
     private final ObservableList<LocalTime> end = FXCollections.observableArrayList();
     Appointment appointment;

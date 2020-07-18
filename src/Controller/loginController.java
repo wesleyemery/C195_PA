@@ -49,20 +49,34 @@ public class loginController implements Initializable {
     private ResourceBundle rb;
     Locale locale;
     static User currentUser = new User();
-    private String errorPassword, errorBlank, errorTitle, exitMessage, exitHeader, loginTitle, loginHeader;
+    private String passwordErr, missingInput, titleErr, exitAlert, exitHeader, loginTitle, loginHeader, confirm;
 
     @FXML
     void exitAction(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Alert: Exiting the Scheduling System");
-        alert.setContentText("Would you like to continue?");
+        alert.setTitle(confirm);
+        alert.setHeaderText(exitHeader);
+        alert.setContentText(exitAlert);
 
         Optional<ButtonType> button = alert.showAndWait();
         if (button.get() == ButtonType.OK){
             Platform.exit();
         }
 
+    }
+
+    private void setResourceBundle() {
+        passwordErr = rb.getString("passwordErr");
+        missingInput = rb.getString("missingInput");
+        titleErr = rb.getString("titleErr");
+        exitAlert = rb.getString("exitAlert");
+        exitHeader = rb.getString("exitHeader");
+        userNameLabel.setText(rb.getString("username"));
+        passwordLabel.setText(rb.getString("password"));
+        loginButton.setText(rb.getString("login"));
+        loginTitle = rb.getString("loginTitle");
+        loginHeader = rb.getString("loginHeader");
+        confirm = rb.getString("confirm");
     }
 
     @FXML
@@ -74,17 +88,17 @@ public class loginController implements Initializable {
         //validation
         if (userName.isEmpty() || userName==null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(errorTitle);
-            alert.setHeaderText("Error");
-            alert.setContentText(errorBlank);
+            alert.setTitle(titleErr);
+            alert.setHeaderText(titleErr);
+            alert.setContentText(missingInput);
             alert.show();
             userNameValid = false;
 
         } else if (password.isEmpty() || password==null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(errorTitle);
-            alert.setHeaderText("Error");
-            alert.setContentText(errorBlank);
+            alert.setTitle(titleErr);
+            alert.setHeaderText(titleErr);
+            alert.setContentText(missingInput);
             alert.show();
             passwordValid = false;
         } else{
@@ -100,8 +114,6 @@ public class loginController implements Initializable {
                 }
 
             }
-
-
             if (userNameValid && passwordValid) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/mainScreen.fxml"));
                 mainScreenController controller = new mainScreenController();
@@ -115,15 +127,15 @@ public class loginController implements Initializable {
                 }
             else if(userNameValid == false){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(errorTitle);
-                alert.setHeaderText("Error");
-                alert.setContentText("Username is invalid");
+                alert.setTitle(titleErr);
+                alert.setHeaderText(titleErr);
+                alert.setContentText(missingInput);
                 alert.show();
             }else if(userNameValid && passwordValid == false){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(errorTitle);
-                alert.setHeaderText("Error");
-                alert.setContentText("Password is invalid");
+                alert.setTitle(titleErr);
+                alert.setHeaderText(titleErr);
+                alert.setContentText(missingInput);
                 alert.show();
             }
 
@@ -132,7 +144,7 @@ public class loginController implements Initializable {
 
 
     public void textFieldGenerate(){
-        userNameTextField.setText(rb.getString("user"));
+        userNameTextField.setText(rb.getString("username"));
         passwordTextField.setText(rb.getString("password"));
     }
 
@@ -148,19 +160,9 @@ public class loginController implements Initializable {
         locale = Locale.getDefault();
         rb = ResourceBundle.getBundle("Languages/language", locale.getDefault());
         textFieldGenerate();
-        if (locale.getDefault().getLanguage().equals("es") ||  locale.getDefault().getLanguage().equals("en") || locale.getDefault().getLanguage().equals("mx")) {
-            errorPassword = rb.getString("errorPassword");
-            errorBlank = rb.getString("errorBlank");
-            errorTitle = rb.getString("errorTitle");
-            exitMessage = rb.getString("exitMessage");
-            exitHeader = rb.getString("exitHeader");
-            userNameLabel.setText(rb.getString("user"));
-            passwordLabel.setText(rb.getString("password"));
-            loginButton.setText(rb.getString("login"));
-            loginTitle = rb.getString("loginTitle");
-            loginHeader = rb.getString("loginHeader");
+        if (locale.getDefault().getLanguage().equals("es") ||  locale.getDefault().getLanguage().equals("en") || locale.getDefault().getLanguage().equals("mx"))
+            setResourceBundle();
 
-        }
 
     }
 

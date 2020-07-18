@@ -83,7 +83,6 @@ public class addCustomerController implements Initializable {
 
 
             Integer cityId = DBCity.getCityId(city);
-            //System.out.println("Cityid = " + cityId);
 
             if ( cityId == null ){
                 cityId = DBCity.addToCityTable(city, countryId);
