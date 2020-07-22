@@ -39,16 +39,27 @@ public class scheduleReportController implements Initializable {
     private ComboBox<String> userCB;
 
     @FXML
-    void userAction(ActionEvent event) {
+    void selectUserAction(ActionEvent event) {
+        String user = userCB.getValue();
+        int id = DBUser.queryUserIdfromName(user);
+        getScheduleReport(id);
+    }
 
+    private int getID(){
+        String user = (String)userCB.getValue();
+        int id = DBUser.queryUserIdfromName(user);
+        return id;
     }
 
     private void populateUser() {
         ObservableList<User> allUsers = FXCollections.observableArrayList();
-        allUsers = DBUser.queryUsers();
+        ObservableList<String> userNames = FXCollections.observableArrayList();
+        allUsers = DBUser.queryAllUserNames();
         for (User u:allUsers) {
-            userCB.setValue(u.getUserName());
+            userNames.add(u.getUserName());
         }
+        userCB.setItems(userNames);
+        userCB.setValue(userNames.get(0));
     }
     @FXML
     void backButtonAction(ActionEvent event) {
@@ -72,10 +83,11 @@ public class scheduleReportController implements Initializable {
         }
     }
 
-    public void getScheduleReport() {
+    public void getScheduleReport(int id) {
+
         try {
             Statement sm = DBConnection.getConnection().createStatement();
-            String query = "SELECT title, start, end FROM appointment WHERE userId = 2;";
+            String query = "SELECT title, start, end FROM appointment WHERE userId = '" + id + "';";
             ResultSet rs = sm.executeQuery(query);
             StringBuilder sb = new StringBuilder();
             sb.append("Schedule: \n\n");
@@ -92,6 +104,8 @@ public class scheduleReportController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         populateUser();
-        getScheduleReport();
+        String user = (String)userCB.getValue();
+        int id = DBUser.queryUserIdfromName(user);
+        getScheduleReport(id);
     }
 }

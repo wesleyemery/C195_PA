@@ -23,6 +23,7 @@
       </Label>
       <TextArea fx:id="scheduleTextArea" layoutX="14.0" layoutY="125.0" prefHeight="200.0" prefWidth="607.0" />
       <Button fx:id="backButton" layoutX="578.0" layoutY="335.0" mnemonicParsing="false" onAction="#backButtonAction" text="Back" />
-      <ComboBox fx:id="userCB" layoutX="14.0" layoutY="77.0" onAction="#userAction" prefWidth="150.0" />
+      <ComboBox fx:id="userCB" layoutX="14.0" layoutY="77.0" prefWidth="150.0" />
+      <Button fx:id="selectUserButton" layoutX="169.0" layoutY="77.0" mnemonicParsing="false" onAction="#selectUserAction" text="Select" />
    </children>
 </AnchorPane>

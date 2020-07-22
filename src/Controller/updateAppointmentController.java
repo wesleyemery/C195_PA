@@ -233,7 +233,7 @@ public class updateAppointmentController implements Initializable {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                Integer customerId = rs.getInt("customer.customerId");
+                Integer customerId = rs.getInt("customerId");
                 String customerName = rs.getString("customerName");
                 customerArray.add(new Customer(customerName));
             }
