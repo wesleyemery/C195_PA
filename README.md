@@ -1,16 +1,17 @@
 # c195SchedulerApp
 Scheduling Application
 C195 Performance Assessment
-This application is a scheduling application using MySQL for data persistence. It allows a user to create and modify customers and appointments, and display notifications of upcoming appointments. It also maintained an access control log.
 
-The goal of the exercise was to demonstrate proficiency in database connections, lambda functions, exception handing and assertions, localization, and logging.
+Contracted to develop a scheduling desktop user interface application. The contract is with a global consulting organization that conducts business in multiple languages and has main offices in Phoenix, Arizona; New York, New York; and London, England. The consulting organization has provided a MySQL database that your application must pull data from. The database is used for other systems and therefore its structure cannot be modified.
 
-IntelliJ and SceneBuilder are the tools I used.
+
+IntelliJ and SceneBuilder 
 
 Usage
-This project required a MySQL connector. I used mysql-connector-java-5.1.41 from Oracle.
+This project required a MySQL connector. 
 
-  You will also need to create a database.properties file in your root directory.
+Used: mysql-connector-java-5.1.41 
+
   
   dbdriver=com.mysql.jdbc.Driver
   

@@ -76,7 +76,7 @@ public class DBUser {
         return null;
     }
 
-    public static Integer queryUserIdfromName(String userName) {
+    public static Integer queryUserIdFromName(String userName) {
 
         String query = "SELECT * "
                 + "FROM user WHERE userName = '" + userName + "';";

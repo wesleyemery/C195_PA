@@ -1,6 +1,7 @@
 package Database;
 
 import Controller.addAppointmentController;
+import Controller.loginController;
 import Model.Customer;
 import Model.User;
 import javafx.scene.control.Alert;
@@ -19,6 +20,14 @@ public class DBAppointment {
     //2020-08-22 15:00:00.0
 
 
+    public static int getCurrentUserId(){
+        User u = new User();
+        loginController currentUser = new loginController();
+        u = currentUser.getCurrentUser();
+        String name = u.getUserName();
+        int id = DBUser.queryUserIdFromName(name);
+        return id;
+    }
    public static boolean addToAppointmentTable(Integer customerId, String title, String startTime, String endTime, String type,  String description) {
 
         try {
@@ -37,11 +46,11 @@ public class DBAppointment {
                             + "createdBy, "
                             + "lastUpdate, "
                             + "lastUpdateBy) "
-                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); ",
+                            + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ; ",
                     Statement.RETURN_GENERATED_KEYS);
 
             ps.setInt(1, customerId);
-            ps.setInt(2, 1);
+            ps.setInt(2, getCurrentUserId());
             ps.setString(3, title);
             ps.setString(4, description);
             ps.setString(5, "");
@@ -114,7 +123,7 @@ public class DBAppointment {
         LocalDateTime localDateTime = Utils.Time.getLocalDateTime();
         LocalDateTime localDateTimeAdd15 = Utils.Time.getLocalDateTimeAdd15();
 
-        String query = "SELECT * FROM appointment WHERE userId = '1' AND start BETWEEN '" + localDateTime + "' AND '" + localDateTimeAdd15 + "';";
+        String query = "SELECT * FROM appointment WHERE userId = '" + getCurrentUserId() + "' AND start BETWEEN '" + localDateTime + "' AND '" + localDateTimeAdd15 + "';";
         try {
             PreparedStatement statement = DBConnection.getConnection().prepareStatement(query);
             ResultSet rs = statement.executeQuery();
@@ -131,13 +140,13 @@ public class DBAppointment {
             e.printStackTrace();
         }
     }
-    public static boolean isOverlap(String start, String end, int userId) {
+    public static boolean isOverlap(String start, String end) {
 
         String query = "SELECT * FROM appointment WHERE start = ? AND userId = ?";
         try {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
             ps.setString(1, start);
-            ps.setInt(2, userId);
+            ps.setInt(2, getCurrentUserId());
             ResultSet rs = ps.executeQuery();
 
             boolean isOverlap = false;

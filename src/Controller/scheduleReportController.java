@@ -41,13 +41,13 @@ public class scheduleReportController implements Initializable {
     @FXML
     void selectUserAction(ActionEvent event) {
         String user = userCB.getValue();
-        int id = DBUser.queryUserIdfromName(user);
+        int id = DBUser.queryUserIdFromName(user);
         getScheduleReport(id);
     }
 
     private int getID(){
         String user = (String)userCB.getValue();
-        int id = DBUser.queryUserIdfromName(user);
+        int id = DBUser.queryUserIdFromName(user);
         return id;
     }
 
@@ -105,7 +105,7 @@ public class scheduleReportController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         populateUser();
         String user = (String)userCB.getValue();
-        int id = DBUser.queryUserIdfromName(user);
+        int id = DBUser.queryUserIdFromName(user);
         getScheduleReport(id);
     }
 }

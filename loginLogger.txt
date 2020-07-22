@@ -90,3 +90,27 @@ Jul 22, 2020 4:45:39 PM Controller.loginController loginLogger
 INFO: User Username successfully logged in.
 Jul 22, 2020 4:46:25 PM Controller.loginController loginLogger
 INFO: User Username successfully logged in.
+Jul 22, 2020 4:52:16 PM Controller.loginController loginLogger
+INFO: User test successfully logged in.
+Jul 22, 2020 4:58:42 PM Controller.loginController loginLogger
+INFO: User test successfully logged in.
+Jul 22, 2020 5:07:21 PM Controller.loginController loginLogger
+INFO: User test successfully logged in.
+Jul 22, 2020 5:12:49 PM Controller.loginController loginLogger
+INFO: User test successfully logged in.
+Jul 22, 2020 5:13:50 PM Controller.loginController loginLogger
+INFO: User Username successfully logged in.
+Jul 22, 2020 5:17:17 PM Controller.loginController loginLogger
+INFO: User test successfully logged in.
+Jul 22, 2020 5:21:24 PM Controller.loginController loginLogger
+INFO: User test successfully logged in.
+Jul 22, 2020 5:28:41 PM Controller.loginController loginLogger
+INFO: User test successfully logged in.
+Jul 22, 2020 5:32:51 PM Controller.loginController loginLogger
+INFO: User Username successfully logged in.
+Jul 22, 2020 5:33:14 PM Controller.loginController loginLogger
+INFO: User test successfully logged in.
+Jul 22, 2020 5:34:19 PM Controller.loginController loginLogger
+INFO: User Username successfully logged in.
+Jul 22, 2020 5:34:48 PM Controller.loginController loginLogger
+INFO: User test successfully logged in.

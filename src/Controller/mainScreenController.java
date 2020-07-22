@@ -331,7 +331,7 @@ public class mainScreenController implements Initializable {
 
         if (radioAll.isSelected()) {
             appointmentArray.clear();
-            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment";
+            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE userId='" + DBAppointment.getCurrentUserId() + "';";
 
             try {
                 ResultSet rs = DBConnection.getConnection().createStatement().executeQuery(query);
@@ -352,8 +352,7 @@ public class mainScreenController implements Initializable {
             return appointmentArray;
         } else if(radioMonth.isSelected()){
             appointmentArray.clear();
-            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getMonth() + "' AND appointment.end <= '" + Utils.Time.getEndOfMonth() + "' AND userId='1';";
-            //System.out.println(query);
+            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getMonth() + "' AND appointment.end <= '" + Utils.Time.getEndOfMonth() + "' AND userId='" + DBAppointment.getCurrentUserId() + "';";
             try (PreparedStatement sm = DBConnection.getConnection().prepareStatement(query);
                  ResultSet rs = sm.executeQuery()) {
                 while (rs.next()) {
@@ -374,7 +373,7 @@ public class mainScreenController implements Initializable {
         } else if(radioWeek.isSelected()) {
             appointmentArray.clear();
 
-            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getWeek() + "' AND appointment.end <= '" + Utils.Time.getWeekLater() + "' AND userId='1';";
+            String query = "SELECT appointmentId, customerId, title, type, start, end FROM appointment WHERE appointment.start >= '" + Utils.Time.getWeek() + "' AND appointment.end <= '" + Utils.Time.getWeekLater() + "' AND userId='" + DBAppointment.getCurrentUserId() + "';";
             //System.out.println(query);
             try (PreparedStatement sm = DBConnection.getConnection().prepareStatement(query);
                  ResultSet rs = sm.executeQuery()) {
