@@ -1,6 +1,12 @@
 package Controller;
 
 import Database.DBConnection;
+import Database.DBCustomer;
+import Database.DBUser;
+import Model.Customer;
+import Model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
@@ -28,6 +35,21 @@ public class scheduleReportController implements Initializable {
     @FXML
     private Button backButton;
 
+    @FXML
+    private ComboBox<String> userCB;
+
+    @FXML
+    void userAction(ActionEvent event) {
+
+    }
+
+    private void populateUser() {
+        ObservableList<User> allUsers = FXCollections.observableArrayList();
+        allUsers = DBUser.queryUsers();
+        for (User u:allUsers) {
+            userCB.setValue(u.getUserName());
+        }
+    }
     @FXML
     void backButtonAction(ActionEvent event) {
         backToMain(event);
@@ -53,22 +75,23 @@ public class scheduleReportController implements Initializable {
     public void getScheduleReport() {
         try {
             Statement sm = DBConnection.getConnection().createStatement();
-            String query = "SELECT title, start, end FROM appointment ;";
+            String query = "SELECT title, start, end FROM appointment WHERE userId = 2;";
             ResultSet rs = sm.executeQuery(query);
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.append("Schedule: \n\n");
-            sbuf.append(String.format("%1$-45s %2$-45s %3$-45s \n", "Title", "Start    ", "End    "));
-            sbuf.append("\n");
+            StringBuilder sb = new StringBuilder();
+            sb.append("Schedule: \n\n");
+            sb.append(String.format("%1$-45s %2$-45s %3$-45s \n", "Title", "Start    ", "End    "));
+            sb.append("\n");
             while (rs.next()) {
-                sbuf.append(String.format("%1$-30s %2$-35s %3$-35s \n", rs.getString("title"), rs.getString("start"), rs.getString("end")));}
+                sb.append(String.format("%1$-30s %2$-35s %3$-35s \n", rs.getString("title"), rs.getString("start"), rs.getString("end")));}
             sm.close();
-            scheduleTextArea.setText(sbuf.toString());
+            scheduleTextArea.setText(sb.toString());
         } catch (SQLException e) {
             e.printStackTrace();}
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        populateUser();
         getScheduleReport();
     }
 }

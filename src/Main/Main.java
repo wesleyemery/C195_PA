@@ -32,15 +32,9 @@ public class Main extends Application {
         LocalTime parisTime = LocalTime.of(01,00);
         ZoneId parisZoneId = ZoneId.of("Europe/Paris");
         ZonedDateTime parisZDT = ZonedDateTime.of(parisDate, parisTime, parisZoneId);
-        ZoneId localZoneID = ZoneId.of(TimeZone.getDefault().getID());*/
+        ZoneId localZoneID = ZoneId.of(TimeZone.getDefault().getID());
 
-
-        Connection connection = DBConnection.getConnection(); //Connect to DB
-        launch(args);
-        DBConnection.closeConnection();
-
-
-        /*String insertStatement = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy) VALUES(?, ?, ?, ?);";
+        String insertStatement = "INSERT INTO country(country, createDate, createdBy, lastUpdateBy) VALUES(?, ?, ?, ?);";
 
         String countryName;
         String createDate = "2020-06-29 00:00:00";
@@ -66,12 +60,9 @@ public class Main extends Application {
         if(ps.getUpdateCount() > 0)
             System.out.println(ps.getUpdateCount() + " rows impacted!");
         else
-            System.out.println("No Change!");*/
+            System.out.println("No Change!");
 
-
-
-
-        /*DBQuery.setPreparedStatement(connection);
+        DBQuery.setPreparedStatement(connection);
         Statement statement = DBQuery.getStatement();
 
         DataGenerator data = new DataGenerator();
@@ -139,5 +130,8 @@ public class Main extends Application {
             e.printStackTrace();
         }*/
 
+        Connection connection = DBConnection.getConnection(); //Connect to DB
+        launch(args);
+        DBConnection.closeConnection();
     }
 }

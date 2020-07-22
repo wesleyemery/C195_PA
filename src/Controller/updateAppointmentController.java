@@ -261,6 +261,7 @@ public class updateAppointmentController implements Initializable {
         queryAllCustomerNames();
         setCustomerNames();
 
+        // lambda to isolate to business hours
         startDate.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {

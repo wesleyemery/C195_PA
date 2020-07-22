@@ -31,9 +31,9 @@ public class DBCountry {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement("INSERT INTO country(country, createDate, createdBy, lastUpdate, lastUpdateBy) VALUES" +
                     "(?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, country);
-            ps.setString(2, Utils.Time.dateTime());
+            ps.setString(2, Utils.Time.getTimestamp());
             ps.setString(3, "admin");
-            ps.setString(4, Utils.Time.dateTime());
+            ps.setString(4, Utils.Time.getTimestamp());
             ps.setString(5, "admin");
 
             ps.executeUpdate();

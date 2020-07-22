@@ -1,7 +1,10 @@
 package Controller;
 
 import Database.DBConnection;
+import Model.Appointment;
 import Model.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,10 +18,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
+import static Utils.Time.getLocalDateTime;
+import static Utils.Time.getMonth;
 
 
 public class appointmentReportController implements Initializable {
@@ -53,19 +63,19 @@ public class appointmentReportController implements Initializable {
     }
 
     public void getAppointmentReport() {
-
-        int id = 1;
+        int month = getLocalDateTime().getMonthValue();
         try {
             Statement sm = DBConnection.getConnection().createStatement();
-            String query = "SELECT COUNT(DISTINCT type) FROM appointment WHERE userId = '"+ id +"';";
+            String query = "SELECT COUNT(DISTINCT type) FROM appointment WHERE month(start) = '" + month +  "';";
             ResultSet rs = sm.executeQuery(query);
-            StringBuilder sbuf = new StringBuilder();
-            sbuf.append(String.format("Number of Appointment Types: "));
+            StringBuilder sb = new StringBuilder();
+            sb.append(String.format("Number of Appointment Types this Month: "));
 
             while (rs.next()) {
-                sbuf.append(rs.getInt("count(distinct type)")).toString();}
+                sb.append(rs.getInt("count(distinct type)")).toString();}
             sm.close();
-            appointmentTextArea.setText(sbuf.toString());
+            appointmentTextArea.setText(sb.toString());
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -73,6 +83,7 @@ public class appointmentReportController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         getAppointmentReport();
     }
 }

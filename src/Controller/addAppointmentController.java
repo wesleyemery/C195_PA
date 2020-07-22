@@ -205,8 +205,6 @@ public class addAppointmentController implements Initializable {
         } while (!time.equals(LocalTime.of(17, 15)));
         start.remove(start.size() - 1);
         end.remove(0);
-        startCb.setItems(start);
-        endCb.setItems(end);
     }
 
     private void backToMain(ActionEvent event) {
@@ -252,6 +250,8 @@ public class addAppointmentController implements Initializable {
         endDate.setDisable(true);
         customerCb.setItems(customerNames);
         setTimes();
+        startCb.setItems(start);
+        endCb.setItems(end);
 
     }
 }
