@@ -70,9 +70,6 @@ public class loginController implements Initializable {
     }
 
     private void setResourceBundle() {
-        locale = Locale.getDefault();
-        rb = ResourceBundle.getBundle("Languages/language", locale.getDefault());
-        if (locale.getDefault().getLanguage().equals("es") ||  locale.getDefault().getLanguage().equals("en") || locale.getDefault().getLanguage().equals("mx")) {
 
             passwordErr = rb.getString("passwordErr");
             missingInput = rb.getString("missingInput");
@@ -85,7 +82,7 @@ public class loginController implements Initializable {
             loginTitle = rb.getString("loginTitle");
             loginHeader = rb.getString("loginHeader");
             confirm = rb.getString("confirm");
-        }
+
     }
 
     @FXML
@@ -187,8 +184,12 @@ public class loginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        locale = Locale.getDefault();
+        rb = ResourceBundle.getBundle("Languages/language", locale.getDefault());
         textFieldGenerate();
-        setResourceBundle();
+        if (locale.getDefault().getLanguage().equals("es") ||  locale.getDefault().getLanguage().equals("en") || locale.getDefault().getLanguage().equals("mx")) {
+            setResourceBundle();
+        }
 
 
     }
