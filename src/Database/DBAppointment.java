@@ -143,8 +143,28 @@ public class DBAppointment {
         }
     }
 
+    public static boolean isOverlapAdd(String start, String end) {
 
-    public static boolean isOverlap(String start, String end, int appId) {
+
+        String query = "SELECT * FROM appointment WHERE (start >= '" + start + "' AND start < '" + end + "') "
+                + "OR (end > '" + start + "' AND end <= '" + end + "') OR (start <= '" + start + "') AND "
+                + "(end >= '" + end + "') AND userId = ?;";
+        try {
+            PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
+            ps.setInt(1, getCurrentUserId());
+            ResultSet rs = ps.executeQuery();
+
+            boolean isOverlap = false;
+            while (rs.next()) isOverlap = true;
+            return isOverlap;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    public static boolean isOverlapUpdate(String start, String end, int appId) {
 
 
         String query = "SELECT * FROM appointment WHERE (start >= '" + start + "' AND start < '" + end + "' AND NOT appointmentId = '" + appId + "') "

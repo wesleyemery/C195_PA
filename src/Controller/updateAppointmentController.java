@@ -221,7 +221,7 @@ public class updateAppointmentController implements Initializable {
         if (id != null){
             String st = getStartDateTime() + ":00";
             String et = getEndDateTime() + ":00";
-            if (DBAppointment.isOverlap(st, et, appId)) {
+            if (DBAppointment.isOverlapUpdate(st, et, appId)) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Error");
                 alert.setContentText("This appointment overlaps with another");
