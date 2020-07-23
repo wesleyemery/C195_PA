@@ -2,6 +2,8 @@ package Database;
 
 import Controller.addAppointmentController;
 import Controller.loginController;
+import Controller.updateAppointmentController;
+import Model.Appointment;
 import Model.Customer;
 import Model.User;
 import javafx.scene.control.Alert;
@@ -140,13 +142,17 @@ public class DBAppointment {
             e.printStackTrace();
         }
     }
-    public static boolean isOverlap(String start, String end) {
 
-        String query = "SELECT * FROM appointment WHERE start = ? AND userId = ?";
+
+    public static boolean isOverlap(String start, String end, int appId) {
+
+
+        String query = "SELECT * FROM appointment WHERE (start >= '" + start + "' AND start < '" + end + "' AND NOT appointmentId = '" + appId + "') "
+        + "OR (end > '" + start + "' AND end <= '" + end + "' AND NOT appointmentId = '" + appId + "') OR (start <= '" + start + "' AND NOT appointmentId = '" + appId + "') AND "
+        + "(end >= '" + end + "' AND NOT appointmentId = '" + appId + "') AND userId = ?;";
         try {
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(query);
-            ps.setString(1, start);
-            ps.setInt(2, getCurrentUserId());
+            ps.setInt(1, getCurrentUserId());
             ResultSet rs = ps.executeQuery();
 
             boolean isOverlap = false;
@@ -159,7 +165,6 @@ public class DBAppointment {
 
         return false;
     }
-
 
 
 }

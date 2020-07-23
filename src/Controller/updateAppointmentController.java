@@ -6,6 +6,7 @@ import Database.DBCustomer;
 import Database.DBUser;
 import Model.Appointment;
 import Model.Customer;
+import Model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -72,7 +73,6 @@ public class updateAppointmentController implements Initializable {
     Appointment appointment;
     LocalDate startDate1, endDate1;
     LocalTime startTime, endTime;
-
 
 
     @FXML
@@ -211,8 +211,22 @@ public class updateAppointmentController implements Initializable {
             if (end.isBefore(start) ||  end.equals(start)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setContentText("End Time is overlapping with the Start Time.");
+                alert.setContentText("End Time cannot be at the same time or before the Start Time.");
                 alert.showAndWait();
+            }
+        }
+
+        Integer id = DBAppointment.getCurrentUserId();
+        int appId = appointment.getAppointmentId();
+        if (id != null){
+            String st = getStartDateTime() + ":00";
+            String et = getEndDateTime() + ":00";
+            if (DBAppointment.isOverlap(st, et, appId)) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Error");
+                alert.setContentText("This appointment overlaps with another");
+                alert.showAndWait();
+                return;
             }
         }
 

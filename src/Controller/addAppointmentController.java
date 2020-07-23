@@ -125,7 +125,7 @@ public class addAppointmentController implements Initializable {
             alert.showAndWait();
         }
         if (end != null && start != null) {
-            if ( end.equals(start)) {
+            if ( end.isBefore(start) ||  end.equals(start)) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setContentText("End Time cannot be at the same time or before the Start Time.");
@@ -134,10 +134,12 @@ public class addAppointmentController implements Initializable {
         }
 
         Integer id = DBAppointment.getCurrentUserId();
+        int appId = appointment.getAppointmentId();
+
         if (id != null){
             String st = getStartDateTime() + ":00";
             String et = getEndDateTime() + ":00";
-            if (DBAppointment.isOverlap(st, et)) {
+            if (DBAppointment.isOverlap(st, et, appId)) {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Error");
                 alert.setContentText("This appointment overlaps with another");
